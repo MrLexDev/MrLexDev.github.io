@@ -1,53 +1,336 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio de Alejandro</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f9;
-            color: #333;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 1rem 2rem;
-            text-align: center;
-        }
-        section {
-            padding: 2rem;
-            max-width: 800px;
-            margin: auto;
-        }
-        footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding: 1rem;
-            background: #333;
-            color: #fff;
-        }
-    </style>
-</head>
-<body>
-<header>
-    <h1>¡Hola, soy Alejandro!</h1>
-    <p>Bienvenido a mi portafolio</p>
-</header>
-<section>
-    <h2>Sobre mí</h2>
-    <p>Estudiante, jugador de vóley y entusiasta del gimnasio. En mi tiempo libre me gusta aprender cosas nuevas.</p>
-    <h2>Proyectos</h2>
-    <ul>
-        <li><a href="#">Proyecto 1</a></li>
-        <li><a href="#">Proyecto 2</a></li>
-    </ul>
-</section>
-<footer>
-    <p>© 2025 Alejandro. Todos los derechos reservados.</p>
-</footer>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Portfolio" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/fa62c117c7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Alejandro Galo</title>
+  </head>
+  <body class="light" id="top">
+    <header class="header center">
+      <h3>
+        <a href="https://MrLexDN.github.io" class="link"
+          >ML.</a
+        >
+      </h3>
+
+      <nav class="nav center">
+        <ul class="nav__list center">
+          <li class="nav__list-item">
+            <a class="link link--nav" href="#experience">Experience</a>
+          </li>
+          <li class="nav__list-item">
+            <a class="link link--nav" href="#projects">Projects</a>
+          </li>
+          <li class="nav__list-item">
+            <a class="link link--nav" href="#skills">Skills</a>
+          </li>
+          <li class="nav__list-item">
+            <a class="link link--nav" href="#contact">Contact</a>
+          </li>
+        </ul>
+
+        <button type="button" aria-label="toggle theme" class="btn btn--icon">
+          <i aria-hidden="true" id="btn-theme" class="fas fa-moon"></i>
+        </button>
+
+        <button
+          type="button"
+          aria-label="toggle navigation"
+          class="btn btn--icon nav__hamburger"
+        >
+          <i aria-hidden="true" class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- About -->
+      <div class="about center">
+        <h1>Hi, I am <span class="about__name">Alejandro Galo.</span></h1>
+        <h2 class="about__role">A Game Developer.</h2>
+        <p class="about__desc">
+            I have expertise in Unity and Unreal Engine, turning ideas into immersive,
+            playable experiences. Passionate about new technologies, always looking for learning new things.
+        </p>
+
+        <div class="about__contact center">
+          <a href="https://example.com">
+            <span class="btn btn--outline">Resume</span>
+          </a>
+
+          <a
+            href="https://github.com/MrLexDN"
+            aria-label="github"
+            class="link link--icon"
+          >
+            <i aria-hidden="true" class="fab fa-github"></i>
+          </a>
+
+          <a
+            href="https://linkedin.com/in/Alejandro-Galo"
+            aria-label="linkedin"
+            class="link link--icon"
+          >
+            <i aria-hidden="true" class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+
+      <section class="experience">
+        <h2 class="experience__title">Experience</h2>
+
+        <div class="experience__item">
+          <div class="experience__icon">
+            <img src="catness-icon.png" alt="Catness Game Studios Icon" />
+          </div>
+          <div class="experience__content">
+            <h3 class="experience__role">Game Programmer</h3>
+            <p class="experience__company">
+              Catness Game Studios <span class="experience__dates">Jan 2022 - Dec 2023</span>
+            </p>
+            <p class="experience__description">
+              Developed and ported games using Unreal Engine. Collaborated in a team of 6-7 developers to create a multiplayer game, optimizing performance for different platforms.
+            </p>
+            <ul class="experience__stack">
+              <li>C++</li>
+              <li>Unreal Engine</li>
+              <li>Perforce</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="experience__item">
+          <div class="experience__icon">
+            <img src="tech-solutions-icon.png" alt="Tech Solutions Icon" />
+          </div>
+          <div class="experience__content">
+            <h3 class="experience__role">Frontend Developer</h3>
+            <p class="experience__company">
+              Tech Solutions <span class="experience__dates">Mar 2021 - Dec 2021</span>
+            </p>
+            <p class="experience__description">
+              Built responsive web applications using React and JavaScript, focusing on performance optimization and UI/UX improvements.
+            </p>
+            <ul class="experience__stack">
+              <li>React</li>
+              <li>JavaScript</li>
+              <li>CSS</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <!-- Experience -->
+      <section id="experience" class="section experience">
+        <h2 class="section__title">Experience</h2>
+
+        <div class="projects__grid">
+          <div class="project" data-bg="photos/seahorizon.jpg">
+            <h3>Catness Game Studios</h3>
+            <p class="project__description">
+              Game programmer, porting and game development. Ported a game in Unreal to different platforms and
+              participated in the development of a multiplayer game in a team of 6-7 people.
+            </p>
+            <ul class="project__stack">
+              <li class="project__stack-item">C++</li>
+              <li class="project__stack-item">Unreal Engine</li>
+              <li class="project__stack-item">Perforce</li>
+            </ul>
+
+            <a
+                    href="https://github.com"
+                    aria-label="source code"
+                    class="link link--icon"
+            >
+              <i aria-hidden="true" class="fab fa-github"></i>
+            </a>
+            <a
+                    href="https://example.com"
+                    aria-label="live preview"
+                    class="link link--icon"
+            >
+              <i aria-hidden="true" class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+
+          <div class="project">
+            <h3>Firescale Studios</h3>
+            <p class="project__description">
+              Working on a card game in Unity.
+            </p>
+            <ul class="project__stack">
+              <li class="project__stack-item">C#</li>
+              <li class="project__stack-item">Unity</li>
+              <li class="project__stack-item">Git</li>
+            </ul>
+
+            <a
+                    href="https://github.com"
+                    aria-label="source code"
+                    class="link link--icon"
+            >
+              <i aria-hidden="true" class="fab fa-github"></i>
+            </a>
+            <a
+                    href="https://example.com"
+                    aria-label="live preview"
+                    class="link link--icon"
+            >
+              <i aria-hidden="true" class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+      
+      
+      <!-- Projects -->
+      <section id="projects" class="section projects">
+        <h2 class="section__title">Projects</h2>
+
+        <div class="projects__grid">
+          <div class="project">
+            <h3>Sea Horizon Port</h3>
+            <p class="project__description">
+              Port for PS4, PS5, XBox One and XBox Series.
+            </p>
+            <ul class="project__stack">
+              <li class="project__stack-item">Unreal Engine 4</li>
+              <li class="project__stack-item"> * </li>
+              <li class="project__stack-item"> * </li>
+            </ul>
+
+            <a
+              href="https://github.com"
+              aria-label="source code"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://example.com"
+              aria-label="live preview"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+
+          <div class="project">
+            <h3>Battle Royal</h3>
+            <p class="project__description">
+              Implementation of multiplayer, GAS in character abilities, UI menus, and more.
+            </p>
+            <ul class="project__stack">
+              <li class="project__stack-item">SASS</li>
+              <li class="project__stack-item">TypeScript</li>
+              <li class="project__stack-item">React</li>
+            </ul>
+
+            <a
+              href="https://github.com"
+              aria-label="source code"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://example.com"
+              aria-label="live preview"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+
+          <div class="project">
+            <h3>Project 3</h3>
+            <p class="project__description">
+              Card game developed in Unity.
+            </p>
+            <ul class="project__stack">
+              <li class="project__stack-item">SASS</li>
+              <li class="project__stack-item">TypeScript</li>
+              <li class="project__stack-item">React</li>
+            </ul>
+
+            <a
+              href="https://github.com"
+              aria-label="source code"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://example.com"
+              aria-label="live preview"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="section skills" id="skills">
+        <h2 class="section__title">Skills</h2>
+        <ul class="skills__list">
+          <li class="skills__list-item btn btn--plain">HTML</li>
+          <li class="skills__list-item btn btn--plain">CSS</li>
+          <li class="skills__list-item btn btn--plain">SCSS</li>
+          <li class="skills__list-item btn btn--plain">JavaScript</li>
+          <li class="skills__list-item btn btn--plain">TypeScript</li>
+          <li class="skills__list-item btn btn--plain">React</li>
+          <li class="skills__list-item btn btn--plain">Redux</li>
+          <li class="skills__list-item btn btn--plain">Git</li>
+          <li class="skills__list-item btn btn--plain">Material UI</li>
+          <li class="skills__list-item btn btn--plain">Jest</li>
+          <li class="skills__list-item btn btn--plain">Enzyme</li>
+          <li class="skills__list-item btn btn--plain">CI/CD</li>
+        </ul>
+      </section>
+
+      <!-- Contact -->
+      <section class="section contact center" id="contact">
+        <h2 class="section__title">Contact</h2>
+        <a href="mailto:alejandrogalogames@gmail.com">
+          <span class="btn btn--outline">alejandrogalogames@gmail.com</span>
+        </a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <a
+        href=""
+        class="link footer__link"
+      >
+         
+      </a>
+    </footer>
+
+    <div class="scroll-container">
+      <div class="scroll-top">
+        <a aria-label="Scroll up" href="#top">
+          <i aria-hidden="true" class="fas fa-arrow-up"></i>
+        </a>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
 </html>
