@@ -301,7 +301,25 @@ main {
   background-repeat: no-repeat;
   border-radius: 10px;
 
+
+  /*display: flex; /* Habilita el diseño en fila */
+  align-items: flex-start; /* Alinea verticalmente al inicio */
+  gap: 1em; /* Espacio entre la imagen y el texto */
+
 }
+
+.project__image {
+  width: 120px; /* Ancho de la imagen */
+  height: auto; /* Mantiene la proporción de la imagen */
+  border-radius: 8px; /* Bordes redondeados para estilo */
+  object-fit: cover; /* Asegura que la imagen no se deforme */
+  flex-shrink: 0; /* Evita que la imagen cambie de tamaño */
+}
+
+.project a {
+  flex: 1; /* Permite que el contenido textual use el resto del espacio */
+}
+
 
 
 
@@ -506,6 +524,45 @@ main {
     border-radius: 5px;
     font-size: 0.875rem;
   }
+
+  .experience__grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr; /* Una sola columna principal */
+    gap: 2em;
+  }
+
+  /* Proyectos que contienen imagen */
+  .project:has(> .project__image) {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Dos columnas: imagen y contenido */
+    gap: 1.5em;
+    align-items: start;
+  }
+
+  .experience__image {
+    grid-column: 1;
+    grid-row: 1/-1; /* La imagen ocupa todas las filas */
+    width: 100px; /* Ancho deseado para la imagen */
+    height: 100px;
+    object-fit: cover;
+    border-radius: 108px; /* Opcional */
+  }
+
+  /* Contenido del proyecto se ubica en columna 2 */
+  .project h3,
+  .project p,
+  .project ul,
+  .project a {
+    grid-column: 2;
+  }
+
+  /* Mantener estilo original para proyectos sin imagen */
+  .project:not(:has(img)) {
+    display: block;
+  }
+
 
 
 }
