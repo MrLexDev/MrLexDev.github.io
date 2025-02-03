@@ -236,6 +236,10 @@ main {
   text-transform: uppercase;
 }
 
+.section__titlept2 {
+  color: var(--clr-primary);
+}
+
 .nav__list {
   margin-right: 1.5em;
   display: flex;
@@ -595,7 +599,7 @@ main {
     display: block;
     width: 40px;
     height: 40px;
-    background: #2c98f0;
+    background: var(--clr-bg);
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
@@ -644,8 +648,8 @@ main {
 
   .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label {
     position: relative;
-    background: #70A9A1; /*linear-gradient(135deg, rgb(255, 221, 153), rgb(249, 191, 63));*** timeline work experience ****/
-    color: #F6F1D1; /* timeline color font*/
+    background: var(--clr-primary); /*linear-gradient(135deg, rgb(255, 221, 153), rgb(249, 191, 63));*** timeline work experience ****/
+    color: #000; /* timeline color font*/
     padding: 1.5em;
     margin-left: 60px;
     -webkit-background-clip: padding-box;
@@ -765,7 +769,7 @@ main {
     }
 
 #projects h2 {
-  color: #F6F1D1;
+  /*color: #F6F1D1;*/
   margin-bottom: 50px;
 }
 
@@ -860,7 +864,7 @@ main {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #70A9A1; /*linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%); *** Itchio fondo *** */
+  background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%); /*** Itchio fondo *** */
 }
 
 /* Contenido de la tarjeta */
