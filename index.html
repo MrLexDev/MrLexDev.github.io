@@ -1,188 +1,535 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alejandro Galo - Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://kit.fontawesome.com/fa62c117c7.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título y Descripción dinámicos -->
+    <title data-lang="es">Alejandro Galo - Portafolio de Desarrollador</title>
+    <title data-lang="en">Alejandro Galo - Developer Portfolio</title>
+    <meta data-lang="es" name="description" content="Portafolio personal de Alejandro Galo, mostrando proyectos, habilidades y experiencia como desarrollador de videojuegos.">
+    <meta data-lang="en" name="description" content="Personal portfolio of Alejandro Galo, showcasing projects, skills, and experience as a game developer.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Gris oscuro para el fondo */
+            color: #E5E7EB; /* Texto casi blanco */
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .accent-color {
+            color: #38BDF8; /* Azul cielo */
+        }
+        .accent-bg {
+            background-color: #38BDF8;
+        }
+        .accent-border {
+            border-color: #38BDF8;
+        }
+        .section-title {
+            @apply relative text-3xl font-bold mb-4 text-center pb-4;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #38BDF8;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        .section-subtitle {
+            @apply text-center text-lg text-gray-400 mb-12 max-w-2xl mx-auto;
+        }
+        /* Estilos para la línea de tiempo */
+        .timeline-container {
+            position: relative;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: #374151; /* gray-700 */
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+            border-radius: 3px;
+        }
+        .timeline-item {
+            position: relative;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            right: -8px;
+            background-color: #111827;
+            border: 3px solid #38BDF8; /* accent-color */
+            top: 10px;
+            border-radius: 50%;
+            z-index: 1;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        /* Estilos para el selector de idioma */
+        .lang-switcher button {
+            color: #38BDF8;
+            font-weight: 700;
+        }
+    </style>
 </head>
-<body class="light" id="top">
-  <header class="header center">
-    <h1 class="logo"><a href="#top" class="link">ML.</a></h1>
-    <nav class="nav center">
-      <ul class="nav__list center">
-        <li class="nav__list-item"><a class="link link--nav" href="#about">About</a></li>
-        <li class="nav__list-item"><a class="link link--nav" href="#experience">Experience</a></li>
-        <li class="nav__list-item"><a class="link link--nav" href="#projects">Projects</a></li>
-        <li class="nav__list-item"><a class="link link--nav" href="#education">Education</a></li>
-        <li class="nav__list-item"><a class="link link--nav" href="#skills">Skills</a></li>
-        <li class="nav__list-item"><a class="link link--nav" href="#contact">Contact</a></li>
-      </ul>
-      <button type="button" aria-label="toggle theme" class="btn btn--icon">
-        <i aria-hidden="true" id="btn-theme" class="fas fa-moon"></i>
-      </button>
-      <button type="button" aria-label="toggle navigation" class="btn btn--icon nav__hamburger">
-        <i aria-hidden="true" class="fas fa-bars"></i>
-      </button>
-    </nav>
-  </header>
+<body class="antialiased">
 
-  <main>
-    <section id="about" class="about center">
-      <div class="about__photo">
-        <img src="photos/pp.jpg" alt="Alejandro Galo" class="profile-photo">
-      </div>
-      <div class="about__text">
-        <h2>Hi, I am <span class="about__name">Alejandro Galo</span></h2>
-        <p class="about__role">Game Developer</p>
-        <p class="about__desc">I have expertise in Unity and Unreal Engine, turning ideas into immersive playable experiences. Passionate about new technologies...</p>
-        <div class="about__links">
-          <a href="AlejandroGaloCV_NoNum.pdf" download class="btn btn--outline">Resume</a>
-          <a href="https://github.com/MrLexDev" target="_blank" aria-label="github" class="link link--icon"><i class="fab fa-github"></i></a>
-          <a href="https://linkedin.com/in/Alejandro-Galo" target="_blank" aria-label="linkedin" class="link link--icon"><i class="fab fa-linkedin"></i></a>
+<!-- Header & Navegación -->
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect" id="navbar">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+            <a href="#" class="text-2xl font-bold text-white">Alejandro Galo</a>
+            <div class="flex items-center">
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-gray-300 hover:text-white transition" data-lang="es">Sobre mí</a>
+                    <a href="#about" class="text-gray-300 hover:text-white transition" data-lang="en">About</a>
+                    <a href="#experience" class="text-gray-300 hover:text-white transition" data-lang="es">Experiencia</a>
+                    <a href="#experience" class="text-gray-300 hover:text-white transition" data-lang="en">Experience</a>
+                    <a href="#skills" class="text-gray-300 hover:text-white transition" data-lang="es">Habilidades</a>
+                    <a href="#skills" class="text-gray-300 hover:text-white transition" data-lang="en">Skills</a>
+                    <a href="#projects" class="text-gray-300 hover:text-white transition" data-lang="es">Proyectos</a>
+                    <a href="#projects" class="text-gray-300 hover:text-white transition" data-lang="en">Projects</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white transition" data-lang="es">Contacto</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white transition" data-lang="en">Contact</a>
+                </nav>
+                <!-- Selector de Idioma -->
+                <div class="lang-switcher flex items-center ml-8 space-x-2 text-sm">
+                    <button id="lang-es" class="text-gray-300 hover:text-white font-semibold">ES</button>
+                    <span class="text-gray-500">|</span>
+                    <button id="lang-en" class="text-gray-300 hover:text-white font-semibold">EN</button>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none ml-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
         </div>
-      </div>
-    </section>
-
-    <section id="experience" class="section">
-      <h2 class="section__title">Work Experience</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <h3 class="timeline-title">Firescale <span class="timeline-date">Dec 2024 - Present</span></h3>
-            <p class="timeline-role">Game Programmer</p>
-            <p class="timeline-text">Unity programmer for a roguelite game with turn based card game.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <h3 class="timeline-title">Catness Game Sutudios <span class="timeline-date">Jan 2023 - Nov 2024</span></h3>
-            <p class="timeline-role">Game Programmer</p>
-            <p class="timeline-text">Porting for PS4, PS5, Xbox One, Xbox Series. Unreal programmer for a multiplayer battle royale game in a team of 6-7 people.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="section">
-      <h2 class="section__title">Work Projects</h2>
-      <div class="projects__grid">
-        <div class="project">
-          <h3>Sea Horizon Port</h3>
-          <p class="project__description">Port for PS4, PS5, Xbox One and Xbox Series.</p>
-          <ul class="project__stack">
-            <li class="project__stack-item">Unreal Engine 4</li>
-          </ul>
-          <a href="https://store.playstation.com/es-es/product/EP2005-PPSA09602_00-SEAHORIZON000000" target="_blank" aria-label="Sea Horizon" class="link link--icon"><i class="fas fa-external-link-alt"></i></a>
-        </div>
-        <div class="project">
-          <h3>Battle Royale</h3>
-          <p class="project__description">Implementation of multiplayer, GAS in character abilities, UI menus, and more.</p>
-          <ul class="project__stack">
-            <li class="project__stack-item">Unreal Engine 5</li>
-            <li class="project__stack-item">C++</li>
-            <li class="project__stack-item">Perforce</li>
-          </ul>
-        </div>
-        <div class="project">
-          <h3>Rise of the Overlords</h3>
-          <p class="project__description">Card game developed in Unity.</p>
-          <ul class="project__stack">
-            <li class="project__stack-item">Unity</li>
-            <li class="project__stack-item">C#</li>
-            <li class="project__stack-item">Git</li>
-          </ul>
-          <a href="https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/" target="_blank" aria-label="Rise of the Overlords" class="link link--icon"><i class="fas fa-external-link-alt"></i></a>
-        </div>
-      </div>
-    </section>
-
-    <section id="education" class="section">
-      <h2 class="section__title">Education</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <h3 class="timeline-title">Universitat Jaume I <span class="timeline-date">2019 - 2023</span></h3>
-            <p class="timeline-role">Design and Development of Videogames</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <h3 class="timeline-title">Universitat Jaume I <span class="timeline-date">Sep 2020 - Jun 2021</span></h3>
-            <p class="timeline-role">Software Engineering</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <h3 class="timeline-title">Agora Lledó International School <span class="timeline-date">Sep 2017 - Jun 2019</span></h3>
-            <p class="timeline-role">International Baccalaureate</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="personal" class="section">
-      <h2 class="section__title">Personal Projects</h2>
-      <div class="projects__grid">
-        <div class="project">
-          <img src="photos/HiddenOffering.png" alt="The Hidden Offering" class="project__img">
-          <h3>The Hidden Offering</h3>
-          <p class="project__description">A simple game created for the Game Off game jam. Your role is to ensure that no traces of a crime are left behind after the ritual is completed.</p>
-          <div class="project__meta">
-            <span class="badge">Game Jam</span>
-            <span class="badge">Released</span>
-          </div>
-          <a href="https://mrlexdev.itch.io/the-hidden-offering" target="_blank" aria-label="Hidden Offering" class="link link--icon"><i class="fas fa-external-link-alt"></i></a>
-        </div>
-        <div class="project">
-          <img src="photos/enginewars.png" alt="Engine Wars" class="project__img">
-          <h3>Engine Wars</h3>
-          <p class="project__description">In a future ruled by megacorporations owning game mechanic patents, indie developers must rely on outdated tools. Experience quirky levels with mismatched gameplay across diverse worlds.</p>
-          <div class="project__meta">
-            <span class="badge">Game Jam</span>
-            <span class="badge">Released</span>
-          </div>
-          <a href="https://ttakeshii.itch.io/engine-wars" target="_blank" aria-label="Engine Wars" class="link link--icon"><i class="fas fa-external-link-alt"></i></a>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills" class="section">
-      <h2 class="section__title">Skills</h2>
-      <ul class="skills__list">
-        <li class="skills__list-item btn btn--plain">Unreal Engine 4/5</li>
-        <li class="skills__list-item btn btn--plain">C++</li>
-        <li class="skills__list-item btn btn--plain">Unity</li>
-        <li class="skills__list-item btn btn--plain">C#</li>
-        <li class="skills__list-item btn btn--plain">Perforce</li>
-        <li class="skills__list-item btn btn--plain">Git</li>
-        <li class="skills__list-item btn btn--plain">Sourcetree</li>
-        <li class="skills__list-item btn btn--plain">VR</li>
-      </ul>
-    </section>
-
-    <section id="contact" class="section contact center">
-      <h2 class="section__title">Contact</h2>
-      <a href="mailto:alejandrogalogames@gmail.com" class="btn btn--outline">alejandrogalogames@gmail.com</a>
-    </section>
-  </main>
-
-  <footer class="footer center">
-    <a href="#top" class="link footer__link">Back to top</a>
-  </footer>
-
-  <div class="scroll-container">
-    <div class="scroll-top">
-      <a aria-label="Scroll up" href="#top">
-        <i aria-hidden="true" class="fas fa-arrow-up"></i>
-      </a>
     </div>
-  </div>
+    <!-- Menú Móvil -->
+    <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2">
+        <a href="#about" class="block text-gray-300 hover:text-white transition" data-lang="es">Sobre mí</a>
+        <a href="#about" class="block text-gray-300 hover:text-white transition" data-lang="en">About</a>
+        <a href="#experience" class="block text-gray-300 hover:text-white transition" data-lang="es">Experiencia</a>
+        <a href="#experience" class="block text-gray-300 hover:text-white transition" data-lang="en">Experience</a>
+        <a href="#skills" class="block text-gray-300 hover:text-white transition" data-lang="es">Habilidades</a>
+        <a href="#skills" class="block text-gray-300 hover:text-white transition" data-lang="en">Skills</a>
+        <a href="#projects" class="block text-gray-300 hover:text-white transition" data-lang="es">Proyectos</a>
+        <a href="#projects" class="block text-gray-300 hover:text-white transition" data-lang="en">Projects</a>
+        <a href="#contact" class="block text-gray-300 hover:text-white transition" data-lang="es">Contacto</a>
+        <a href="#contact" class="block text-gray-300 hover:text-white transition" data-lang="en">Contact</a>
+    </div>
+</header>
 
-  <script src="script.js"></script>
+<main>
+    <!-- Sección Hero -->
+    <section id="home"  class="relative min-h-screen flex items-center justify-center text-center bg-cover bg-left-top"
+                        style="background-image: url('img/back.png');">
+        <div class="absolute inset-0 bg-gray-900 bg-opacity-70"></div>
+        <div class="relative z-10 px-6 py-10 isolate">
+            <!-- 🔮 Capa #1: blur fuerte, radio pequeño -->
+            <div class="absolute inset-0 -z-10 rounded-2xl
+                backdrop-blur-2xl bg-gray-900/60
+                [mask-image:radial-gradient(ellipse_55%_45%_at_center,white_0%,transparent_100%)]
+                [-webkit-mask-image:radial-gradient(ellipse_55%_45%_at_center,white_0%,transparent_100%)]">
+            </div>
+
+            <!-- 🔮 Capa #2: blur suave, radio grande -->
+            <div class="absolute inset-0 -z-20 rounded-2xl
+                backdrop-blur-lg bg-gray-900/40
+                [mask-image:radial-gradient(ellipse_80%_65%_at_center,white_0%,transparent_100%)]
+                [-webkit-mask-image:radial-gradient(ellipse_80%_65%_at_center,white_0%,transparent_100%)]">
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-tight">
+                <span data-lang="es">Hola, soy <span class="accent-color">Alejandro Galo</span></span>
+                <span data-lang="en">Hello, I'm <span class="accent-color">Alejandro Galo</span></span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                <span data-lang="es">Desarrollador de Videojuegos. Con experiencia en Unity y Unreal Engine, convirtiendo ideas en experiencias jugables inmersivas. Apasionado por las nuevas tecnologías.</span>
+                <span data-lang="en">Game Developer. With expertise in Unity and Unreal Engine, turning ideas into immersive playable experiences. Passionate about new technologies.</span>
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="#contact" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105">
+                    <span data-lang="es">Contáctame</span>
+                    <span data-lang="en">Contact Me</span>
+                </a>
+                <a href="#projects" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105">
+                    <span data-lang="es">Ver Proyectos</span>
+                    <span data-lang="en">View Projects</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Mí -->
+    <section id="about" class="py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">
+                <span data-lang="es">Sobre Mí</span>
+                <span data-lang="en">About Me</span>
+            </h2>
+            <p class="section-subtitle">
+                <span data-lang="es">Un poco de mi trayectoria y lo que me apasiona.</span>
+                <span data-lang="en">A little about my background and my passions.</span>
+            </p>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/3">
+                    <img src="img/pf.JPG" alt="Foto de Alejandro Galo" class="rounded-full shadow-lg mx-auto w-64 h-64 md:w-80 md:h-80 object-cover border-4 accent-border">
+                </div>
+                <div class="md:w-2/3 text-lg text-gray-300 space-y-4 text-center md:text-left">
+                    <p>
+                        <span data-lang="es">¡Hola! Soy un desarrollador de software con sede en [Tu Ciudad]. Me especializo en el desarrollo de aplicaciones web full-stack, con un fuerte enfoque en el rendimiento, la usabilidad y el diseño limpio.</span>
+                        <span data-lang="en">Hello! I'm a software developer based in [Your City]. I specialize in full-stack web application development, with a strong focus on performance, usability, and clean design.</span>
+                    </p>
+                    <p>
+                        <span data-lang="es">Me encanta transformar ideas complejas en realidades digitales. Mi viaje en la programación comenzó con [Cuenta una breve historia], y desde entonces, no he dejado de aprender y explorar nuevas tecnologías.</span>
+                        <span data-lang="en">I love transforming complex ideas into digital realities. My journey in programming began with [Tell a short story], and since then, I haven't stopped learning and exploring new technologies.</span>
+                    </p>
+                    <p>
+                        <span data-lang="es">Fuera del trabajo, disfruto de [Tu Hobby 1], [Tu Hobby 2] y contribuir a proyectos de código abierto.</span>
+                        <span data-lang="en">Outside of work, I enjoy [Your Hobby 1], [Your Hobby 2], and contributing to open-source projects.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Experiencia -->
+    <section id="experience" class="py-24 bg-gray-900/50">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">
+                <span data-lang="es">Experiencia Laboral</span>
+                <span data-lang="en">Work Experience</span>
+            </h2>
+            <p class="section-subtitle">
+                <span data-lang="es">Mi trayectoria profesional hasta la fecha.</span>
+                <span data-lang="en">My professional journey so far.</span>
+            </p>
+            <div class="timeline-container max-w-3xl mx-auto">
+                <!-- Item de la línea de tiempo 1 -->
+                <div class="timeline-item flex md:justify-end md:pr-8 mb-12">
+                    <div class="w-full md:w-5/12">
+                        <div class="glass-effect rounded-lg p-6">
+                            <p class="accent-color font-semibold mb-1" data-lang="es">Diciembre 2024 - Presente</p>
+                            <p class="accent-color font-semibold mb-1" data-lang="en">December 2024 - Present</p>
+                            <h3 class="text-xl font-bold text-white mb-1">
+                                <span data-lang="es">Programador</span>
+                                <span data-lang="en">Game Programmer</span>
+                            </h3>
+                            <p class="text-gray-400 mb-3" data-lang="es">Firescale Studios | Castellón</p>
+                            <p class="text-gray-400 mb-3" data-lang="en">Firescale Studios | Castellón</p>
+                            <ul class="list-disc list-inside text-gray-300 text-sm">
+                                <li data-lang="es">Desarrollo de multiples herramientas para el juego Rise of the Overlords</li>
+                                <li data-lang="en">Development of multiple tools for the game Rise of the Overlords</li>
+                                <li data-lang="es">Desarrollo de mecanicas y colaboración en un equipo de 6-7 personas</li>
+                                <li data-lang="en">Development of mechanics and collaboration in a team of 6-7 people</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item de la línea de tiempo 2 -->
+                <div class="timeline-item flex md:justify-start md:pl-8 mb-12">
+                    <div class="w-full md:w-5/12">
+                        <div class="glass-effect rounded-lg p-6">
+                            <p class="accent-color font-semibold mb-1" data-lang="es">Enero 2023 - Noviembre 2024</p>
+                            <p class="accent-color font-semibold mb-1" data-lang="en">January 2023 - November 2024</p>
+                            <h3 class="text-xl font-bold text-white mb-1">
+                                <span data-lang="es">Programador</span>
+                                <span data-lang="en">Game Programmer</span>
+                            </h3>
+                            <p class="text-gray-400 mb-3" data-lang="es">Catness Game Studios | Castellón</p>
+                            <p class="text-gray-400 mb-3" data-lang="en">Catness Game Studios | Castellón</p>
+                            <ul class="list-disc list-inside text-gray-300 text-sm">
+                                <li data-lang="es">Portee Sea Horizon a las plataformas PS4, PS5, XBox One y XBox Series</li>
+                                <li data-lang="en">Ported Sea Horizon to the platforms  PS4, PS5, XBox One y XBox Series</li>
+                                <li data-lang="es">Implemente varias mecánicas multiplayer en un Battle Royale</li>
+                                <li data-lang="en">Implement multiple multiplayer mechanics in a Battle Royale</li>
+                                <li data-lang="es">Colaboré en un equipo ágil de 5-6 personas para la creación del Battle Royale.</li>
+                                <li data-lang="en">Collaboration with an agile team of 5-6 people to create the Battle Royale.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item de la línea de tiempo 3 -->
+                <div class="timeline-item flex md:justify-start md:pl-8 mb-12">
+                    <div class="w-full md:w-5/12">
+                        <div class="glass-effect rounded-lg p-6">
+                            <p class="accent-color font-semibold mb-1" data-lang="es">Septiembre 2019 - Junio 2023</p>
+                            <p class="accent-color font-semibold mb-1" data-lang="en">September 2019 - June 2023</p>
+                            <h3 class="text-xl font-bold text-white mb-1">
+                                <span data-lang="es">Diseño y desarrollo de videojuegos</span>
+                                <span data-lang="en">Design and Development of Videogames</span>
+                            </h3>
+                            <p class="text-gray-400 mb-3" data-lang="es">Universitat Jaume I | Castellón</p>
+                            <p class="text-gray-400 mb-3" data-lang="en">Universitat Jaume I | Castellón</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item de la línea de tiempo 4 -->
+                <div class="timeline-item flex md:justify-start md:pl-8 mb-12">
+                    <div class="w-full md:w-5/12">
+                        <div class="glass-effect rounded-lg p-6">
+                            <p class="accent-color font-semibold mb-1" data-lang="es">Septiembre 2020 - Junio 2021</p>
+                            <p class="accent-color font-semibold mb-1" data-lang="en">September 2020 - June 2021</p>
+                            <h3 class="text-xl font-bold text-white mb-1">
+                                <span data-lang="es">Ingeniería informática</span>
+                                <span data-lang="en">Software Engineering</span>
+                            </h3>
+                            <p class="text-gray-400 mb-3" data-lang="es">Universitat Jaume I | Castellón</p>
+                            <p class="text-gray-400 mb-3" data-lang="en">Universitat Jaume I | Castellón</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item de la línea de tiempo 5 -->
+                <div class="timeline-item flex md:justify-start md:pl-8 mb-12">
+                    <div class="w-full md:w-5/12">
+                        <div class="glass-effect rounded-lg p-6">
+                            <p class="accent-color font-semibold mb-1" data-lang="es">Septiembre 2017 - Junio 2019</p>
+                            <p class="accent-color font-semibold mb-1" data-lang="en">September 2017 - June 2019</p>
+                            <h3 class="text-xl font-bold text-white mb-1">
+                                <span data-lang="es">Bachillerato Internacional</span>
+                                <span data-lang="en">International Baccalaureate</span>
+                            </h3>
+                            <p class="text-gray-400 mb-3" data-lang="es">Agora Lledó International School | Castellón</p>
+                            <p class="text-gray-400 mb-3" data-lang="en">Agora Lledó International School | Castellón</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Habilidades -->
+    <section id="skills" class="py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">
+                <span data-lang="es">Habilidades Técnicas</span>
+                <span data-lang="en">Technical Skills</span>
+            </h2>
+            <p class="section-subtitle">
+                <span data-lang="es">Las tecnologías y herramientas con las que trabajo a diario.</span>
+                <span data-lang="en">The technologies and tools I work with daily.</span>
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 text-center">
+                <!-- Habilidades -->
+                <div class="flex flex-col items-center gap-2 p-4 glass-effect rounded-lg">
+                    <img src="img/c--4.svg" alt="Logotipo C#" class="h-12 w-12 object-contain" />
+                    <span class="font-semibold text-white">C#</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 p-4 glass-effect rounded-lg">
+                    <img src="img/c.svg" alt="Logotipo C#" class="h-12 w-12 object-contain" />
+                    <span class="font-semibold text-white">C++</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 p-4 glass-effect rounded-lg">
+                    <img src="img/unity3d-icon_blue.svg" alt="Logotipo C#" class="h-12 w-12 object-contain" />
+                    <span class="font-semibold text-white">Unity</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 p-4 glass-effect rounded-lg">
+                    <img src="img/unreal-engine-blue.svg" alt="Logotipo C#" class="h-12 w-12 object-contain" />
+                    <span class="font-semibold text-white">Unreal Engine</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 p-4 glass-effect rounded-lg">
+                    <img src="img/Git-Icon.svg" alt="Logotipo C#" class="h-12 w-12 object-contain" />
+                    <span class="font-semibold text-white">Git & Sourcetree</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 p-4 glass-effect rounded-lg">
+                    <img src="img/p4v.png" alt="Logotipo C#" class="h-12 w-12 object-contain" />
+                    <span class="font-semibold text-white">Perforce</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Proyectos -->
+    <section id="projects" class="py-24 bg-gray-900/50">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">
+                <span data-lang="es">Mis Proyectos</span>
+                <span data-lang="en">My Projects</span>
+            </h2>
+            <p class="section-subtitle">
+                <span data-lang="es">Algunos de los trabajos de los que estoy más orgulloso.</span>
+                <span data-lang="en">Some of the work I'm most proud of.</span>
+            </p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Proyecto 1 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                    <img src="img/HiddenOffering.png" alt="Imagen del Proyecto 1" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-white" data-lang="es">The Hidden Offering</h3>
+                        <h3 class="text-xl font-bold mb-2 text-white" data-lang="en">The Hidden Offering</h3>
+                        <p class="text-gray-400 mb-4">
+                            <span data-lang="es">Un juego sencillo creado para la Game Off Game Jam. Tu misión es asegurarte de que no queden rastros del crimen tras completar el ritual.</span>
+                            <span data-lang="en">A simple game created for the Game Off game jam. Your role is to ensure that no traces of a crime are left behind after the ritual is completed.</span>
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="https://mrlexdev.itch.io/the-hidden-offering" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Ver Demo</span><span data-lang="en">View Demo</span></a>
+                            <a href="https://github.com/alitwicerh/Secrets" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Código Fuente</span><span data-lang="en">Source Code</span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto 2 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                    <img src="img/enginewars.png" alt="Imagen del Proyecto 2" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-white" data-lang="es">Engine Wars</h3>
+                        <h3 class="text-xl font-bold mb-2 text-white" data-lang="en">Engine Wars</h3>
+                        <p class="text-gray-400 mb-4">
+                            <span data-lang="es">En un futuro dominado por megacorporaciones que poseen patentes de mecánicas de juego, los desarrolladores independientes deben recurrir a herramientas obsoletas. Experimenta niveles peculiares con una jugabilidad dispar en mundos diversos.</span>
+                            <span data-lang="en">In a future ruled by megacorporations owning game mechanic patents, indie developers must rely on outdated tools. Experience quirky levels with mismatched gameplay across diverse worlds.</span>
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="https://ttakeshii.itch.io/engine-wars" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Ver Demo</span><span data-lang="en">View Demo</span></a>
+                            <!--<a href="https://github.com/alitwicerh/Secrets" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Código Fuente</span><span data-lang="en">Source Code</span></a> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto 3 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                    <img src="https://placehold.co/600x400/1F2937/38BDF8?text=Proyecto+3" alt="Imagen del Proyecto 3" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-white" data-lang="es">Nombre del Proyecto 3</h3>
+                        <h3 class="text-xl font-bold mb-2 text-white" data-lang="en">Project Name 3</h3>
+                        <p class="text-gray-400 mb-4">
+                            <span data-lang="es">Una breve descripción de tu proyecto. Explica el problema que resuelve y las tecnologías clave utilizadas.</span>
+                            <span data-lang="en">A brief description of your project. Explain the problem it solves and the key technologies used.</span>
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Ver Demo</span><span data-lang="en">View Demo</span></a>
+                            <a href="#" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Código Fuente</span><span data-lang="en">Source Code</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contact" class="py-24">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="section-title">
+                <span data-lang="es">Contacto</span>
+                <span data-lang="en">Contact</span>
+            </h2>
+            <p class="section-subtitle">
+                <span data-lang="es">¿Tienes una idea o un proyecto? ¡Hablemos!</span>
+                <span data-lang="en">Have an idea or a project? Let's talk!</span>
+            </p>
+            <div class="max-w-md mx-auto">
+                <p class="text-lg text-gray-300 mb-8">
+                    <span data-lang="es">Estoy disponible para oportunidades freelance o para unirme a un equipo increíble. Puedes contactarme a través de mi email o mis redes sociales.</span>
+                    <span data-lang="en">I'm available for freelance opportunities or to join an amazing team. You can reach me via email or my social media.</span>
+                </p>
+                <a href="mailto:alejandrogalogames@gmail.com" class="inline-block accent-bg hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105 mb-8 text-lg">
+                    AlejandroGaloGames@gmail.com
+                </a>
+                <div class="flex justify-center space-x-6">
+                    <a href="https://github.com/MrLexDev" target="_blank" class="text-gray-400 hover:accent-color transition">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                    </a>
+                    <a href="https://linkedin.com/in/alejandro-galo" target="_blank" class="text-gray-400 hover:accent-color transition">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-gray-900 border-t border-gray-800">
+    <div class="container mx-auto px-6 py-4 text-center text-gray-500">
+        <p>&copy; <span id="year"></span> <span data-lang="es">Alejandro Galo. Todos los derechos reservados.</span><span data-lang="en">Alejandro Galo. All rights reserved.</span></p>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const langButtons = {
+            es: document.getElementById('lang-es'),
+            en: document.getElementById('lang-en')
+        };
+
+        const allLangElements = document.querySelectorAll('[data-lang]');
+
+        const setLanguage = (lang) => {
+            // Ocultar todos los elementos
+            allLangElements.forEach(el => {
+                el.style.display = 'none';
+            });
+
+            // Mostrar elementos del idioma seleccionado
+            document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
+                el.style.display = ''; // O usa 'block', 'inline', etc. según corresponda
+            });
+
+            // Actualizar el atributo lang del html
+            document.documentElement.lang = lang;
+
+            // Guardar preferencia
+            localStorage.setItem('language', lang);
+
+            // Actualizar botones
+            Object.values(langButtons).forEach(btn => btn.classList.remove('active'));
+            langButtons[lang].classList.add('active');
+        };
+
+        // Event listeners para botones
+        langButtons.es.addEventListener('click', () => setLanguage('es'));
+        langButtons.en.addEventListener('click', () => setLanguage('en'));
+
+        // Establecer idioma inicial
+        const savedLang = localStorage.getItem('language') || 'es';
+        setLanguage(savedLang);
+    });
+
+
+    // --- JS para el menú móvil ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // --- JS para cerrar el menú al hacer clic en un enlace ---
+    const navLinks = document.querySelectorAll('#mobile-menu a, header nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if(mobileMenu.offsetParent !== null) { // Si el menú móvil está visible
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    });
+
+    // --- JS para el año actual en el footer ---
+    document.getElementById('year').textContent = new Date().getFullYear().toString();
+
+    // --- JS para el efecto de la barra de navegación al hacer scroll ---
+    const navbar = document.getElementById('navbar');
+    window.onscroll = () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('shadow-lg');
+        } else {
+            navbar.classList.remove('shadow-lg');
+        }
+    };
+</script>
 </body>
 </html>
