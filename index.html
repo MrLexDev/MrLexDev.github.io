@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,13 +36,30 @@
         }
         .section-title {
             @apply relative text-3xl font-bold mb-4 text-center pb-4;
+            position: relative;
+            font-size: 2.25rem; /* text-4xl */
+            line-height: 2.5rem;
+            font-weight: 800; /* font-extrabold */
+            margin-bottom: 1.5rem; /* mb-6 */
+            padding-bottom: 1.5rem; /* pb-6 */
+            text-align: center;
+            background: linear-gradient(to right, #38BDF8, #38BDF8); /*6366F1*/
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 3rem; /* text-5xl */
+                line-height: 1;
+            }
         }
         .section-title::after {
             content: '';
             position: absolute;
             display: block;
-            width: 80px;
-            height: 4px;
+            width: 120px;
+            height: 5px;
             background: #38BDF8;
             bottom: 0;
             left: 50%;
@@ -51,6 +68,31 @@
         }
         .section-subtitle {
             @apply text-center text-lg text-gray-400 mb-12 max-w-2xl mx-auto;
+            text-align: center;
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.75rem;
+            color: #9CA3AF; /* text-gray-400 */
+            margin-bottom: 3rem; /* mb-12 */
+            max-width: 42rem; /* max-w-2xl */
+            margin-left: auto;
+            margin-right: auto; /* mx-auto */
+        }
+        .timeline-item.break::after {
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .timeline-item.break {
+            text-align: center;
+        }
+        .timeline-item.break .break-label {
+            position: relative;
+            background-color: #111827;
+            color: #38BDF8;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            border: 2px solid #38BDF8;
+            z-index: 2;
         }
         /* Estilos para la línea de tiempo */
         .timeline-container {
@@ -66,9 +108,11 @@
             left: 50%;
             margin-left: -1.5px;
             border-radius: 3px;
+            z-index: -1;
         }
         .timeline-item {
             position: relative;
+            z-index: 1;
         }
         .timeline-item::after {
             content: '';
@@ -88,6 +132,10 @@
         .lang-switcher button {
             color: #38BDF8;
             font-weight: 700;
+        }
+        .lang-switcher button.active {
+            color: white;
+            border-bottom: 2px solid #38BDF8;
         }
     </style>
 </head>
@@ -113,9 +161,9 @@
                 </nav>
                 <!-- Selector de Idioma -->
                 <div class="lang-switcher flex items-center ml-8 space-x-2 text-sm">
-                    <button id="lang-es" class="text-gray-300 hover:text-white font-semibold">ES</button>
+                    <button id="lang-en" class="text-gray-300 hover:text-white font-semibold">English</button>
                     <span class="text-gray-500">|</span>
-                    <button id="lang-en" class="text-gray-300 hover:text-white font-semibold">EN</button>
+                    <button id="lang-es" class="text-gray-300 hover:text-white font-semibold">Español</button>
                 </div>
                 <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none ml-4">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -141,7 +189,7 @@
 <main>
     <!-- Sección Hero -->
     <section id="home"  class="relative min-h-screen flex items-center justify-center text-center bg-cover bg-left-top"
-                        style="background-image: url('img/back.png');">
+                        style="background-image: url('img/back2.png');">
         <div class="absolute inset-0 bg-gray-900 bg-opacity-70"></div>
         <div class="relative z-10 px-6 py-10 isolate">
             <!-- 🔮 Capa #1: blur fuerte, radio pequeño -->
@@ -195,16 +243,16 @@
                 </div>
                 <div class="md:w-2/3 text-lg text-gray-300 space-y-4 text-center md:text-left">
                     <p>
-                        <span data-lang="es">¡Hola! Soy un desarrollador de software con sede en [Tu Ciudad]. Me especializo en el desarrollo de aplicaciones web full-stack, con un fuerte enfoque en el rendimiento, la usabilidad y el diseño limpio.</span>
-                        <span data-lang="en">Hello! I'm a software developer based in [Your City]. I specialize in full-stack web application development, with a strong focus on performance, usability, and clean design.</span>
+                        <span data-lang="es">¡Hola! Soy un programador de videojuegos con base en Castellón, España. Me especializo en desarrollo de videojuegos, con un impulso incansable por dominar tecnologías emergentes y una pasión por escribir código limpio y bien estructurado.</span>
+                        <span data-lang="en">Hello! I’m a game programmer based in Castellón, Spain. I specialize in gameplay programming development, with a relentless drive to master emerging technologies and a passion for writing clean, well-structured code.</span>
                     </p>
                     <p>
-                        <span data-lang="es">Me encanta transformar ideas complejas en realidades digitales. Mi viaje en la programación comenzó con [Cuenta una breve historia], y desde entonces, no he dejado de aprender y explorar nuevas tecnologías.</span>
-                        <span data-lang="en">I love transforming complex ideas into digital realities. My journey in programming began with [Tell a short story], and since then, I haven't stopped learning and exploring new technologies.</span>
+                        <span data-lang="es">Me encanta transformar ideas atrevidas en mundos interactivos. Mi trayectoria en la programación comenzó creando juegos sencillos en Scratch, y desde entonces he estado investigando las tecnologías más recientes, sumergiéndome en nuevos lenguajes y prototipando mecánicas en cada game jam que encuentro.</span>
+                        <span data-lang="en">I love transforming bold ideas into interactive worlds. My journey in programming began doing simple games on Scratch, and ever since, I’ve been looking at the newest technologies, diving into new languages, and prototyping mechanics at every game jam I can find.</span>
                     </p>
                     <p>
-                        <span data-lang="es">Fuera del trabajo, disfruto de [Tu Hobby 1], [Tu Hobby 2] y contribuir a proyectos de código abierto.</span>
-                        <span data-lang="en">Outside of work, I enjoy [Your Hobby 1], [Your Hobby 2], and contributing to open-source projects.</span>
+                        <span data-lang="es">Fuera del código, me puedes encontrar jugando al voleibol o viendo anime, aunque lo más probable es que esté empezando otro proyecto para resolver algún problema ultraespecífico.</span>
+                        <span data-lang="en">Outside of coding, you’ll often catch playing Volleyball or watching anime, but probably I would be starting another project to solve some ultra-specific problem.</span>
                     </p>
                 </div>
             </div>
@@ -267,8 +315,17 @@
                         </div>
                     </div>
                 </div>
+                <!-- Separador Educación -->
+                <div class="timeline-item break flex justify-center mb-12">
+                    <div class="w-full md:w-auto text-center">
+                        <span class="break-label">
+                            <span data-lang="es">Formación Académica</span>
+                            <span data-lang="en">Education</span>
+                        </span>
+                    </div>
+                </div>
                 <!-- Item de la línea de tiempo 3 -->
-                <div class="timeline-item flex md:justify-start md:pl-8 mb-12">
+                <div class="timeline-item flex md:justify-end md:pr-8 mb-12">
                     <div class="w-full md:w-5/12">
                         <div class="glass-effect rounded-lg p-6">
                             <p class="accent-color font-semibold mb-1" data-lang="es">Septiembre 2019 - Junio 2023</p>
@@ -298,7 +355,7 @@
                     </div>
                 </div>
                 <!-- Item de la línea de tiempo 5 -->
-                <div class="timeline-item flex md:justify-start md:pl-8 mb-12">
+                <div class="timeline-item flex md:justify-end md:pr-8 mb-12">
                     <div class="w-full md:w-5/12">
                         <div class="glass-effect rounded-lg p-6">
                             <p class="accent-color font-semibold mb-1" data-lang="es">Septiembre 2017 - Junio 2019</p>
@@ -338,11 +395,11 @@
                     <span class="font-semibold text-white">C++</span>
                 </div>
                 <div class="flex flex-col items-center gap-2 p-4 glass-effect rounded-lg">
-                    <img src="img/unity3d-icon_blue.svg" alt="Logotipo C#" class="h-12 w-12 object-contain" />
+                    <img src="img/unity3d-icon_white.svg" alt="Logotipo C#" class="h-12 w-12 object-contain" />
                     <span class="font-semibold text-white">Unity</span>
                 </div>
                 <div class="flex flex-col items-center gap-2 p-4 glass-effect rounded-lg">
-                    <img src="img/unreal-engine-blue.svg" alt="Logotipo C#" class="h-12 w-12 object-contain" />
+                    <img src="img/unreal-engine-white.svg" alt="Logotipo C#" class="h-12 w-12 object-contain" />
                     <span class="font-semibold text-white">Unreal Engine</span>
                 </div>
                 <div class="flex flex-col items-center gap-2 p-4 glass-effect rounded-lg">
@@ -403,17 +460,17 @@
                 </div>
                 <!-- Proyecto 3 -->
                 <div class="bg-gray-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 shadow-lg">
-                    <img src="https://placehold.co/600x400/1F2937/38BDF8?text=Proyecto+3" alt="Imagen del Proyecto 3" class="w-full h-48 object-cover">
+                    <img src="img/Fractalia.png" alt="Imagen del Proyecto 3" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-white" data-lang="es">Nombre del Proyecto 3</h3>
-                        <h3 class="text-xl font-bold mb-2 text-white" data-lang="en">Project Name 3</h3>
+                        <h3 class="text-xl font-bold mb-2 text-white" data-lang="es">Fractalia</h3>
+                        <h3 class="text-xl font-bold mb-2 text-white" data-lang="en">Fractalia</h3>
                         <p class="text-gray-400 mb-4">
-                            <span data-lang="es">Una breve descripción de tu proyecto. Explica el problema que resuelve y las tecnologías clave utilizadas.</span>
-                            <span data-lang="en">A brief description of your project. Explain the problem it solves and the key technologies used.</span>
+                            <span data-lang="es">Juego en desarrollo en el que exploras varios fractales</span>
+                            <span data-lang="en">Work in progress game in which you explore various fractals</span>
                         </p>
                         <div class="flex space-x-4">
-                            <a href="#" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Ver Demo</span><span data-lang="en">View Demo</span></a>
-                            <a href="#" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Código Fuente</span><span data-lang="en">Source Code</span></a>
+                            <!-- <a href="#" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Ver Demo</span><span data-lang="en">View Demo</span></a> -->
+                            <a href="https://github.com/MrLexDev/Fractalia" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Código Fuente</span><span data-lang="en">Source Code</span></a>
                         </div>
                     </div>
                 </div>
@@ -495,7 +552,7 @@
         langButtons.en.addEventListener('click', () => setLanguage('en'));
 
         // Establecer idioma inicial
-        const savedLang = localStorage.getItem('language') || 'es';
+        const savedLang = localStorage.getItem('language') || 'en';
         setLanguage(savedLang);
     });
 
