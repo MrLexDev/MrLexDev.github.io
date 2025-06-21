@@ -190,7 +190,7 @@
 <main>
     <!-- Sección Hero -->
     <section id="home"  class="relative min-h-screen flex items-center justify-center text-center bg-cover bg-left-top"
-                        style="background-image: url('img/back2.png');">
+                        style="background-image: url('img/back2.webp');">
         <div class="absolute inset-0 bg-gray-900 bg-opacity-70"></div>
         <div class="relative z-10 px-6 py-10 isolate">
             <!-- 🔮 Capa #1: blur fuerte, radio pequeño -->
@@ -214,11 +214,19 @@
                 <span data-lang="es">Desarrollador de Videojuegos. Con experiencia en Unity y Unreal Engine, convirtiendo ideas en experiencias jugables inmersivas. Apasionado por las nuevas tecnologías.</span>
                 <span data-lang="en">Game Developer. With expertise in Unity and Unreal Engine, turning ideas into immersive playable experiences. Passionate about new technologies.</span>
             </p>
-            <div class="flex justify-center space-x-4">
-                <a href="AlejandroGaloCV_NoNum.pdf" download class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105">
-                    <span data-lang="es">Descargar CV</span>
-                    <span data-lang="en">Download CV</span>
-                </a>
+            <div class="flex justify-center space-x-4 items-start">
+                <div class="flex flex-col items-center">
+                    <a id="cvDownload" href="AlejandroGaloCV_NoNum.pdf" download class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105">
+                        <span id="cvButtonTextEs" data-lang="es">Descargar CV</span>
+                        <span id="cvButtonTextEn" data-lang="en">Download CV</span>
+                    </a>
+                    <label class="relative inline-flex items-center cursor-pointer mt-2">
+                        <input type="checkbox" id="cvToggle" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-sky-500 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
+                        <span id="cvLabelEs" class="ml-3 text-sm font-medium text-gray-300" data-lang="es">Versión ATM-friendly</span>
+                        <span id="cvLabelEn" class="ml-3 text-sm font-medium text-gray-300" data-lang="en">ATM-friendly version</span>
+                    </label>
+                </div>
                 <a href="#contact" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105">
                     <span data-lang="es">Contáctame</span>
                     <span data-lang="en">Contact Me</span>
@@ -252,8 +260,8 @@
                         <span data-lang="en">Hello! I’m a game programmer based in Castellón, Spain. I specialize in gameplay programming development, with a relentless drive to master emerging technologies and a passion for writing clean, well-structured code.</span>
                     </p>
                     <p>
-                        <span data-lang="es">Me encanta transformar ideas atrevidas en mundos interactivos. Mi trayectoria en la programación comenzó creando juegos sencillos en Scratch, y desde entonces he estado investigando las tecnologías más recientes, sumergiéndome en nuevos lenguajes y prototipando mecánicas en cada game jam que encuentro.</span>
-                        <span data-lang="en">I love transforming bold ideas into interactive worlds. My journey in programming began doing simple games on Scratch, and ever since, I’ve been looking at the newest technologies, diving into new languages, and prototyping mechanics at every game jam I can find.</span>
+                        <span data-lang="es">Me encanta transformar ideas atrevidas en mundos interactivos. Mi trayectoria en la programación comenzó creando juegos sencillos en Scratch de niño, y desde entonces he estado investigando las tecnologías más recientes, sumergiéndome en nuevos lenguajes y prototipando mecánicas en cada game jam que encuentro.</span>
+                        <span data-lang="en">I love transforming bold ideas into interactive worlds. My journey in programming began doing simple games on Scratch as a kid, and ever since, I’ve been looking at the newest technologies, diving into new languages, and prototyping mechanics at every game jam I can find.</span>
                     </p>
                     <p>
                         <span data-lang="es">Fuera del código, me puedes encontrar jugando al voleibol o viendo anime, aunque lo más probable es que esté empezando otro proyecto para resolver algún problema ultraespecífico.</span>
@@ -444,6 +452,7 @@
                         <div class="flex space-x-4">
                             <a href="https://mrlexdev.itch.io/the-hidden-offering" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Ver Demo</span><span data-lang="en">View Demo</span></a>
                             <a href="https://github.com/alitwicerh/Secrets" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Código Fuente</span><span data-lang="en">Source Code</span></a>
+                            <a href="https://youtu.be/vRdege_J9DA" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Gameplay</span><span data-lang="en">Gameplay</span></a>
                         </div>
                     </div>
                 </div>
@@ -460,6 +469,7 @@
                         <div class="flex space-x-4">
                             <a href="https://ttakeshii.itch.io/engine-wars" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Ver Demo</span><span data-lang="en">View Demo</span></a>
                             <!--<a href="https://github.com/alitwicerh/Secrets" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Código Fuente</span><span data-lang="en">Source Code</span></a> -->
+                            <a href="https://youtu.be/YPu8ssr_1HA" target="_blank" class="text-sky-400 hover:text-sky-300 transition"><span data-lang="es">Gameplay</span><span data-lang="en">Gameplay</span></a>
                         </div>
                     </div>
                 </div>
@@ -592,6 +602,26 @@
             navbar.classList.remove('shadow-lg');
         }
     };
+
+    // --- JS para el toggle de CV ---
+    const cvDownload = document.getElementById('cvDownload');
+    const cvToggle = document.getElementById('cvToggle');
+    const cvButtonTextEs = document.getElementById("cvButtonTextEs");
+    const cvButtonTextEn = document.getElementById("cvButtonTextEn");
+
+    function updateCvLink() {
+        if (cvToggle.checked) {
+            cvDownload.href = "Alejandro_Garcia_GameDev_CV_2025_NoNumber.pdf";
+            cvButtonTextEs.textContent = "Descargar CV ATM - friendly";
+            cvButtonTextEn.textContent = "Download ATM - friendly CV";
+        } else {
+            cvDownload.href = "Alejandro_Garcia_GameDev_CV_2025_Human_NoNumber.pdf";
+            cvButtonTextEs.textContent = "Descargar CV  para humanos";
+            cvButtonTextEn.textContent = "Download Human styled CV";
+        }
+    }
+    cvToggle.addEventListener('change', updateCvLink);
+    updateCvLink();
 </script>
 </body>
 </html>
