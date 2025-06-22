@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="img/logo.png" type="image/svg+xml">
+    <link rel="icon" href="img/logo.svg" type="image/svg+xml">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -58,6 +58,7 @@
         .section-title::after {
             content: '';
             position: absolute;
+            text-align: center; 
             display: block;
             width: 120px;
             height: 5px;
@@ -70,6 +71,7 @@
         .section-subtitle {
             @apply text-center text-lg text-gray-400 mb-12 max-w-2xl mx-auto;
             text-align: center;
+            font-style: italic;
             font-size: 1.125rem; /* text-lg */
             line-height: 1.75rem;
             color: #9CA3AF; /* text-gray-400 */
@@ -612,12 +614,12 @@
     function updateCvLink() {
         if (cvToggle.checked) {
             cvDownload.href = "Alejandro_Garcia_GameDev_CV_2025_NoNumber.pdf";
-            cvButtonTextEs.textContent = "Descargar CV ATM - friendly";
-            cvButtonTextEn.textContent = "Download ATM - friendly CV";
+            cvButtonTextEs.textContent = "Descargar CV ATM-friendly";
+            cvButtonTextEn.textContent = "Download ATM-friendly CV";
         } else {
             cvDownload.href = "Alejandro_Garcia_GameDev_CV_2025_Human_NoNumber.pdf";
-            cvButtonTextEs.textContent = "Descargar CV  para humanos";
-            cvButtonTextEn.textContent = "Download Human styled CV";
+            cvButtonTextEs.textContent = "Descargar CV Tradicional";
+            cvButtonTextEn.textContent = "Download Traditional CV";
         }
     }
     cvToggle.addEventListener('change', updateCvLink);
