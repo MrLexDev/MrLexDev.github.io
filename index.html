@@ -47,7 +47,10 @@
             background: linear-gradient(to right, #38BDF8, #38BDF8); /*6366F1*/
             -webkit-background-clip: text;
             color: transparent;
-            display: inline-block;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
         }
         @media (min-width: 768px) {
             .section-title {
@@ -198,15 +201,15 @@
             <!-- 🔮 Capa #1: blur fuerte, radio pequeño -->
             <div class="absolute inset-0 -z-10 rounded-2xl
                 backdrop-blur-2xl bg-gray-900/60
-                [mask-image:radial-gradient(ellipse_55%_45%_at_center,white_0%,transparent_100%)]
-                [-webkit-mask-image:radial-gradient(ellipse_55%_45%_at_center,white_0%,transparent_100%)]">
+                [mask-image:radial-gradient(ellipse_65%_55%_at_center,white_75%,transparent_100%)]
+                [-webkit-mask-image:radial-gradient(ellipse_65%_55%_at_center,white_0%,transparent_100%)]">
             </div>
 
             <!-- 🔮 Capa #2: blur suave, radio grande -->
             <div class="absolute inset-0 -z-20 rounded-2xl
                 backdrop-blur-lg bg-gray-900/40
-                [mask-image:radial-gradient(ellipse_80%_65%_at_center,white_0%,transparent_100%)]
-                [-webkit-mask-image:radial-gradient(ellipse_80%_65%_at_center,white_0%,transparent_100%)]">
+                [mask-image:radial-gradient(ellipse_90%_75%_at_center,white_0%,transparent_100%)]
+                [-webkit-mask-image:radial-gradient(ellipse_90%_75%_at_center,white_0%,transparent_100%)]">
             </div>
             <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-tight">
                 <span data-lang="es">Hola, soy <span class="accent-color">Alejandro Galo</span></span>
