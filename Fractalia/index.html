@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title" data-lang-es="Fractalia - Demo Jugable" data-lang-en="Fractalia - Playable Demo">Fractalia - Playable Demo</title>
+    <meta id="page-description" name="description" data-lang-es="Explora la demo WebGL del proyecto Fractalia." data-lang-en="Experience the WebGL demo of the Fractalia project." content="Experience the WebGL demo of the Fractalia project.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../img/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../docs/Builds/TemplateData/style.css">
+    <style>
+        #unity-container {
+            position: relative !important;
+            left: auto !important;
+            top: auto !important;
+            transform: none !important;
+            width: 100%;
+        }
+
+        #unity-container.unity-desktop {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #unity-footer {
+            position: relative !important;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        #unity-logo-title-footer {
+            display: none;
+        }
+
+        #unity-fullscreen-button {
+            float: none !important;
+        }
+
+        #unity-build-title {
+            float: none !important;
+            margin-right: 0 !important;
+        }
+
+        #unity-canvas {
+            max-width: 960px;
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 8 / 5;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        #unity-loading-bar {
+            position: absolute !important;
+        }
+    </style>
+</head>
+<body class="antialiased bg-gray-950 text-white">
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect" id="navbar">
+    <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="../" class="text-2xl font-bold text-white">Alejandro Galo</a>
+        <div class="flex items-center gap-6">
+            <a href="../#projects" class="text-gray-300 hover:text-white transition" data-lang="es">Volver al portafolio</a>
+            <a href="../#projects" class="text-gray-300 hover:text-white transition" data-lang="en">Back to portfolio</a>
+            <div class="lang-switcher flex items-center space-x-2 text-sm">
+                <button id="lang-en" class="text-gray-300 hover:text-white font-semibold">English</button>
+                <span class="text-gray-500">|</span>
+                <button id="lang-es" class="text-gray-300 hover:text-white font-semibold">Español</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="pt-32 pb-16">
+    <section class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto text-center mb-12">
+            <h1 class="text-4xl font-extrabold mb-4" data-lang="en">Fractalia Web Demo</h1>
+            <h1 class="text-4xl font-extrabold mb-4" data-lang="es">Demo Web de Fractalia</h1>
+            <p class="text-gray-300" data-lang="en">Interact with the WebGL build of Fractalia directly in your browser. Use the fullscreen button below the canvas for an immersive experience.</p>
+            <p class="text-gray-300" data-lang="es">Interactúa con la versión WebGL de Fractalia directamente en tu navegador. Utiliza el botón de pantalla completa debajo del lienzo para una experiencia inmersiva.</p>
+        </div>
+        <div class="glass-effect rounded-2xl p-4 md:p-8">
+            <div id="unity-container" class="unity-desktop">
+                <canvas id="unity-canvas" width="960" height="600" tabindex="-1"></canvas>
+                <div id="unity-loading-bar">
+                    <div id="unity-logo"></div>
+                    <div id="unity-progress-bar-empty">
+                        <div id="unity-progress-bar-full"></div>
+                    </div>
+                </div>
+                <div id="unity-warning"></div>
+                <div id="unity-footer">
+                    <div id="unity-logo-title-footer"></div>
+                    <div id="unity-fullscreen-button"></div>
+                    <div id="unity-build-title">Fractalia</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="py-8 bg-gray-900/50">
+    <div class="container mx-auto px-6 text-center text-gray-400 text-sm">
+        <p data-lang="en">&copy; <span id="year"></span> Alejandro Galo. All rights reserved.</p>
+        <p data-lang="es">&copy; <span id="year"></span> Alejandro Galo. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.querySelector('#unity-canvas');
+        const buildBasePath = '../docs/Builds';
+        const buildUrl = `${buildBasePath}/Build`;
+        const loaderUrl = `${buildUrl}/00df4871dd873f972b76de35844e0c8e.loader.js`;
+        const config = {
+            arguments: [],
+            dataUrl: `${buildUrl}/363599b3c3f7ee2d30eea67ae5ad6845.data.unityweb`,
+            frameworkUrl: `${buildUrl}/d32f8ffc4b984c81ad3b56e00b54cfdf.framework.js.unityweb`,
+            codeUrl: `${buildUrl}/8ba58f2bf98a6bc6b070b43b839d2331.wasm.unityweb`,
+            streamingAssetsUrl: `${buildBasePath}/StreamingAssets`,
+            companyName: 'LexCorp',
+            productName: 'Fractalis',
+            productVersion: '0.1.0',
+            showBanner: (msg, type) => {
+                const warningBanner = document.querySelector('#unity-warning');
+                const div = document.createElement('div');
+                div.innerHTML = msg;
+                if (type === 'error') {
+                    div.style = 'background: red; padding: 10px;';
+                } else {
+                    if (type === 'warning') {
+                        div.style = 'background: yellow; padding: 10px;';
+                    }
+                    setTimeout(() => {
+                        warningBanner.removeChild(div);
+                        warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+                    }, 5000);
+                }
+                warningBanner.appendChild(div);
+                warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+            },
+        };
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            const meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+            document.head.appendChild(meta);
+            document.querySelector('#unity-container').className = 'unity-mobile';
+            canvas.className = 'unity-mobile';
+        } else {
+            canvas.style.width = '100%';
+            canvas.style.height = 'auto';
+            canvas.style.aspectRatio = '8 / 5';
+        }
+
+        document.querySelector('#unity-loading-bar').style.display = 'block';
+
+        const script = document.createElement('script');
+        script.src = loaderUrl;
+        script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+                document.querySelector('#unity-progress-bar-full').style.width = `${100 * progress}%`;
+            }).then((unityInstance) => {
+                document.querySelector('#unity-loading-bar').style.display = 'none';
+                document.querySelector('#unity-fullscreen-button').onclick = () => {
+                    unityInstance.SetFullscreen(1);
+                };
+            }).catch((message) => {
+                alert(message);
+            });
+        };
+        document.body.appendChild(script);
+    });
+</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
