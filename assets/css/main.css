@@ -145,3 +145,31 @@ body {
 .lang-hidden {
     display: none !important;
 }
+
+.project-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 30px -15px rgba(56, 189, 248, 0.4);
+}
+
+.project-image-wrapper {
+    display: block;
+    overflow: hidden;
+}
+
+.project-image {
+    transition: transform 0.4s ease;
+}
+
+.project-image-wrapper:hover .project-image,
+.project-image-wrapper:focus-visible .project-image {
+    transform: scale(1.08);
+}
+
+.project-image-wrapper:focus-visible {
+    outline: 2px solid #38BDF8;
+    outline-offset: 3px;
+}
