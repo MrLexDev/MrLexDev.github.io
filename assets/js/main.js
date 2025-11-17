@@ -78,20 +78,22 @@ const initMobileMenuToggle = () => {
 
 const initNavbarShadow = () => {
     const navbar = document.getElementById('navbar');
-    if (!navbar) {
-        return;
-    }
+    if (!navbar) return;
 
-    const toggleShadow = () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('shadow-lg');
-        } else {
-            navbar.classList.remove('shadow-lg');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-lg');
+                } else {
+                    navbar.classList.remove('shadow-lg');
+                }
+                ticking = false;
+            });
+            ticking = true;
         }
-    };
-
-    window.addEventListener('scroll', toggleShadow);
-    toggleShadow();
+    });
 };
 
 const setCurrentYear = () => {
@@ -117,15 +119,15 @@ const initCvToggle = () => {
             es: 'Descargar CV Tradicional',
             en: 'Download Traditional CV',
         },
-        atm: {
+        ats: {
             href: 'Alejandro_Garcia_GameDev_CV_2025_NoNumber.pdf',
-            es: 'Descargar CV ATM-friendly',
-            en: 'Download ATM-friendly CV',
+            es: 'Descargar CV ATS-friendly',
+            en: 'Download ATS-friendly CV',
         },
     };
 
     const updateCvLink = () => {
-        const option = cvToggle.checked ? labels.atm : labels.traditional;
+        const option = cvToggle.checked ? labels.ats : labels.traditional;
         cvDownload.href = option.href;
         cvButtonTextEs.textContent = option.es;
         cvButtonTextEn.textContent = option.en;
