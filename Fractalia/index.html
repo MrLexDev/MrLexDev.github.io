@@ -1,15 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title" data-lang-es="Fractalia - Demo Jugable" data-lang-en="Fractalia - Playable Demo">Fractalia - Playable Demo</title>
-    <meta id="page-description" name="description" data-lang-es="Explora la demo WebGL del proyecto Fractalia." data-lang-en="Experience the WebGL demo of the Fractalia project." content="Experience the WebGL demo of the Fractalia project.">
+    <title id="page-title" data-i18n="fractalia.title">Fractalia - Playable Demo</title>
+    <meta id="page-description" name="description" data-i18n="fractalia.desc"
+        content="Experience the WebGL demo of the Fractalia project.">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="../img/QuasarLogoV2.svg" type="image/svg+xml">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        tech: {
+                            bg: '#0f172a',
+                            surface: '#1e293b',
+                            primary: '#38bdf8',
+                            secondary: '#6366f1',
+                            text: '#f8fafc',
+                            muted: '#94a3b8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <link rel="stylesheet" href="../assets/css/main.css">
     <style>
         .iframe-wrapper {
@@ -37,59 +68,101 @@
         }
     </style>
 </head>
-<body class="antialiased bg-gray-950 text-white">
-<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect" id="navbar">
-    <div class="container mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="../index.html" class="flex items-center space-x-3 text-2xl font-bold text-white">
-            <img src="../img/QuasarLogoV2.svg" alt="Alejandro Galo logo" class="w-10 h-10">
-            <span>Alejandro Galo</span>
-        </a>
-        <div class="flex items-center gap-6">
-            <a href="../#projects" class="text-gray-300 hover:text-white transition" data-lang="es">Volver al portafolio</a>
-            <a href="../#projects" class="text-gray-300 hover:text-white transition" data-lang="en">Back to portfolio</a>
-            <div class="lang-switcher flex items-center space-x-2 text-sm">
-                <button id="lang-en" class="text-gray-300 hover:text-white font-semibold">English</button>
-                <span class="text-gray-500">|</span>
-                <button id="lang-es" class="text-gray-300 hover:text-white font-semibold">Español</button>
+
+<body class="antialiased bg-tech-bg text-white">
+
+    <!-- Canvas para animación de fondo -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 top-0 start-0 border-b border-gray-800/50 bg-tech-bg/90 backdrop-blur-md transition-all duration-300"
+        id="navbar">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <div class="w-10 h-10 flex items-center justify-center">
+                    <!-- Usando logo SVG para transparencia -->
+                    <img src="../img/QuasarLogoV2.png" alt="Logo" class="w-full h-full object-contain">
+                </div>
+                <span
+                    class="self-center text-xl font-display font-bold whitespace-nowrap text-white tracking-tight">ALEJANDRO<span
+                        class="text-tech-primary">GARCIA</span></span>
+            </a>
+
+            <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                <!-- Botón de Idioma -->
+                <button id="lang-toggle"
+                    class="flex items-center gap-2 px-3 py-1 text-sm font-medium text-white bg-slate-800 hover:bg-slate-700 rounded-full border border-slate-600 transition-colors mr-2">
+                    <i class="fa-solid fa-globe text-tech-primary"></i>
+                    <span id="current-lang-text">EN</span>
+                </button>
+
+                <button data-collapse-toggle="navbar-sticky" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-800 focus:outline-none"
+                    aria-controls="navbar-sticky" aria-expanded="false" id="menu-toggle">
+                    <span class="sr-only">Abrir menú</span>
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                <ul
+                    class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-800 rounded-lg bg-gray-900/50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
+                    <li><a href="../index.html#home"
+                            class="block py-2 px-3 text-white hover:text-tech-primary md:p-0 transition-colors"
+                            data-i18n="nav.home">Home</a></li>
+                    <li><a href="../index.html#about"
+                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
+                            data-i18n="nav.about">About</a></li>
+                    <li><a href="../index.html#experience"
+                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
+                            data-i18n="nav.exp">Experience</a></li>
+                    <li><a href="../index.html#skills"
+                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
+                            data-i18n="nav.skills">Skills</a></li>
+                    <li><a href="../index.html#projects"
+                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
+                            data-i18n="nav.projects">Projects</a></li>
+                    <li><a href="../index.html#contact" class="block py-2 px-3 text-tech-primary md:p-0 font-bold"
+                            data-i18n="nav.contact">Contact</a></li>
+                </ul>
             </div>
         </div>
-    </div>
-</header>
+    </nav>
 
-<main class="pt-32 pb-16">
-    <section class="container mx-auto px-6">
-        <div class="max-w-4xl mx-auto text-center mb-12">
-            <h1 class="text-4xl font-extrabold mb-4" data-lang="en">Fractalia Web Demo</h1>
-            <h1 class="text-4xl font-extrabold mb-4" data-lang="es">Demo Web de Fractalia</h1>
-            <p class="text-gray-300" data-lang="en">Interact with the Fractalia demo hosted on itch.io directly in your browser. For the best experience, expand the embed below or open it in a new tab.</p>
-            <p class="text-gray-300" data-lang="es">Interactúa con la demo de Fractalia alojada en itch.io directamente en tu navegador. Para la mejor experiencia, expande el embed de abajo o ábrela en una nueva pestaña.</p>
-        </div>
-        <div class="glass-effect rounded-2xl p-4 md:p-8">
-            <div class="space-y-6">
-                <div class="iframe-wrapper">
-                    <iframe
-                        src="https://itch.io/embed-upload/15571351?color=333333"
-                        title="Fractalia on itch.io"
-                        loading="lazy"
-                    ></iframe>
-                </div>
-                
-                <div class="text-sm text-gray-400 space-y-2">
-                    <p data-lang="en">If the embed does not load, you can <a href="https://mrlexdev.itch.io/fractalia" target="_blank" rel="noopener" class="text-purple-300 hover:text-purple-200 underline">play Fractalia directly on itch.io</a>.</p>
-                    <p data-lang="es">Si el embed no carga, puedes <a href="https://mrlexdev.itch.io/fractalia" target="_blank" rel="noopener" class="text-purple-300 hover:text-purple-200 underline">jugar Fractalia directamente en itch.io</a>.</p>
+    <main class="pt-32 pb-16 relative z-10">
+        <section class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 text-white" data-i18n="fractalia.title">
+                    Fractalia Web Demo</h1>
+                <p class="text-tech-muted text-lg" data-i18n="fractalia.desc">Interact with the Fractalia demo hosted on
+                    itch.io directly in your browser. For the best experience, expand the embed below or open it in a
+                    new tab.</p>
+            </div>
+            <div
+                class="glass-effect rounded-2xl p-4 md:p-8 border border-slate-800 bg-tech-surface/30 backdrop-blur-md shadow-2xl">
+                <div class="space-y-6">
+                    <div class="iframe-wrapper shadow-lg rounded-xl overflow-hidden border border-slate-700">
+                        <iframe src="https://itch.io/embed-upload/15571351?color=333333" title="Fractalia on itch.io"
+                            loading="lazy"></iframe>
+                    </div>
+
+                    <div class="text-sm text-tech-muted space-y-2 text-center">
+                        <p data-i18n="fractalia.fallback">If the embed does not load, you can <a
+                                href="https://mrlexdev.itch.io/fractalia" target="_blank" rel="noopener"
+                                class="text-tech-primary hover:underline">play Fractalia directly on itch.io</a>.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
 
-<footer class="py-8 bg-gray-900/50">
-    <div class="container mx-auto px-6 text-center text-gray-400 text-sm">
-        <p data-lang="en">&copy; <span id="year"></span> Alejandro Galo. All rights reserved.</p>
-        <p data-lang="es">&copy; <span id="year"></span> Alejandro Galo. Todos los derechos reservados.</p>
-    </div>
-</footer>
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-950 text-center border-t border-slate-900 relative z-10">
+        <p class="text-slate-600 text-sm">&copy; 2025 Alejandro Garcia. <span data-i18n="footer">All rights
+                reserved.</span></p>
+    </footer>
 
-<script src="../assets/js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
 </body>
+
 </html>

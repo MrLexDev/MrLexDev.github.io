@@ -1,175 +1,72 @@
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #111827;
-    color: #E5E7EB;
-}
-
-.glass-effect {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.accent-color {
-    color: #38BDF8;
-}
-
-.accent-bg {
-    background-color: #38BDF8;
-}
-
-.accent-border {
-    border-color: #38BDF8;
-}
-
-.section-title {
+    background-color: #0f172a;
+    color: #f8fafc;
+    overflow-x: hidden;
     position: relative;
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    text-align: center;
-    background: linear-gradient(to right, #38BDF8, #38BDF8);
-    -webkit-background-clip: text;
-    color: transparent;
-    display: block;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+    /* Necesario para el canvas absoluto */
+    min-height: 100vh;
 }
 
-@media (min-width: 768px) {
-    .section-title {
-        font-size: 3rem;
-        line-height: 1;
-    }
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    width: 120px;
-    height: 5px;
-    background: #38BDF8;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 2px;
-}
-
-.section-subtitle {
-    text-align: center;
-    font-style: italic;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    color: #9CA3AF;
-    margin-bottom: 3rem;
-    max-width: 42rem;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.timeline-container {
-    position: relative;
-}
-
-.timeline-container::after {
-    content: '';
-    position: absolute;
-    width: 3px;
-    background-color: #374151;
+#bg-canvas {
+    position: fixed;
     top: 0;
-    bottom: 0;
-    left: 50%;
-    margin-left: -1.5px;
-    border-radius: 3px;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
+    /* Detrás de todo el contenido */
+    opacity: 0.6;
+    pointer-events: none;
+    /* Permite hacer clic a través del canvas */
 }
 
-.timeline-item {
-    position: relative;
-    z-index: 1;
+.text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, #38bdf8, #6366f1);
 }
 
-.timeline-item::after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    background-color: #111827;
-    border: 3px solid #38BDF8;
-    top: 10px;
-    border-radius: 50%;
-    z-index: 1;
-    left: 50%;
-    transform: translateX(-50%);
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-.timeline-item.break {
-    text-align: center;
+::-webkit-scrollbar-track {
+    background: #0f172a;
 }
 
-.timeline-item.break::after {
-    top: 50%;
-    transform: translate(-50%, -50%);
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
 }
 
-.timeline-item.break .break-label {
-    position: relative;
-    background-color: #111827;
-    color: #38BDF8;
-    padding: 0.5rem 1rem;
-    border-radius: 9999px;
-    font-weight: 700;
-    border: 2px solid #38BDF8;
-    z-index: 2;
+::-webkit-scrollbar-thumb:hover {
+    background: #38bdf8;
 }
 
-.lang-switcher button {
-    color: #38BDF8;
-    font-weight: 700;
+/* Clase para el efecto imán */
+.magnet-trigger {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.lang-switcher button.active {
-    color: #ffffff;
-    border-bottom: 2px solid #38BDF8;
-}
-
-.hero-section {
-    background-image: url('../../img/back2.webp');
-    background-size: cover;
-    background-position: left top;
-}
-
-.lang-hidden {
-    display: none !important;
-}
-
-.project-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 30px -15px rgba(56, 189, 248, 0.4);
-}
-
-.project-image-wrapper {
-    display: block;
-    overflow: hidden;
+/* Efecto de zoom en imagen al hacer hover en la tarjeta del proyecto */
+.project-card:hover .project-image {
+    transform: scale(1.05);
 }
 
 .project-image {
-    transition: transform 0.4s ease;
+    transition: transform 0.5s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.project-image-wrapper:hover .project-image,
-.project-image-wrapper:focus-visible .project-image {
-    transform: scale(1.08);
-}
-
-.project-image-wrapper:focus-visible {
-    outline: 2px solid #38BDF8;
-    outline-offset: 3px;
+/* Aseguramos que la imagen no se salga del contenedor al hacer zoom */
+.project-image-container {
+    overflow: hidden;
+    position: relative;
+    height: 12rem;
+    /* h-48 de Tailwind */
+    display: block;
+    /* Para que el enlace ocupe todo el espacio */
 }
