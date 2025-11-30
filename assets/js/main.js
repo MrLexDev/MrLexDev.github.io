@@ -295,7 +295,7 @@ const translations = {
         footer: "Todos los derechos reservados.",
         fractalia: {
             title: "Demo Web de Fractalia",
-            desc: "Interactúa con la demo de Fractalia alojada en itch.io directamente en tu navegador. Para la mejor experiencia, expande el embed de abajo o ábrela en una nueva pestaña.",
+            desc: "Interactúa con la demo de Fractalia alojada en itch.io directamente en tu navegador (puede tardar unos minutos en cargar). Para la mejor experiencia, expande el embed de abajo o ábrela en una nueva pestaña (en monitores de alta resolución se recomienda abrir en pantalla completa en la página web de itch.io).",
             fallback: "Si el embed no carga, puedes <a href='https://mrlexdev.itch.io/fractalia' target='_blank' rel='noopener' class='text-tech-primary hover:underline'>jugar Fractalia directamente en itch.io</a>."
         }
     },
@@ -355,7 +355,7 @@ const translations = {
         footer: "All rights reserved.",
         fractalia: {
             title: "Fractalia Web Demo",
-            desc: "Interact with the Fractalia demo hosted on itch.io directly in your browser. For the best experience, expand the embed below or open it in a new tab.",
+            desc: "Interact with the Fractalia demo hosted on itch.io directly in your browser (it may take a few minutes to load). For the best experience, expand the embed below or open it in a new tab (on high resolution monitors is recommended to open full screen on the itch.io web).",
             fallback: "If the embed does not load, you can <a href='https://mrlexdev.itch.io/fractalia' target='_blank' rel='noopener' class='text-tech-primary hover:underline'>play Fractalia directly on itch.io</a>."
         }
     }
