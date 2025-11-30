@@ -35,7 +35,8 @@ let mouse = {
 // Estado del "Imán" (Magnet)
 let magnetState = {
     active: false,
-    rect: null // Guardará las coordenadas de la tarjeta hovereada
+    element: null, // Guardará el elemento hovereado
+    rect: null // Guardará las coordenadas actualizadas cada frame
 };
 
 window.addEventListener('mousemove', (event) => {
@@ -49,22 +50,17 @@ function setupMagnetTriggers() {
     triggers.forEach(trigger => {
         trigger.addEventListener('mouseenter', () => {
             magnetState.active = true;
-            magnetState.rect = trigger.getBoundingClientRect();
+            magnetState.element = trigger;
         });
         trigger.addEventListener('mouseleave', () => {
             magnetState.active = false;
-            magnetState.rect = null;
+            magnetState.element = null;
         });
     });
 }
 
-// Actualizar coordenadas del imán al hacer scroll
-window.addEventListener('scroll', () => {
-    if (magnetState.active) {
-        // Forzar reset temporal para evitar coordenadas desfasadas
-        magnetState.active = false;
-    }
-});
+// Actualizar coordenadas del imán al hacer scroll - ELIMINADO para permitir recalculo dinámico
+// window.addEventListener('scroll', () => { ... });
 
 class Particle {
     constructor(x, y, directionX, directionY, size, color) {
@@ -209,6 +205,11 @@ function animate() {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
     }
 
+    // OPTIMIZACIÓN: Calcular posición del imán una vez por frame
+    if (magnetState.active && magnetState.element) {
+        magnetState.rect = magnetState.element.getBoundingClientRect();
+    }
+
     for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
     }
@@ -218,9 +219,12 @@ function animate() {
 // Eventos de ventana
 window.addEventListener('resize', resizeCanvas);
 
-window.addEventListener('mouseout', () => {
-    mouse.x = undefined;
-    mouse.y = undefined;
+window.addEventListener('mouseout', (event) => {
+    // Solo resetear si el mouse sale de la ventana (no si entra a un hijo)
+    if (!event.relatedTarget && !event.toElement) {
+        mouse.x = undefined;
+        mouse.y = undefined;
+    }
 });
 
 // Inicialización segura
@@ -253,7 +257,7 @@ const translations = {
             title: "Sobre",
             title_span: "Mí",
             p1: "Hola, soy Alejandro. Soy un Programador de Gameplay con base en Castellón, España. Mi viaje comenzó creando juegos simples en Scratch, y ahora envío builds semanales para prototipos multijugador complejos.",
-            p2: "Tengo experiencia porteando títulos como 'Sea Horizon' a PS4, PS5 y Xbox. Me impulsa dominar tecnologías emergentes y escribir código limpio. He mejorado los tiempos de QA un 40% y aumentado los FPS un 15% mediante optimización.",
+            p2: "Tengo experiencia porteando títulos como 'Sea Horizon' a PS4, PS5 y Xbox. Me impulsa dominar tecnologías emergentes y escribir código limpio. He mejorado los tiempos de QA un 95% y aumentado los FPS un 15% mediante optimización.",
             check1: "Portabilidad Consolas (PS/Xbox)",
             check2: "Optimización de Rendimiento",
             check3: "Redes Multijugador",
@@ -264,7 +268,7 @@ const translations = {
             title_span: "Trayectoria",
             item1_role: "Unity Developer",
             item1_date: "Dic 2024 - Presente",
-            item1_desc: "Desarrollo de sistemas de trucos acelerando el QA un 40%. Creación de herramientas de localización reduciendo la iteración un 60%. Implementación de sistemas de encuentros basados en datos para <a href='https://riseoftheoverlords.com/' target='_blank' class='text-tech-primary hover:underline'>Rise of the Overlords</a>.",
+            item1_desc: "Desarrollo de sistemas de trucos acelerando el QA un 95%. Creación de herramientas de localización reduciendo la iteración un 60%. Implementación de sistemas de encuentros basados en datos para <a href='https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/' target='_blank' class='text-tech-primary hover:underline'>Rise of the Overlords</a>.",
             item2_role: "Unreal Developer",
             item2_date: "Ene 2023 - Nov 2024",
             item2_desc: "Creación de un Battle Royale de 100 jugadores en UE5. Portabilidad de <a href='https://catnessgames.com/es/juegos/sea-horizon/' target='_blank' class='text-tech-primary hover:underline'>Sea Horizon</a> a consolas. Migración a UE 5.3 con ganancia de +15% FPS. Sistemas de inventario replicados.",
@@ -313,7 +317,7 @@ const translations = {
             title: "About",
             title_span: "Me",
             p1: "Hi, I'm Alejandro. I am a Gameplay Programmer based in Castellón, Spain. My journey started with creating simple games in Scratch, and now I'm shipping weekly builds for complex multiplayer prototypes.",
-            p2: "I have experience porting titles like 'Sea Horizon' to PS4, PS5, and Xbox. I am driven by mastering emerging technologies and writing clean, maintainable code. I've improved QA turnaround times by 40% and boosted frame rates by 15% through optimization.",
+            p2: "I have experience porting titles like 'Sea Horizon' to PS4, PS5, and Xbox. I am driven by mastering emerging technologies and writing clean, maintainable code. I've improved QA turnaround times by 95% and boosted frame rates by 15% through optimization.",
             check1: "Console Porting (PS/Xbox)",
             check2: "Performance Optimization",
             check3: "Multiplayer Networking",
@@ -324,7 +328,7 @@ const translations = {
             title_span: "Journey",
             item1_role: "Unity Developer",
             item1_date: "Dec 2024 - Present",
-            item1_desc: "Built in-game Cheat Systems accelerating QA by 40%. Developed localization tools cutting iteration time by 60%. Implemented data-driven encounter systems for <a href='https://riseoftheoverlords.com/' target='_blank' class='text-tech-primary hover:underline'>Rise of the Overlords</a>.",
+            item1_desc: "Built in-game Cheat Systems accelerating QA by 95%. Developed localization tools cutting iteration time by 60%. Implemented data-driven encounter systems for <a href='https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/' target='_blank' class='text-tech-primary hover:underline'>Rise of the Overlords</a>.",
             item2_role: "Unreal Developer",
             item2_date: "Jan 2023 - Nov 2024",
             item2_desc: "Built a 100-player battle-royale in UE5. Ported <a href='https://catnessgames.com/games/sea-horizon/' target='_blank' class='text-tech-primary hover:underline'>Sea Horizon</a> to PS4, PS5, and Xbox. Migrated projects to UE 5.3 yielding +15% FPS gain. Implemented replicated inventory systems.",
