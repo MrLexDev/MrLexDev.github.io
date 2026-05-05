@@ -246,32 +246,32 @@ const translations = {
     es: {
         nav: { home: "Inicio", about: "Sobre Mí", exp: "Trayectoria", skills: "Habilidades", projects: "Proyectos", contact: "Contacto" },
         hero: {
-            role: "Programador de Gameplay",
-            title_prefix: "Creando Experiencias",
-            title_suffix: "De Juego Inmersivas",
-            desc: "Transformo conceptos complejos en mecánicas jugables y código eficiente. Especializado en Unity y Unreal Engine con un enfoque en optimización y portabilidad a consolas.",
+            role: "Technical Designer",
+            title_prefix: "Diseñando Sistemas de",
+            title_suffix: "Juego Sistémicos",
+            desc: "Diseño y programo piezas de software modulares, sistemas y mecánicas de juego. Especializado en Unity y Unreal Engine, construyendo arquitecturas limpias para empoderar a los equipos de diseño.",
             cta_cv: "Descargar CV",
             cta_contact: "Contactar"
         },
         about: {
             title: "Sobre",
             title_span: "Mí",
-            p1: "Hola, soy Alejandro. Soy un Programador de Gameplay con base en Castellón, España. Mi viaje comenzó creando juegos simples en Scratch, y ahora envío builds semanales para prototipos multijugador complejos.",
-            p2: "Tengo experiencia porteando títulos como 'Sea Horizon' a PS4, PS5 y Xbox. Me impulsa dominar tecnologías emergentes y escribir código limpio. He mejorado los tiempos de QA un 95% y aumentado los FPS un 15% mediante optimización.",
-            check1: "Portabilidad Consolas (PS/Xbox)",
-            check2: "Optimización de Rendimiento",
-            check3: "Redes Multijugador",
-            check4: "Desarrollo de Herramientas"
+            p1: "Hola, soy Alejandro. Technical Designer y Gameplay Programmer con base en Castellón, España. Me enfoco en la creación de herramientas, arquitecturas de sistemas y optimización de pipelines para mejorar la forma en la que diseñamos juegos.",
+            p2: "Me apasiona construir frameworks sistémicos y modulares que agilicen el desarrollo. He desarrollado herramientas y plugins que reducen la iteración un 95% y sistemas en red listos para multijugador.",
+            check1: "Arquitectura de Sistemas Modulares",
+            check2: "Diseño y Tooling para Motores",
+            check3: "Frameworks Multijugador",
+            check4: "Mecánicas Sistémicas"
         },
         exp: {
             title: "Mi",
             title_span: "Trayectoria",
-            item1_role: "Unity Developer",
+            item1_role: "Technical Designer & Unity Developer",
             item1_date: "Dic 2024 - Presente",
-            item1_desc: "Desarrollo de sistemas de trucos acelerando el QA un 95%. Creación de herramientas de localización reduciendo la iteración un 60%. Implementación de sistemas de encuentros basados en datos para <a href='https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/' target='_blank' class='text-tech-primary hover:underline'>Rise of the Overlords</a>.",
+            item1_desc: "Desarrollo de un sistema de trucos sistémico acelerando el QA un 95%. Creación de sistemas de datos modulares para encuentros y mecánicas de combate, empoderando al equipo de diseño en <a href='https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/' target='_blank' class='text-tech-primary hover:underline'>Rise of the Overlords</a>.",
             item2_role: "Unreal Developer",
             item2_date: "Ene 2023 - Nov 2024",
-            item2_desc: "Creación de un Battle Royale de 100 jugadores en UE5. Portabilidad de <a href='https://catnessgames.com/es/juegos/sea-horizon/' target='_blank' class='text-tech-primary hover:underline'>Sea Horizon</a> a consolas. Migración a UE 5.3 con ganancia de +15% FPS. Sistemas de inventario replicados.",
+            item2_desc: "Arquitectura de red modular y escalable para un Battle Royale de 100 jugadores en UE5. Diseño e implementación de un sistema de inventario replicado y altamente modular. Optimización de sistemas y portabilidad.",
             item3_role: "Grado en Diseño y Desarrollo de Videojuegos",
             item3_date: "Sep 2019 - Jun 2023",
             item3_desc: "Formación especializada en diseño, programación y gráficos. Incluye concentración en Ingeniería de Software (2020-2021)."
@@ -283,8 +283,8 @@ const translations = {
         projects: {
             title: "Proyectos",
             title_span: "Destacados",
-            p1_desc: "Juego de exploración fractal generado proceduralmente. Implementación de algoritmos de raymarching personalizados en shaders de Unity usando HLSL para geometrías complejas en tiempo real.",
-            p2_desc: "Experiencia de sigilo narrativo creada en 48h para la Game Off jam. Scripting de gameplay y lógica visual usando Blueprints y C++ en UE5.",
+            p1_desc: "Framework sistémico donde los jugadores exploran espacios fractales generados proceduralmente. Implementación de algoritmos de raymarching en shaders de Unity usando HLSL.",
+            p2_desc: "Experiencia de sigilo narrativo sistémico creada en 48h para la Game Off jam. Integración de sistemas y lógica visual usando una mezcla limpia de Blueprints y C++ en UE5.",
             p3_desc: "Un juego único con niveles peculiares y jugabilidad dispar en mundos diversos. Desarrollado con herramientas 'obsoletas' en un entorno distópico.",
             btn: "Ver Detalles",
             btn_demo: "Jugar Demo"
@@ -306,32 +306,32 @@ const translations = {
     en: {
         nav: { home: "Home", about: "About Me", exp: "Career", skills: "Skills", projects: "Projects", contact: "Contact" },
         hero: {
-            role: "Gameplay Programmer",
-            title_prefix: "Building Immersive",
-            title_suffix: "Game Experiences",
-            desc: "I transform complex concepts into playable mechanics and efficient code. Specialized in Unity and Unreal Engine with a focus on optimization and console porting.",
+            role: "Technical Designer",
+            title_prefix: "Architecting Systemic",
+            title_suffix: "Game Mechanics",
+            desc: "I design and program modular pieces of software, game systems, and mechanics. Specialized in Unity and Unreal Engine, building clean architectures to empower design teams.",
             cta_cv: "Download CV",
             cta_contact: "Contact Me"
         },
         about: {
             title: "About",
             title_span: "Me",
-            p1: "Hi, I'm Alejandro. I am a Gameplay Programmer based in Castellón, Spain. My journey started with creating simple games in Scratch, and now I'm shipping weekly builds for complex multiplayer prototypes.",
-            p2: "I have experience porting titles like 'Sea Horizon' to PS4, PS5, and Xbox. I am driven by mastering emerging technologies and writing clean, maintainable code. I've improved QA turnaround times by 95% and boosted frame rates by 15% through optimization.",
-            check1: "Console Porting (PS/Xbox)",
-            check2: "Performance Optimization",
-            check3: "Multiplayer Networking",
-            check4: "Tool Development"
+            p1: "Hi, I'm Alejandro. A Technical Designer and Gameplay Programmer based in Castellón, Spain. My focus is on tooling, system architecture, and pipeline optimization to shape the way we build games.",
+            p2: "I am passionate about building systemic, modular frameworks that streamline development. I've developed custom editor plugins cutting iteration times by 95% and engineered robust, network-ready systems for multiplayer environments.",
+            check1: "Modular System Architecture",
+            check2: "Engine Tooling & Editor Plugins",
+            check3: "Multiplayer Frameworks",
+            check4: "Systemic Mechanics"
         },
         exp: {
             title: "My",
             title_span: "Journey",
-            item1_role: "Unity Developer",
+            item1_role: "Technical Designer & Unity Developer",
             item1_date: "Dec 2024 - Present",
-            item1_desc: "Built in-game Cheat Systems accelerating QA by 95%. Developed localization tools cutting iteration time by 60%. Implemented data-driven encounter systems for <a href='https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/' target='_blank' class='text-tech-primary hover:underline'>Rise of the Overlords</a>.",
+            item1_desc: "Developed a systemic Cheat System accelerating QA by 95%. Architected a data-driven, modular encounter design tool, empowering level designers for <a href='https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/' target='_blank' class='text-tech-primary hover:underline'>Rise of the Overlords</a>.",
             item2_role: "Unreal Developer",
             item2_date: "Jan 2023 - Nov 2024",
-            item2_desc: "Built a 100-player battle-royale in UE5. Ported <a href='https://catnessgames.com/games/sea-horizon/' target='_blank' class='text-tech-primary hover:underline'>Sea Horizon</a> to PS4, PS5, and Xbox. Migrated projects to UE 5.3 yielding +15% FPS gain. Implemented replicated inventory systems.",
+            item2_desc: "Engineered scalable, modular networking architecture for a 100-player battle-royale in UE5. Designed a highly-modular replicated inventory framework. Optimized core systems and maintained integrity across console platforms.",
             item3_role: "BSc, Design and Development of Videogames",
             item3_date: "Sep 2019 - Jun 2023",
             item3_desc: "Specialized training in game design, programming, and graphics. Included a concentration in Software Engineering (2020-2021)."
@@ -343,8 +343,8 @@ const translations = {
         projects: {
             title: "Featured",
             title_span: "Projects",
-            p1_desc: "Procedurally generated fractal exploration game. Implemented custom raymarching algorithms in Unity shaders using HLSL to render complex geometries in real-time.",
-            p2_desc: "Narrative-stealth experience created in 48h for Game Off jam. Handled gameplay scripting and visual logic using Blueprints and C++ in UE5.",
+            p1_desc: "A systemic framework where players explore procedurally generated fractal spaces. Implemented custom raymarching algorithms in Unity shaders using HLSL.",
+            p2_desc: "Systemic narrative-stealth experience created in 48h for Game Off jam. Handled gameplay scripting and systems integration using a clean mix of Blueprints and C++ in UE5.",
             p3_desc: "A unique game featuring quirky levels with mismatched gameplay across diverse worlds. Developed using obsolete tools in a dystopian setting.",
             btn: "View Details",
             btn_demo: "Play Demo"
