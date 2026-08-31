@@ -1,405 +1,420 @@
-// --- 1. Lógica del Menú Móvil ---
+// ==========================================
+// CINEMATIC DARK STUDIO — SCRIPT ENGINE
+// ==========================================
+
+// --- 1. Theme Management (Dark / Light) ---
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+
+function getPreferredTheme() {
+  const storedTheme = localStorage.getItem('app-theme');
+  if (storedTheme) return storedTheme;
+  return 'dark'; // Option B default is dark
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('app-theme', theme);
+  
+  const icon = theme === 'dark' ? '☀' : '☾';
+  if (themeToggleBtn) themeToggleBtn.textContent = icon;
+  if (themeToggleMobile) themeToggleMobile.textContent = icon;
+}
+
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  });
+}
+
+if (themeToggleMobile) {
+  themeToggleMobile.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  });
+}
+
+// Initial theme setup
+setTheme(getPreferredTheme());
+
+
+// --- 2. Mobile Menu Navigation ---
 const menuToggle = document.getElementById('menu-toggle');
-const navbarSticky = document.getElementById('navbar-sticky');
+const mobileMenu = document.getElementById('mobile-menu');
 
-if (menuToggle && navbarSticky) {
-    menuToggle.addEventListener('click', () => {
-        navbarSticky.classList.toggle('hidden');
+if (menuToggle && mobileMenu) {
+  menuToggle.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  // Close menu when clicking nav links
+  const mobileLinks = mobileMenu.querySelectorAll('a');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
     });
+  });
 }
 
-// --- 2. Lógica del Canvas Interactivo y MAGNETISMO ---
-const canvas = document.getElementById('bg-canvas');
-let ctx;
-if (canvas) {
-    ctx = canvas.getContext('2d');
-}
-let particlesArray;
 
-// Función para ajustar el tamaño del canvas
-function resizeCanvas() {
-    if (!canvas) return;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    // Recalculate mouse radius if needed
-    mouse.radius = (canvas.height / 100) * (canvas.width / 100);
-    init();
-}
+// --- 3. CV Dropdown ---
+const cvDropdowns = document.querySelectorAll('[data-cv-dropdown]');
 
-let mouse = {
-    x: null,
-    y: null,
-    radius: canvas ? (canvas.height / 100) * (canvas.width / 100) : 0
-}
-
-// Estado del "Imán" (Magnet)
-let magnetState = {
-    active: false,
-    element: null, // Guardará el elemento hovereado
-    rect: null // Guardará las coordenadas actualizadas cada frame
+const cvFiles = {
+  multiplayer: {
+    en: 'CV/Alejandro_Garcia_Multiplayer_CV_2026.pdf',
+    es: 'CV/Alejandro_Garcia_Multiplayer_CV_2026%20-%20Espa%C3%B1ol.pdf'
+  },
+  simulation: {
+    en: 'CV/Alejandro_Garcia_Simulation_CV_2025.pdf',
+    es: 'CV/Alejandro_Garcia_Simulation_CV_2025%20-%20Espa%C3%B1ol.pdf'
+  }
 };
 
-window.addEventListener('mousemove', (event) => {
-    mouse.x = event.x;
-    mouse.y = event.y;
-});
+function updateCvLinks(lang) {
+  document.querySelectorAll('[data-cv]').forEach(link => {
+    const key = link.getAttribute('data-cv');
+    if (cvFiles[key] && cvFiles[key][lang]) {
+      link.setAttribute('href', cvFiles[key][lang]);
+    }
+  });
+}
 
-// Configurar los triggers del imán
-function setupMagnetTriggers() {
-    const triggers = document.querySelectorAll('.magnet-trigger');
-    triggers.forEach(trigger => {
-        trigger.addEventListener('mouseenter', () => {
-            magnetState.active = true;
-            magnetState.element = trigger;
-        });
-        trigger.addEventListener('mouseleave', () => {
-            magnetState.active = false;
-            magnetState.element = null;
-        });
+cvDropdowns.forEach(dropdown => {
+  const toggle = dropdown.querySelector('[data-cv-toggle]');
+  if (!toggle) return;
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const wasOpen = dropdown.classList.contains('open');
+
+    cvDropdowns.forEach(d => {
+      d.classList.remove('open');
+      const t = d.querySelector('[data-cv-toggle]');
+      if (t) t.setAttribute('aria-expanded', 'false');
     });
-}
 
-// Actualizar coordenadas del imán al hacer scroll - ELIMINADO para permitir recalculo dinámico
-// window.addEventListener('scroll', () => { ... });
-
-class Particle {
-    constructor(x, y, directionX, directionY, size, color) {
-        this.x = x;
-        this.y = y;
-        this.directionX = directionX;
-        this.directionY = directionY;
-        this.size = size;
-        this.color = color;
-        this.baseX = x;
-        this.baseY = y;
-        this.density = (Math.random() * 30) + 1;
+    if (!wasOpen) {
+      dropdown.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
     }
+  });
 
-    draw() {
-        if (!ctx) return;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
-
-    update() {
-        // Movimiento base normal
-        this.x += this.directionX;
-        this.y += this.directionY;
-
-        // Rebotes
-        if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
-        if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
-
-        // --- LÓGICA DE INTERACCIÓN ---
-
-        if (magnetState.active && magnetState.rect) {
-            // MODO IMÁN: Atraer al borde más cercano de la caja
-            const rect = magnetState.rect;
-
-            // 1. Encontrar el punto más cercano en el rectángulo (Clamp)
-            let closestX = Math.max(rect.left, Math.min(this.x, rect.right));
-            let closestY = Math.max(rect.top, Math.min(this.y, rect.bottom));
-
-            // 2. Si el punto está DENTRO de la caja, forzarlo al borde más cercano
-            // (Esto hace que los puntos delineen la caja en lugar de llenarla)
-            if (this.x > rect.left && this.x < rect.right && this.y > rect.top && this.y < rect.bottom) {
-                const distLeft = Math.abs(this.x - rect.left);
-                const distRight = Math.abs(this.x - rect.right);
-                const distTop = Math.abs(this.y - rect.top);
-                const distBottom = Math.abs(this.y - rect.bottom);
-
-                const minDist = Math.min(distLeft, distRight, distTop, distBottom);
-
-                if (minDist === distLeft) closestX = rect.left;
-                else if (minDist === distRight) closestX = rect.right;
-                else if (minDist === distTop) closestY = rect.top;
-                else closestY = rect.bottom;
-            }
-
-            // 3. Calcular distancia a ese punto del borde
-            let dx = closestX - this.x;
-            let dy = closestY - this.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-
-            // Rango de atracción
-            let magnetRange = 150;
-
-            if (distance < magnetRange) {
-                // Atraer suavemente
-                const forceDirectionX = dx / distance;
-                const forceDirectionY = dy / distance;
-                const force = (magnetRange - distance) / magnetRange;
-
-                // Velocidad de atracción
-                const attractionSpeed = 2.5;
-
-                this.x += forceDirectionX * force * attractionSpeed;
-                this.y += forceDirectionY * force * attractionSpeed;
-            }
-
-        } else {
-            // MODO NORMAL: Repulsión del ratón
-            let dx = mouse.x - this.x;
-            let dy = mouse.y - this.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < mouse.radius) {
-                const forceDirectionX = dx / distance;
-                const forceDirectionY = dy / distance;
-                const force = (mouse.radius - distance) / mouse.radius;
-                const directionX = forceDirectionX * force * this.density;
-                const directionY = forceDirectionY * force * this.density;
-
-                this.x -= directionX;
-                this.y -= directionY;
-            }
-        }
-
-        this.draw();
-    }
-}
-
-function init() {
-    if (!canvas) return;
-    particlesArray = [];
-    let numberOfParticles = (canvas.height * canvas.width) / 10000;
-    for (let i = 0; i < numberOfParticles; i++) {
-        let size = (Math.random() * 2) + 1;
-        let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-        let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-        let directionX = (Math.random() * 0.4) - 0.2;
-        let directionY = (Math.random() * 0.4) - 0.2;
-        let color = '#38bdf8';
-
-        particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
-    }
-}
-
-function connect() {
-    let opacityValue = 1;
-    for (let a = 0; a < particlesArray.length; a++) {
-        for (let b = a; b < particlesArray.length; b++) {
-            let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
-                ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-
-            if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                opacityValue = 1 - (distance / 20000);
-                if (ctx) {
-                    ctx.strokeStyle = 'rgba(56, 189, 248,' + opacityValue * 0.15 + ')';
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                    ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                    ctx.stroke();
-                }
-            }
-        }
-    }
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-    if (ctx && canvas) {
-        ctx.clearRect(0, 0, innerWidth, innerHeight);
-    }
-
-    // OPTIMIZACIÓN: Calcular posición del imán una vez por frame
-    if (magnetState.active && magnetState.element) {
-        magnetState.rect = magnetState.element.getBoundingClientRect();
-    }
-
-    for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-    }
-    connect();
-}
-
-// Eventos de ventana
-window.addEventListener('resize', resizeCanvas);
-
-window.addEventListener('mouseout', (event) => {
-    // Solo resetear si el mouse sale de la ventana (no si entra a un hijo)
-    if (!event.relatedTarget && !event.toElement) {
-        mouse.x = undefined;
-        mouse.y = undefined;
-    }
+  dropdown.querySelectorAll('[data-cv-menu] a').forEach(link => {
+    link.addEventListener('click', () => {
+      dropdown.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 });
 
-// Inicialización segura
-window.addEventListener('load', () => {
-    resizeCanvas();
-    setupMagnetTriggers(); // Iniciar los triggers
-    animate();
+document.addEventListener('click', (e) => {
+  cvDropdowns.forEach(dropdown => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('open');
+      const t = dropdown.querySelector('[data-cv-toggle]');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    }
+  });
 });
 
-// Fallback por si load ya ocurrió (común en algunos entornos de desarrollo)
-if (document.readyState === 'complete') {
-    resizeCanvas();
-    setupMagnetTriggers();
-    animate();
+
+
+
+// --- 4. Flagship Terminal Live Telemetry Stream ---
+const terminalContent = document.getElementById('terminal-content');
+const terminalLines = [
+  { prefix: '[tick 1247]', actor: 'player_96', action: 'fire', meta: '→ server_ack(182ms)', result: 'hit=true', accent: true },
+  { prefix: '[tick 1248]', actor: 'replicate actors=', meta: '2,384', action: '/ budget=', result: '2,600' },
+  { prefix: '[tick 1249]', actor: 'player_42', action: 'inv_pick', meta: 'item_rifle_02', result: 'ack=✓', accent: true },
+  { prefix: '[tick 1250]', actor: 'bandwidth kbps/client', action: '38.4', meta: 'avg', result: '36.1' },
+  { prefix: '[tick 1251]', actor: 'state_reconcile', action: 'entities=47', meta: 'drift=', result: '0.00', accent: true },
+  { prefix: '[tick 1252]', actor: 'player_11', action: 'disconnect', meta: '→ session_persist(60s)', result: 'OK' },
+  { prefix: '[tick 1253]', actor: 'net_update', action: 'OK', meta: 'jitter=±', result: '2.8ms' },
+  { prefix: '[tick 1254]', actor: 'server_tick', action: '60Hz', meta: 'budget=', result: '14.2/16.6ms', accent: true },
+  { prefix: '[tick 1255]', actor: 'sync_report', action: 'desync=0', meta: 'race_cond=', result: '0', accent: true },
+];
+
+let baseTick = 1256;
+
+function streamTerminalLog() {
+  if (!terminalContent) return;
+
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const isDark = currentTheme === 'dark';
+  const accent = isDark ? '#00e5ff' : '#0066ff';
+  const mute = isDark ? '#7b8598' : '#5b6578';
+  const ink = isDark ? '#f2f4f8' : '#0a0e16';
+
+  baseTick++;
+  const randomPlayer = `player_${Math.floor(Math.random() * 99) + 1}`;
+  const actions = [
+    { text: `replicate actors=<span style="color:${ink}">${2200 + Math.floor(Math.random() * 200)}</span> / budget=<span style="color:${ink}">2,600</span>` },
+    { text: `<span style="color:${accent}">${randomPlayer}</span> fire <span style="color:${ink}">→ server_ack(${120 + Math.floor(Math.random() * 80)}ms)</span> hit=<span style="color:${accent}">true</span>` },
+    { text: `net_update <span style="color:${ink}">OK</span> jitter=±<span style="color:${ink}">${(Math.random() * 3 + 1).toFixed(1)}ms</span>` },
+    { text: `server_tick <span style="color:${accent}">60Hz</span> budget=<span style="color:${ink}">${(Math.random() * 3 + 13).toFixed(1)}/16.6ms</span>` },
+    { text: `<span style="color:${accent}">${randomPlayer}</span> inv_sync <span style="color:${ink}">ack=✓</span> state=<span style="color:${accent}">RECONCILED</span>` }
+  ];
+
+  const chosen = actions[Math.floor(Math.random() * actions.length)];
+  const newLine = document.createElement('div');
+  newLine.innerHTML = `<span style="color:${mute}">[tick ${baseTick}]</span> ${chosen.text}`;
+
+  terminalContent.appendChild(newLine);
+  if (terminalContent.children.length > 11) {
+    terminalContent.removeChild(terminalContent.children[0]);
+  }
 }
 
-// --- 3. Lógica de Cambio de Idioma (Actualizada con tus datos) ---
+if (terminalContent) {
+  setInterval(streamTerminalLog, 2800);
+}
+
+
+// --- 5. Multi-Language (i18n) System ---
 const translations = {
-    es: {
-        nav: { home: "Inicio", about: "Sobre Mí", exp: "Trayectoria", skills: "Habilidades", projects: "Proyectos", contact: "Contacto" },
-        hero: {
-            role: "Technical Designer",
-            title_prefix: "Diseñando Sistemas de",
-            title_suffix: "Juego Sistémicos",
-            desc: "Diseño y programo piezas de software modulares, sistemas y mecánicas de juego. Especializado en Unity y Unreal Engine, construyendo arquitecturas limpias para empoderar a los equipos de diseño.",
-            cta_cv: "Descargar CV",
-            cta_contact: "Contactar"
-        },
-        about: {
-            title: "Sobre",
-            title_span: "Mí",
-            p1: "Hola, soy Alejandro. Technical Designer y Gameplay Programmer con base en Castellón, España. Me enfoco en la creación de herramientas, arquitecturas de sistemas y optimización de pipelines para mejorar la forma en la que diseñamos juegos.",
-            p2: "Me apasiona construir frameworks sistémicos y modulares que agilicen el desarrollo. He desarrollado herramientas y plugins que reducen la iteración un 95% y sistemas en red listos para multijugador.",
-            check1: "Arquitectura de Sistemas Modulares",
-            check2: "Diseño y Tooling para Motores",
-            check3: "Frameworks Multijugador",
-            check4: "Mecánicas Sistémicas"
-        },
-        exp: {
-            title: "Mi",
-            title_span: "Trayectoria",
-            item1_role: "Technical Designer & Unity Developer",
-            item1_date: "Dic 2024 - Presente",
-            item1_desc: "Desarrollo de un sistema de trucos sistémico acelerando el QA un 95%. Creación de sistemas de datos modulares para encuentros y mecánicas de combate, empoderando al equipo de diseño en <a href='https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/' target='_blank' class='text-tech-primary hover:underline'>Rise of the Overlords</a>.",
-            item2_role: "Unreal Developer",
-            item2_date: "Ene 2023 - Nov 2024",
-            item2_desc: "Arquitectura de red modular y escalable para un Battle Royale de 100 jugadores en UE5. Diseño e implementación de un sistema de inventario replicado y altamente modular. Optimización de sistemas y portabilidad.",
-            item3_role: "Grado en Diseño y Desarrollo de Videojuegos",
-            item3_date: "Sep 2019 - Jun 2023",
-            item3_desc: "Formación especializada en diseño, programación y gráficos. Incluye concentración en Ingeniería de Software (2020-2021)."
-        },
-        skills: {
-            title: "Stack",
-            title_span: "Tecnológico"
-        },
-        projects: {
-            title: "Proyectos",
-            title_span: "Destacados",
-            p1_desc: "Framework sistémico donde los jugadores exploran espacios fractales generados proceduralmente. Implementación de algoritmos de raymarching en shaders de Unity usando HLSL.",
-            p2_desc: "Experiencia de sigilo narrativo sistémico creada en 48h para la Game Off jam. Integración de sistemas y lógica visual usando una mezcla limpia de Blueprints y C++ en UE5.",
-            p3_desc: "Un juego único con niveles peculiares y jugabilidad dispar en mundos diversos. Desarrollado con herramientas 'obsoletas' en un entorno distópico.",
-            btn: "Ver Detalles",
-            btn_demo: "Jugar Demo"
-        },
-        contact: {
-            title: "¿Hablamos?",
-            desc: "Estoy disponible para oportunidades freelance o para unirme a un gran equipo. Si tienes un proyecto en mente, contáctame.",
-            name: "Nombre",
-            msg: "Mensaje",
-            btn: "Enviar Mensaje"
-        },
-        footer: "Todos los derechos reservados.",
-        fractalia: {
-            title: "Demo Web de Fractalia",
-            desc: "Interactúa con la demo de Fractalia alojada en itch.io directamente en tu navegador (puede tardar unos minutos en cargar). Para la mejor experiencia, expande el embed de abajo o ábrela en una nueva pestaña (en monitores de alta resolución se recomienda abrir en pantalla completa en la página web de itch.io).",
-            fallback: "Si el embed no carga, puedes <a href='https://mrlexdev.itch.io/fractalia' target='_blank' rel='noopener' class='text-tech-primary hover:underline'>jugar Fractalia directamente en itch.io</a>."
-        }
+  en: {
+    nav: {
+      brand_sub: "Gameplay, Multiplayer & Simulation Programmer",
+      work: "Work",
+      systems: "Systems",
+      trajectory: "Trajectory",
+      contact: "Contact",
+      cv_btn: "CV ↓",
+      cv_multiplayer: "Multiplayer CV",
+      cv_sim: "Simulation CV"
     },
-    en: {
-        nav: { home: "Home", about: "About Me", exp: "Career", skills: "Skills", projects: "Projects", contact: "Contact" },
-        hero: {
-            role: "Technical Designer",
-            title_prefix: "Architecting Systemic",
-            title_suffix: "Game Mechanics",
-            desc: "I design and program modular pieces of software, game systems, and mechanics. Specialized in Unity and Unreal Engine, building clean architectures to empower design teams.",
-            cta_cv: "Download CV",
-            cta_contact: "Contact Me"
-        },
-        about: {
-            title: "About",
-            title_span: "Me",
-            p1: "Hi, I'm Alejandro. A Technical Designer and Gameplay Programmer based in Castellón, Spain. My focus is on tooling, system architecture, and pipeline optimization to shape the way we build games.",
-            p2: "I am passionate about building systemic, modular frameworks that streamline development. I've developed custom editor plugins cutting iteration times by 95% and engineered robust, network-ready systems for multiplayer environments.",
-            check1: "Modular System Architecture",
-            check2: "Engine Tooling & Editor Plugins",
-            check3: "Multiplayer Frameworks",
-            check4: "Systemic Mechanics"
-        },
-        exp: {
-            title: "My",
-            title_span: "Journey",
-            item1_role: "Technical Designer & Unity Developer",
-            item1_date: "Dec 2024 - Present",
-            item1_desc: "Developed a systemic Cheat System accelerating QA by 95%. Architected a data-driven, modular encounter design tool, empowering level designers for <a href='https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/' target='_blank' class='text-tech-primary hover:underline'>Rise of the Overlords</a>.",
-            item2_role: "Unreal Developer",
-            item2_date: "Jan 2023 - Nov 2024",
-            item2_desc: "Engineered scalable, modular networking architecture for a 100-player battle-royale in UE5. Designed a highly-modular replicated inventory framework. Optimized core systems and maintained integrity across console platforms.",
-            item3_role: "BSc, Design and Development of Videogames",
-            item3_date: "Sep 2019 - Jun 2023",
-            item3_desc: "Specialized training in game design, programming, and graphics. Included a concentration in Software Engineering (2020-2021)."
-        },
-        skills: {
-            title: "Tech",
-            title_span: "Stack"
-        },
-        projects: {
-            title: "Featured",
-            title_span: "Projects",
-            p1_desc: "A systemic framework where players explore procedurally generated fractal spaces. Implemented custom raymarching algorithms in Unity shaders using HLSL.",
-            p2_desc: "Systemic narrative-stealth experience created in 48h for Game Off jam. Handled gameplay scripting and systems integration using a clean mix of Blueprints and C++ in UE5.",
-            p3_desc: "A unique game featuring quirky levels with mismatched gameplay across diverse worlds. Developed using obsolete tools in a dystopian setting.",
-            btn: "View Details",
-            btn_demo: "Play Demo"
-        },
-        contact: {
-            title: "Let's Talk?",
-            desc: "I am available for freelance opportunities or to join a great team. If you have a project in mind, get in touch.",
-            name: "Name",
-            msg: "Message",
-            btn: "Send Message"
-        },
-        footer: "All rights reserved.",
-        fractalia: {
-            title: "Fractalia Web Demo",
-            desc: "Interact with the Fractalia demo hosted on itch.io directly in your browser (it may take a few minutes to load). For the best experience, expand the embed below or open it in a new tab (on high resolution monitors is recommended to open full screen on the itch.io web).",
-            fallback: "If the embed does not load, you can <a href='https://mrlexdev.itch.io/fractalia' target='_blank' rel='noopener' class='text-tech-primary hover:underline'>play Fractalia directly on itch.io</a>."
-        }
+    hero: {
+      status_avail: "OPEN TO GAMEPLAY, MULTIPLAYER & SIMULATION ROLES",
+      status_loc: "Spain · Remote & Relocation",
+      title_1: "Engineered for",
+      title_2: "real-time.",
+      desc: "I engineer gameplay, multiplayer and simulation systems in <strong class=\"text-ink\">Unreal Engine 5</strong> and <strong class=\"text-ink\">Unity</strong> — netcode replication, deterministic state synchronization, telemetry tooling, and GPU spatial computing. Experience at <strong class=\"text-ink\">Firescale Studios</strong> and <strong class=\"text-ink\">Catness Game Studios</strong>.",
+      cta_systems: "See the systems →",
+      cta_contact: "Email me",
+      ticker_1: "Unreal 5 & Unity (C++ / C#)",
+      ticker_2: "Replication & Deterministic State Sync",
+      ticker_3: "Multi-Agent Simulation & Telemetry"
+    },
+    metrics: {
+      col1_num: "100",
+      col1_unit: "CONCURRENT ENTITIES",
+      col1_desc: "dedicated-server stress tests",
+      col2_num: "30+",
+      col2_unit: "TRC / XR",
+      col2_desc: "compliance fixes resolved",
+      col3_num: "−90%",
+      col3_unit: "PERCENT",
+      col3_desc: "QA turnaround reduction",
+      col4_num: "60",
+      col4_unit: "FPS STEADY",
+      col4_desc: "deterministic frame-time & memory"
+    },
+    flagship: {
+      chip: "◆ FLAGSHIP SYSTEM",
+      title_1: "Authoritative replication &",
+      title_2: "deterministic state sync",
+      title_3: "in UE5.",
+      desc: "Engineered authority-driven state synchronization, replicated entity components, and deterministic gameplay logic in UE5 — validated with distributed stress tests on headless dedicated servers (~25 concurrent synchronized entities), profiling tick stability, RPC overhead, and bandwidth with Unreal Insights.",
+      card1_title: "State Synchronization",
+      card1_desc: "Authority-driven state sync, replicated entity components, and deterministic gameplay logic on dedicated servers.",
+      card2_title: "Stress Testing & Profiling",
+      card2_desc: "Distributed stress tests on headless servers (~25 concurrent entities): tick stability, RPC overhead, and bandwidth optimization.",
+      card3_title: "Desync & Race Conditions",
+      card3_desc: "Diagnosed state desynchronizations, edge-case race conditions, and network bottlenecks using Unreal Insights and telemetry tooling.",
+      card4_title: "Observability & Tooling",
+      card4_desc: "Runtime telemetry & diagnostics feeding custom tooling — profiling distributed systems to reproduce network edge cases deterministically."
+    },
+    projects: {
+      title: "Selected work",
+      count_chip: "04 projects",
+      p1_sub: "Console port",
+      p1_title: "Sea Horizon",
+      p1_desc: "PS4 / PS5 / Xbox Series. Platform SDK integration, resolved 30+ TRC/XR platform compliance issues, and optimized memory budgets.",
+      p2_sub: "Live Unity title",
+      p2_title: "Rise of the Overlords",
+      p2_desc: "Modular data-driven combat systems using C# and ScriptableObjects. In-engine cheat menu & tooling reduced QA turnaround by 90%.",
+      p3_sub: "Real-time spatial computing",
+      p3_title: "Fractalia",
+      p3_desc: "GPU-accelerated volumetric rendering and spatial queries. Custom HLSL raymarching, analytic Signed Distance Functions (SDFs), and optimized sphere tracing on GPU compute passes.",
+      p3_btn: "Play Web Demo →",
+      p4_sub: "Bachelor's Thesis · Multi-Agent Simulation",
+      p4_title: "Urban Traffic Simulation AI",
+      p4_desc: "Autonomous vehicle agents (FSM) with spatial sensor queries simulating dynamic traffic flow, intersection priority rules, and reactive obstacle avoidance — optimized perception loops and raycasting for smooth multi-agent throughput."
+    },
+    trajectory: {
+      chip: "◆ TIMELINE",
+      title: "Trajectory.",
+      item1_year: "Dec. 2024 — May 2026",
+      item1_role: "Unity Gameplay & Systems Developer (C#)",
+      item1_co: "Firescale Studios · Castellón, Spain",
+      item1_desc: "Architected modular gameplay & engine systems with C#, Zenject DI, and ScriptableObjects — async asset streaming via Addressables, runtime diagnostics & telemetry tooling, Editor automation with data validation, and deterministic 60 FPS frame-time profiling.",
+      item2_year: "Jan. 2023 — Nov. 2024",
+      item2_role: "Multiplayer & Gameplay Programmer (C++)",
+      item2_co: "Catness Game Studios · Hybrid, Spain",
+      item2_desc: "Implemented networked gameplay mechanics with GAS, replicated inventories, and synchronized world states in UE5. Stress-tested dedicated servers (~25 concurrent entities), diagnosed desyncs & race conditions with Unreal Insights, and ported Sea Horizon to PS4/PS5/Xbox Series (30+ TRC/XR fixes, GDK).",
+      item3_year: "Sept. 2019 — June 2023",
+      item3_role: "BSc in Design & Development of Video Games",
+      item3_co: "Universitat Jaume I · Castellón, Spain",
+      item3_desc: "Specialization in Software Engineering and Real-Time Systems Architecture. Urban traffic simulation AI thesis."
+    },
+    contact: {
+      chip: "◆ LET'S CONNECT",
+      title_1: "Building something",
+      title_2: "multiplayer or simulated?",
+      desc: "I'm actively looking for gameplay, multiplayer, and simulation programming roles (Remote & Relocation). C++, C#, Unreal Engine 5, Unity, Netcode, Deterministic Systems, and Telemetry Tooling.",
+      cta_email: "AlejandroGaloDev@gmail.com →",
+      cta_cv: "Download CV"
+    },
+    footer: {
+      copy: "© 2026 Alejandro García López (Alejandro Galo) · Spain",
+      telemetry: "Tick 64Hz · RTT 00ms · Loss 0.0%",
+      version: "v2.0.0"
     }
+  },
+  es: {
+    nav: {
+      brand_sub: "Programador Gameplay, Multijugador & Simulación",
+      work: "Trabajos",
+      systems: "Sistemas",
+      trajectory: "Trayectoria",
+      contact: "Contacto",
+      cv_btn: "CV ↓",
+      cv_multiplayer: "CV Multijugador",
+      cv_sim: "CV Simulación"
+    },
+    hero: {
+      status_avail: "DISPONIBLE PARA ROLES GAMEPLAY, MULTIJUGADOR Y SIMULACIÓN",
+      status_loc: "España · Remoto & Reubicación",
+      title_1: "Diseñado para",
+      title_2: "el tiempo real.",
+      desc: "Desarrollo sistemas gameplay, multijugador y simulación en <strong class=\"text-ink\">Unreal Engine 5</strong> y <strong class=\"text-ink\">Unity</strong> — replicación de red, sincronización determinista de estado, herramientas de telemetría y computación espacial en GPU. Experiencia en <strong class=\"text-ink\">Firescale Studios</strong> y <strong class=\"text-ink\">Catness Game Studios</strong>.",
+      cta_systems: "Ver los sistemas →",
+      cta_contact: "Escríbeme",
+      ticker_1: "Unreal 5 & Unity (C++ / C#)",
+      ticker_2: "Replicación & Sincronización Determinista",
+      ticker_3: "Simulación Multi-Agente & Telemetría"
+    },
+    metrics: {
+      col1_num: "100",
+      col1_unit: "ENTIDADES CONCURRENTES",
+      col1_desc: "pruebas de estrés en servidores dedicados",
+      col2_num: "30+",
+      col2_unit: "TRC / XR",
+      col2_desc: "incidencias resueltas en consolas",
+      col3_num: "−90%",
+      col3_unit: "POR CIENTO",
+      col3_desc: "reducción tiempo de QA",
+      col4_num: "60",
+      col4_unit: "FPS ESTABLES",
+      col4_desc: "frame-time determinista y memoria"
+    },
+    flagship: {
+      chip: "◆ SISTEMA DESTACADO",
+      title_1: "Replicación autoritativa y",
+      title_2: "sincronización determinista",
+      title_3: "en UE5.",
+      desc: "Desarrollé sincronización de estado autoritativa, componentes de entidad replicados y lógica gameplay determinista en UE5 — validado con pruebas de estrés distribuidas en servidores dedicados headless (~25 entidades sincronizadas concurrentes), perfilando estabilidad del tick, overhead de RPCs y ancho de banda con Unreal Insights.",
+      card1_title: "Sincronización de Estado",
+      card1_desc: "Sincronización autoritativa de estado, componentes de entidad replicados y lógica gameplay determinista en servidores dedicados.",
+      card2_title: "Pruebas de Estrés & Profiling",
+      card2_desc: "Pruebas de estrés distribuidas en servidores headless (~25 entidades concurrentes): estabilidad del tick, overhead de RPCs y ancho de banda.",
+      card3_title: "Desyncs & Condiciones de Carrera",
+      card3_desc: "Diagnóstico de desincronizaciones de estado, condiciones de carrera y cuellos de botella de red con Unreal Insights y telemetría.",
+      card4_title: "Observabilidad & Herramientas",
+      card4_desc: "Telemetría y diagnóstico en ejecución conectados a herramientas internas — profiling de sistemas distribuidos para reproducir casos límite de red de forma determinista."
+    },
+    projects: {
+      title: "Trabajos seleccionados",
+      count_chip: "04 proyectos",
+      p1_sub: "Port a consolas",
+      p1_title: "Sea Horizon",
+      p1_desc: "PS4 / PS5 / Xbox Series. Integración de SDKs de plataforma, resolución de más de 30 incidencias de conformidad TRC/XR y optimización de memoria.",
+      p2_sub: "Título activo en Unity",
+      p2_title: "Rise of the Overlords",
+      p2_desc: "Sistemas de combate modulares guiados por datos con C# y ScriptableObjects. Menú de trucos y herramientas en el motor que redujeron el tiempo de QA un 90%.",
+      p3_sub: "Computación espacial en tiempo real",
+      p3_title: "Fractalia",
+      p3_desc: "Renderizado volumétrico y consultas espaciales aceleradas por GPU. Raymarching con HLSL, Signed Distance Functions (SDFs) analíticas y sphere tracing optimizado en pases de cómpute GPU.",
+      p3_btn: "Jugar Demo Web →",
+      p4_sub: "Trabajo Fin de Grado · Simulación Multi-Agente",
+      p4_title: "Urban Traffic Simulation AI",
+      p4_desc: "Agentes de vehículos autónomos (FSM) con consultas espaciales por sensores que simulan flujo de tráfico urbano dinámico, reglas de prioridad en intersecciones y esquiva reactiva de obstáculos — bucles de percepción y raycasting optimizados para un throughput multi-agente fluido."
+    },
+    trajectory: {
+      chip: "◆ TRAYECTORIA",
+      title: "Trayectoria.",
+      item1_year: "Dic. 2024 — May. 2026",
+      item1_role: "Desarrollador Unity Gameplay & Sistemas (C#)",
+      item1_co: "Firescale Studios · Castellón, España",
+      item1_desc: "Arquitectura de sistemas gameplay y de motor modulares con C#, inyección de dependencias (Zenject) y ScriptableObjects — streaming asíncrono de assets con Addressables, herramientas de diagnóstico y telemetría en ejecución, automatización de Editor con validación de datos y profiling de frame-time determinista a 60 FPS.",
+      item2_year: "Ene. 2023 — Nov. 2024",
+      item2_role: "Programador Multijugador & Gameplay (C++)",
+      item2_co: "Catness Game Studios · Híbrido, España",
+      item2_desc: "Implementación de mecánicas gameplay en red con GAS, inventarios replicados y sincronización de estados en UE5. Pruebas de estrés en servidores dedicados (~25 entidades concurrentes), diagnóstico de desyncs y condiciones de carrera con Unreal Insights, y port de Sea Horizon a PS4/PS5/Xbox Series (más de 30 fixes TRC/XR, GDK).",
+      item3_year: "Sept. 2019 — Jun. 2023",
+      item3_role: "Grado en Diseño y Desarrollo de Videojuegos",
+      item3_co: "Universitat Jaume I · Castellón, España",
+      item3_desc: "Mención en Ingeniería de Software y Arquitectura de Sistemas en Tiempo Real. Trabajo de fin de grado en simulación de tráfico urbano mediante IA.",
+    },
+    contact: {
+      chip: "◆ CONECTEMOS",
+      title_1: "¿Construyendo algo",
+      title_2: "multijugador o simulado?",
+      desc: "Busco activamente roles de programación gameplay, multijugador y simulación (Remoto & Reubicación). C++, C#, Unreal Engine 5, Unity, Netcode, Sistemas Deterministas y Telemetría.",
+      cta_email: "AlejandroGaloDev@gmail.com →",
+      cta_cv: "Descargar CV"
+    },
+    footer: {
+      copy: "© 2026 Alejandro García López (Alejandro Galo) · España",
+      telemetry: "Tick 64Hz · RTT 00ms · Pérdida 0.0%",
+      version: "v2.0.0"
+    }
+  }
 };
 
-let currentLang = 'en'; // Default a inglés para ser más internacional
+let currentLanguage = 'en';
 const langToggleBtn = document.getElementById('lang-toggle');
-const langText = document.getElementById('current-lang-text');
+const langToggleMobile = document.getElementById('lang-toggle-mobile');
 
-function updateContent() {
-    const elements = document.querySelectorAll('[data-i18n]');
-    elements.forEach(element => {
-        const keys = element.getAttribute('data-i18n').split('.');
-        let value = translations[currentLang];
-        keys.forEach(key => {
-            if (value) value = value[key];
-        });
+function updatePageLanguage(lang) {
+  currentLanguage = lang;
+  localStorage.setItem('app-lang', lang);
 
-        if (value) {
-            // Si es un input o textarea, cambiamos el placeholder
-            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                // Para etiquetas label
-                if (element.getAttribute('for')) {
-                    element.textContent = value;
-                }
-            } else {
-                // Usamos innerHTML para permitir enlaces dentro de las traducciones
-                element.innerHTML = value;
-            }
-        }
+  const langText = lang.toUpperCase();
+  if (langToggleBtn) langToggleBtn.textContent = langText;
+  if (langToggleMobile) langToggleMobile.textContent = langText;
+
+  const elements = document.querySelectorAll('[data-i18n]');
+  elements.forEach(el => {
+    const keyPath = el.getAttribute('data-i18n').split('.');
+    let translation = translations[lang];
+    keyPath.forEach(k => {
+      if (translation) translation = translation[k];
     });
 
-    // Actualizar texto del botón
-    langText.textContent = currentLang === 'es' ? 'ES' : 'EN';
+    if (translation) {
+      el.innerHTML = translation;
+    }
+  });
+
+  updateCvLinks(lang);
 }
 
-langToggleBtn.addEventListener('click', () => {
-    currentLang = currentLang === 'es' ? 'en' : 'es';
-    updateContent();
-});
+if (langToggleBtn) {
+  langToggleBtn.addEventListener('click', () => {
+    updatePageLanguage(currentLanguage === 'en' ? 'es' : 'en');
+  });
+}
 
-// Inicializar textos
-updateContent();
+if (langToggleMobile) {
+  langToggleMobile.addEventListener('click', () => {
+    updatePageLanguage(currentLanguage === 'en' ? 'es' : 'en');
+  });
+}
+
+// Initial language setup
+const storedLang = localStorage.getItem('app-lang') || 'en';
+updatePageLanguage(storedLang);
+

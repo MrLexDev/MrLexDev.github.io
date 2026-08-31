@@ -1,170 +1,186 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-theme="dark">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title" data-i18n="fractalia.title">Fractalia - Playable Demo</title>
-    <meta id="page-description" name="description" data-i18n="fractalia.desc"
-        content="Experience the WebGL demo of the Fractalia project.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Fractalia — Playable Web Demo | Alejandro Galo</title>
+  <meta id="page-description" name="description"
+    content="Playable real-time raymarched fractal demo in Unity WebGL using custom HLSL shaders.">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap"
-        rel="stylesheet">
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Font Awesome para Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                    },
-                    colors: {
-                        tech: {
-                            bg: '#0f172a',
-                            surface: '#1e293b',
-                            primary: '#38bdf8',
-                            secondary: '#6366f1',
-                            text: '#f8fafc',
-                            muted: '#94a3b8'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="../assets/css/main.css">
 
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <style>
-        .iframe-wrapper {
-            position: relative;
-            width: 100%;
-            padding-top: 62.5%;
-        }
+  <style>
+    .iframe-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+    }
 
-        .iframe-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-            border-radius: 1rem;
-            overflow: hidden;
-            background: #000;
-        }
-
-        @media (min-width: 768px) {
-            .iframe-wrapper {
-                padding-top: 56.25%;
-            }
-        }
-    </style>
+    .iframe-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #000;
+    }
+  </style>
 </head>
 
-<body class="antialiased bg-tech-bg text-white">
+<body class="antialiased relative min-h-screen">
 
-    <!-- Canvas para animación de fondo -->
-    <canvas id="bg-canvas"></canvas>
+  <!-- 80px Background Grid Overlay -->
+  <div class="grid-bg"></div>
 
-    <!-- Navegación -->
-    <nav class="fixed w-full z-50 top-0 start-0 border-b border-gray-800/50 bg-tech-bg/90 backdrop-blur-md transition-all duration-300"
-        id="navbar">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <div class="w-10 h-10 flex items-center justify-center">
-                    <!-- Usando logo SVG para transparencia -->
-                    <img src="../img/QuasarLogoV2.png" alt="Logo" class="w-full h-full object-contain">
-                </div>
-                <span
-                    class="self-center text-xl font-display font-bold whitespace-nowrap text-white tracking-tight">ALEJANDRO<span
-                        class="text-tech-primary">GALO</span></span>
-            </a>
-
-            <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <!-- Botón de Idioma -->
-                <button id="lang-toggle"
-                    class="flex items-center gap-2 px-3 py-1 text-sm font-medium text-white bg-slate-800 hover:bg-slate-700 rounded-full border border-slate-600 transition-colors mr-2">
-                    <i class="fa-solid fa-globe text-tech-primary"></i>
-                    <span id="current-lang-text">EN</span>
-                </button>
-
-                <button data-collapse-toggle="navbar-sticky" type="button"
-                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-800 focus:outline-none"
-                    aria-controls="navbar-sticky" aria-expanded="false" id="menu-toggle">
-                    <span class="sr-only">Abrir menú</span>
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-            </div>
-
-            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                <ul
-                    class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-800 rounded-lg bg-gray-900/50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
-                    <li><a href="../index.html#home"
-                            class="block py-2 px-3 text-white hover:text-tech-primary md:p-0 transition-colors"
-                            data-i18n="nav.home">Home</a></li>
-                    <li><a href="../index.html#about"
-                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
-                            data-i18n="nav.about">About</a></li>
-                    <li><a href="../index.html#experience"
-                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
-                            data-i18n="nav.exp">Experience</a></li>
-                    <li><a href="../index.html#skills"
-                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
-                            data-i18n="nav.skills">Skills</a></li>
-                    <li><a href="../index.html#projects"
-                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
-                            data-i18n="nav.projects">Projects</a></li>
-                    <li><a href="../index.html#contact" class="block py-2 px-3 text-tech-primary md:p-0 font-bold"
-                            data-i18n="nav.contact">Contact</a></li>
-                </ul>
-            </div>
+  <!-- NAVIGATION BAR -->
+  <header class="fixed w-full z-50 top-0 start-0 border-b border-[var(--rule)] bg-[var(--bg)]/90 backdrop-blur-md transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      
+      <!-- Brand & Icon -->
+      <a href="../index.html" class="flex items-center gap-3 group">
+        <svg width="34" height="34" viewBox="0 0 32 32" class="group-hover:scale-105 transition-transform">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+          <circle cx="16" cy="16" r="5" fill="var(--accent)" />
+          <circle cx="4" cy="16" r="2" fill="var(--ink)" />
+          <circle cx="28" cy="16" r="2" fill="var(--ink)" />
+          <circle cx="16" cy="4" r="2" fill="var(--ink)" />
+          <circle cx="16" cy="28" r="2" fill="var(--ink)" />
+        </svg>
+        <div>
+          <div class="font-display font-bold text-base tracking-tight text-[var(--ink)]">ALEJANDRO GALO</div>
+          <div class="font-mono text-[10px] text-[var(--mute)] tracking-wider uppercase" data-i18n="nav.brand_sub">
+            Multiplayer & Gameplay Programmer
+          </div>
         </div>
-    </nav>
+      </a>
 
-    <main class="pt-32 pb-16 relative z-10">
-        <section class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto text-center mb-12">
-                <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 text-white" data-i18n="fractalia.title">
-                    Fractalia Web Demo</h1>
-                <p class="text-tech-muted text-lg" data-i18n="fractalia.desc">Interact with the Fractalia demo hosted on
-                    itch.io directly in your browser. For the best experience, expand the embed below or open it in a
-                    new tab.</p>
-            </div>
-            <div
-                class="glass-effect rounded-2xl p-4 md:p-8 border border-slate-800 bg-tech-surface/30 backdrop-blur-md shadow-2xl">
-                <div class="space-y-6">
-                    <div class="iframe-wrapper shadow-lg rounded-xl overflow-hidden border border-slate-700">
-                        <iframe src="https://itch.io/embed-upload/15696139?color=333333"
-                                allowfullscreen=""
-                                title="Fractalia on itch.io"
-                            loading="lazy"></iframe>
-                    </div>
+      <!-- Desktop Nav & Actions -->
+      <div class="hidden md:flex items-center gap-2">
+        <a href="../index.html#work" class="nav-link" data-i18n="nav.work">Work</a>
+        <a href="../index.html#flagship" class="nav-link" data-i18n="nav.systems">Systems</a>
+        <a href="../index.html#trajectory" class="nav-link" data-i18n="nav.trajectory">Trajectory</a>
+        <a href="../index.html#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
 
-                    <div class="text-sm text-tech-muted space-y-2 text-center">
-                        <p data-i18n="fractalia.fallback">If the embed does not load, you can <a
-                                href="https://mrlexdev.itch.io/fractalia" target="_blank" rel="noopener"
-                                class="text-tech-primary hover:underline">play Fractalia directly on itch.io</a>.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+        <div class="w-px h-5 bg-[var(--rule)] mx-2"></div>
 
-    <!-- Footer -->
-    <footer class="py-8 bg-slate-950 text-center border-t border-slate-900 relative z-10">
-        <p class="text-slate-600 text-sm">&copy; 2025 Alejandro Garcia. <span data-i18n="footer">All rights
-                reserved.</span></p>
-    </footer>
+        <!-- Language Toggle -->
+        <button id="lang-toggle" class="font-mono text-xs px-3 py-1.5 border border-[var(--rule)] hover:border-[var(--accent)] text-[var(--ink)] rounded transition-colors" title="Switch Language">
+          EN
+        </button>
 
-    <script src="../assets/js/main.js"></script>
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="font-mono text-sm px-3 py-1 border border-[var(--rule)] hover:border-[var(--accent)] text-[var(--ink)] rounded transition-colors" title="Toggle Light/Dark mode">
+          ☀
+        </button>
+
+        <!-- CV Button -->
+        <a href="../Alejandro_Garcia_GameDev_CV_2025_Human_NoNumber.pdf" target="_blank" class="btn-pri ml-2 !py-2 !px-4 !text-[11px]" data-i18n="nav.cv_btn">
+          CV ↓
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex items-center gap-2 md:hidden">
+        <button id="lang-toggle-mobile" class="font-mono text-xs px-2.5 py-1 border border-[var(--rule)] text-[var(--ink)] rounded">
+          EN
+        </button>
+        <button id="theme-toggle-mobile" class="font-mono text-xs px-2.5 py-1 border border-[var(--rule)] text-[var(--ink)] rounded">
+          ☀
+        </button>
+        <button id="menu-toggle" class="p-2 border border-[var(--rule)] text-[var(--ink)] rounded hover:border-[var(--accent)]">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--rule)] bg-[var(--surface)] px-6 py-6 space-y-4">
+      <a href="../index.html#work" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.work">Work</a>
+      <a href="../index.html#flagship" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.systems">Systems</a>
+      <a href="../index.html#trajectory" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.trajectory">Trajectory</a>
+      <a href="../index.html#contact" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.contact">Contact</a>
+      <div class="pt-2">
+        <a href="../Alejandro_Garcia_GameDev_CV_2025_Human_NoNumber.pdf" target="_blank" class="btn-pri w-full text-center" data-i18n="nav.cv_btn">
+          Download CV ↓
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN DEMO CONTAINER -->
+  <main class="relative z-10 pt-28 pb-20 px-6 max-w-6xl mx-auto">
+    
+    <!-- Top Back Link & Header -->
+    <div class="mb-8">
+      <a href="../index.html#work" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-accent hover:underline mb-4">
+        <i class="fa-solid fa-arrow-left"></i> <span>Back to Portfolio</span>
+      </a>
+      
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <span class="chip chip-accent">◆ GRAPHICS DEMO</span>
+        <span class="chip">Unity / HLSL Raymarching</span>
+      </div>
+
+      <h1 class="font-display text-4xl lg:text-5xl font-bold tracking-tight text-[var(--ink)] mb-3">
+        Fractalia — Playable WebGL Demo
+      </h1>
+      <p class="font-sans text-base lg:text-lg text-[var(--mute)] max-w-3xl leading-relaxed">
+        Real-time raymarched fractal explorer rendered per-pixel using custom HLSL shaders. You can interact with the live build below or open it full-screen on itch.io.
+      </p>
+    </div>
+
+    <!-- Interactive Game Player Card with Corner Brackets -->
+    <div class="relative bg-[var(--surface)] border border-[var(--rule)] shadow-2xl p-4 lg:p-6 mb-8">
+      <div class="corner-bracket-tl"></div>
+      <div class="corner-bracket-tr"></div>
+      <div class="corner-bracket-bl"></div>
+      <div class="corner-bracket-br"></div>
+
+      <div class="iframe-wrapper border border-[var(--rule)] bg-black overflow-hidden">
+        <iframe src="https://itch.io/embed-upload/15696139?color=06080c"
+                allowfullscreen=""
+                title="Fractalia on itch.io"
+                loading="lazy"></iframe>
+      </div>
+
+      <!-- Links & Fallback -->
+      <div class="mt-4 pt-4 border-t border-[var(--rule)]/60 flex flex-wrap justify-between items-center gap-4 text-xs font-mono text-[var(--mute)]">
+        <div>
+          If the embed doesn't load: <a href="https://mrlexdev.itch.io/fractalia" target="_blank" rel="noopener" class="text-accent hover:underline">Play directly on itch.io →</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://github.com/MrLexDev/Fractalia" target="_blank" rel="noopener" class="hover:text-[var(--ink)] flex items-center gap-1.5">
+            <i class="fa-brands fa-github text-sm"></i> <span>Source Code</span>
+          </a>
+          <a href="https://youtu.be/Ye9NPVDxxRE" target="_blank" rel="noopener" class="hover:text-red-500 flex items-center gap-1.5">
+            <i class="fa-brands fa-youtube text-sm"></i> <span>Gameplay Video</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- TELEMETRY FOOTER -->
+  <footer class="border-t border-[var(--rule)] bg-[var(--bg)] py-8 px-6 lg:px-12 font-mono text-[11px] text-[var(--mute)] tracking-wider uppercase relative z-10">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+      <span data-i18n="footer.copy">© 2026 Alejandro García López (Alejandro Galo) · Spain</span>
+      <span class="text-accent" data-i18n="footer.telemetry">Tick 64Hz · RTT 00ms · Loss 0.0%</span>
+      <span data-i18n="footer.version">v2.0.0</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../assets/js/main.js"></script>
 </body>
 
 </html>

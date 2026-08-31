@@ -1,507 +1,660 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-theme="dark">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="Alejandro Galo - Technical Designer Portfolio" />
-    <meta property="og:description"
-        content="Technical Designer especializado en sistemas y mecánicas modulares de juego." />
-    <meta property="og:image" content="img/QuasarLogoV2.png" />
-    <meta property="og:url" content="https://mrlexdev.github.io/" />
-    <meta property="og:type" content="website" />
-    <link rel="icon" type="image/png" href="img/QuasarLogoV2.png">
-    <title id="page-title" data-lang-es="Alejandro Galo - Portafolio Technical Designer"
-        data-lang-en="Alejandro Galo - Technical Designer Portfolio">Alejandro Galo - Technical Designer Portfolio
-    </title>
-    <meta id="page-description" name="description"
-        data-lang-es="Portafolio de Alejandro Galo, Technical Designer con experiencia en Firescale y Catness Game Studios."
-        data-lang-en="Portfolio of Alejandro Galo, Technical Designer with experience at Firescale and Catness Game Studios."
-        content="Portfolio of Alejandro Galo, Technical Designer with experience at Firescale and Catness Game Studios.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap"
-        rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Alejandro Galo — Gameplay, Multiplayer & Simulation Programmer" />
+  <meta property="og:description"
+    content="Gameplay, Multiplayer & Simulation Programmer specializing in Unreal Engine 5, Unity, C++, Netcode Replication, Deterministic Systems, and Telemetry Tooling." />
+  <meta property="og:image" content="img/QuasarLogoV2.png" />
+  <meta property="og:url" content="https://mrlexdev.github.io/" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="img/QuasarLogoV2.png">
+  <title id="page-title">Alejandro Galo — Gameplay, Multiplayer & Simulation Programmer</title>
+  <meta id="page-description" name="description"
+    content="Portfolio of Alejandro Galo, Gameplay, Multiplayer & Simulation Programmer with experience at Firescale Studios and Catness Game Studios.">
 
-    <!-- Font Awesome para Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                    },
-                    colors: {
-                        tech: {
-                            bg: '#0f172a',
-                            surface: '#1e293b',
-                            primary: '#38bdf8',
-                            secondary: '#6366f1',
-                            text: '#f8fafc',
-                            muted: '#94a3b8'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="assets/css/main.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
-<body class="antialiased">
+<body class="antialiased relative min-h-screen">
 
-    <!-- Canvas para animación de fondo -->
-    <canvas id="bg-canvas"></canvas>
+  <!-- 80px Background Grid Overlay -->
+  <div class="grid-bg"></div>
 
-    <!-- Navegación -->
-    <nav class="fixed w-full z-50 top-0 start-0 border-b border-gray-800/50 bg-tech-bg/90 backdrop-blur-md transition-all duration-300"
-        id="navbar">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <div class="w-10 h-10 flex items-center justify-center">
-                    <!-- Usando logo SVG para transparencia -->
-                    <img src="img/QuasarLogoV2.png" alt="Logo" class="w-full h-full object-contain">
-                </div>
-                <span
-                    class="self-center text-xl font-display font-bold whitespace-nowrap text-white tracking-tight">ALEJANDRO<span
-                        class="text-tech-primary">GALO</span></span>
+  <!-- NAVIGATION BAR -->
+  <header class="fixed w-full z-50 top-0 start-0 border-b border-[var(--rule)] bg-[var(--bg)]/90 backdrop-blur-md transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      
+      <!-- Brand & Icon -->
+      <a href="#" class="flex items-center gap-3 group">
+        <svg width="34" height="34" viewBox="0 0 32 32" class="group-hover:scale-105 transition-transform">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+          <circle cx="16" cy="16" r="5" fill="var(--accent)" />
+          <circle cx="4" cy="16" r="2" fill="var(--ink)" />
+          <circle cx="28" cy="16" r="2" fill="var(--ink)" />
+          <circle cx="16" cy="4" r="2" fill="var(--ink)" />
+          <circle cx="16" cy="28" r="2" fill="var(--ink)" />
+        </svg>
+        <div>
+          <div class="font-display font-bold text-base tracking-tight text-[var(--ink)]">ALEJANDRO GALO</div>
+          <div class="font-mono text-[10px] text-[var(--mute)] tracking-wider uppercase" data-i18n="nav.brand_sub">
+            Gameplay, Multiplayer & Simulation Programmer
+          </div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav & Actions -->
+      <div class="hidden md:flex items-center gap-2">
+        <a href="#work" class="nav-link" data-i18n="nav.work">Work</a>
+        <a href="#flagship" class="nav-link" data-i18n="nav.systems">Systems</a>
+        <a href="#trajectory" class="nav-link" data-i18n="nav.trajectory">Trajectory</a>
+        <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
+
+        <div class="w-px h-5 bg-[var(--rule)] mx-2"></div>
+
+        <!-- Language Toggle -->
+        <button id="lang-toggle" class="font-mono text-xs px-3 py-1.5 border border-[var(--rule)] hover:border-[var(--accent)] text-[var(--ink)] rounded transition-colors" title="Switch Language">
+          EN
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="font-mono text-sm px-3 py-1 border border-[var(--rule)] hover:border-[var(--accent)] text-[var(--ink)] rounded transition-colors" title="Toggle Light/Dark mode">
+          ☀
+        </button>
+
+        <!-- CV Dropdown -->
+        <div class="relative cv-dropdown ml-2" data-cv-dropdown>
+          <button data-cv-toggle class="btn-pri !py-2 !px-4 !text-[11px]" aria-haspopup="true" aria-expanded="false" data-i18n="nav.cv_btn">
+            CV ↓
+          </button>
+          <div data-cv-menu class="cv-dropdown-menu" role="menu">
+            <a href="CV/Alejandro_Garcia_Multiplayer_CV_2026.pdf" target="_blank" rel="noopener" data-cv="multiplayer" class="cv-dropdown-item" role="menuitem">
+              <i class="fa-solid fa-gamepad text-accent text-xs w-4"></i>
+              <span data-i18n="nav.cv_multiplayer">Multiplayer CV</span>
+              <i class="fa-solid fa-download text-[10px] ml-auto text-[var(--mute)]"></i>
             </a>
-
-            <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <!-- Botón de Idioma -->
-                <button id="lang-toggle"
-                    class="flex items-center gap-2 px-3 py-1 text-sm font-medium text-white bg-slate-800 hover:bg-slate-700 rounded-full border border-slate-600 transition-colors mr-2">
-                    <i class="fa-solid fa-globe text-tech-primary"></i>
-                    <span id="current-lang-text">EN</span>
-                </button>
-
-                <button data-collapse-toggle="navbar-sticky" type="button"
-                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-800 focus:outline-none"
-                    aria-controls="navbar-sticky" aria-expanded="false" id="menu-toggle">
-                    <span class="sr-only">Abrir menú</span>
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-            </div>
-
-            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                <ul
-                    class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-800 rounded-lg bg-gray-900/50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
-                    <li><a href="#home"
-                            class="block py-2 px-3 text-white hover:text-tech-primary md:p-0 transition-colors"
-                            data-i18n="nav.home">Home</a></li>
-                    <li><a href="#about"
-                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
-                            data-i18n="nav.about">About</a></li>
-                    <li><a href="#experience"
-                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
-                            data-i18n="nav.exp">Experience</a></li>
-                    <li><a href="#skills"
-                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
-                            data-i18n="nav.skills">Skills</a></li>
-                    <li><a href="#projects"
-                            class="block py-2 px-3 text-tech-muted hover:text-tech-primary md:p-0 transition-colors"
-                            data-i18n="nav.projects">Projects</a></li>
-                    <li><a href="#contact" class="block py-2 px-3 text-tech-primary md:p-0 font-bold"
-                            data-i18n="nav.contact">Contact</a></li>
-                </ul>
-            </div>
+            <a href="CV/Alejandro_Garcia_Simulation_CV_2025.pdf" target="_blank" rel="noopener" data-cv="simulation" class="cv-dropdown-item" role="menuitem">
+              <i class="fa-solid fa-microchip text-accent text-xs w-4"></i>
+              <span data-i18n="nav.cv_sim">Simulation CV</span>
+              <i class="fa-solid fa-download text-[10px] ml-auto text-[var(--mute)]"></i>
+            </a>
+          </div>
         </div>
-    </nav>
+      </div>
 
-    <!-- Hero Section (Sin imagen de fondo, solo canvas) -->
-    <section id="home" class="min-h-screen flex items-center justify-center relative px-4 pt-16">
+      <!-- Mobile Menu Button -->
+      <div class="flex items-center gap-2 md:hidden">
+        <button id="lang-toggle-mobile" class="font-mono text-xs px-2.5 py-1 border border-[var(--rule)] text-[var(--ink)] rounded">
+          EN
+        </button>
+        <button id="theme-toggle-mobile" class="font-mono text-xs px-2.5 py-1 border border-[var(--rule)] text-[var(--ink)] rounded">
+          ☀
+        </button>
+        <button id="menu-toggle" class="p-2 border border-[var(--rule)] text-[var(--ink)] rounded hover:border-[var(--accent)]">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+    </div>
 
-        <div class="text-center z-10 max-w-4xl">
-            <div
-                class="inline-block px-4 py-1 mb-6 border border-tech-primary/30 rounded-full bg-tech-primary/10 backdrop-blur-sm">
-                <span class="text-tech-primary text-sm font-semibold tracking-wide uppercase"
-                    data-i18n="hero.role">Gameplay Programmer</span>
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--rule)] bg-[var(--surface)] px-6 py-6 space-y-4">
+      <a href="#work" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.work">Work</a>
+      <a href="#flagship" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.systems">Systems</a>
+      <a href="#trajectory" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.trajectory">Trajectory</a>
+      <a href="#contact" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.contact">Contact</a>
+      <div class="pt-2 relative cv-dropdown" data-cv-dropdown>
+        <button data-cv-toggle class="btn-pri w-full text-center" aria-haspopup="true" aria-expanded="false" data-i18n="nav.cv_btn">
+          Download CV ↓
+        </button>
+        <div data-cv-menu class="cv-dropdown-menu cv-dropdown-menu-full" role="menu">
+          <a href="CV/Alejandro_Garcia_Multiplayer_CV_2026.pdf" target="_blank" rel="noopener" data-cv="multiplayer" class="cv-dropdown-item" role="menuitem">
+            <i class="fa-solid fa-gamepad text-accent text-xs w-4"></i>
+            <span data-i18n="nav.cv_multiplayer">Multiplayer CV</span>
+            <i class="fa-solid fa-download text-[10px] ml-auto text-[var(--mute)]"></i>
+          </a>
+          <a href="CV/Alejandro_Garcia_Simulation_CV_2025.pdf" target="_blank" rel="noopener" data-cv="simulation" class="cv-dropdown-item" role="menuitem">
+            <i class="fa-solid fa-microchip text-accent text-xs w-4"></i>
+            <span data-i18n="nav.cv_sim">Simulation CV</span>
+            <i class="fa-solid fa-download text-[10px] ml-auto text-[var(--mute)]"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 pt-20">
+
+    <!-- HERO SECTION -->
+    <section class="min-h-[85vh] flex items-center px-6 lg:px-12 py-16 lg:py-24 max-w-7xl mx-auto">
+      <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+      <!-- Hero Content -->
+      <div class="lg:col-span-8 w-full max-w-4xl">
+        
+        <!-- Status Chips -->
+        <div class="flex flex-wrap gap-2.5 items-center mb-8">
+          <span class="chip chip-accent">
+            <span class="w-2 h-2 rounded-full bg-[var(--accent)] blink inline-block"></span>
+            <span data-i18n="hero.status_avail">OPEN TO GAMEPLAY, MULTIPLAYER & SIMULATION ROLES</span>
+          </span>
+          <span class="chip" data-i18n="hero.status_loc">Spain · Remote & Relocation</span>
+        </div>
+
+        <!-- Hero Headline -->
+        <h1 class="hero-title mb-8 text-[var(--ink)]">
+          <span data-i18n="hero.title_1">Engineered for</span><br />
+          <span class="text-accent" data-i18n="hero.title_2">real-time.</span>
+        </h1>
+
+        <!-- Hero Description -->
+        <p class="text-lg lg:text-xl text-[var(--mute)] max-w-2xl font-normal leading-relaxed mb-10" data-i18n="hero.desc">
+          I engineer gameplay, multiplayer and simulation systems in <strong class="text-ink">Unreal Engine 5</strong> and <strong class="text-ink">Unity</strong> — netcode replication, deterministic state synchronization, telemetry tooling, and GPU spatial computing. Experience at <strong class="text-ink">Firescale Studios</strong> and <strong class="text-ink">Catness Game Studios</strong>.
+        </p>
+
+        <!-- Hero CTAs -->
+        <div class="flex flex-wrap gap-4 items-center">
+          <a href="#flagship" class="btn-pri" data-i18n="hero.cta_systems">See the systems →</a>
+          <a href="#contact" class="btn-sec" data-i18n="hero.cta_contact">Email me</a>
+        </div>
+
+        <!-- Spec Ticker -->
+        <div class="mt-14 pt-6 border-t border-[var(--rule)] flex flex-wrap gap-6 lg:gap-10 font-mono text-xs text-[var(--mute)] tracking-wider uppercase">
+          <div class="flex items-center gap-2">
+            <span class="text-accent">◆</span>
+            <span data-i18n="hero.ticker_1">Unreal 5 & Unity (C++ / C#)</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-accent">◆</span>
+            <span data-i18n="hero.ticker_2">Replication & Deterministic State Sync</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-accent">◆</span>
+            <span data-i18n="hero.ticker_3">Multi-Agent Simulation & Telemetry</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Portrait -->
+      <div class="lg:col-span-4 order-first lg:order-none flex justify-center lg:justify-end">
+        <div class="portrait-wrap w-full max-w-[280px] sm:max-w-xs lg:max-w-sm">
+          <div class="portrait-frame">
+            <span class="corner-bracket-tl"></span>
+            <span class="corner-bracket-tr"></span>
+            <span class="corner-bracket-bl"></span>
+            <span class="corner-bracket-br"></span>
+            <img src="img/pf.JPG" alt="Portrait of Alejandro Galo" class="portrait-img" />
+            <div class="portrait-scanline"></div>
+            <div class="portrait-hud">
+              <span>A.GALO // ID_0x1A</span>
+              <span class="text-accent"><span class="blink">●</span> ONLINE</span>
             </div>
-            <h1 class="text-5xl md:text-7xl font-bold font-display text-white mb-6 leading-tight tracking-tight">
-                <span data-i18n="hero.title_prefix">Building Immersive</span> <br>
-                <span class="text-gradient" data-i18n="hero.title_suffix">Game Experiences</span>
-            </h1>
-            <p class="text-tech-muted text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light" data-i18n="hero.desc">
-                I transform complex concepts into playable mechanics and efficient code. Specialized in Unity and Unreal
-                Engine with a focus on optimization and console porting.
+          </div>
+          <div class="portrait-meta">
+            <span>IMG // PROFILE.RAW</span>
+            <span class="text-accent">60 FPS</span>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </section>
+
+    <!-- METRICS / MARQUEE STRIP -->
+    <section class="border-y border-[var(--rule)] bg-[var(--surface)] py-12 px-6 lg:px-12">
+      <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+        
+        <!-- Metric 1 -->
+        <div class="md:border-r border-[var(--rule)] md:pr-8">
+          <div class="font-mono text-[10px] text-[var(--mute)] tracking-widest uppercase" data-i18n="metrics.col1_unit">CONCURRENT ENTITIES</div>
+          <div class="metric-num text-[var(--ink)]">25+</div>
+          <div class="font-sans text-sm text-[var(--mute)] mt-1" data-i18n="metrics.col1_desc">dedicated-server stress tests</div>
+        </div>
+
+        <!-- Metric 2 -->
+        <div class="md:border-r border-[var(--rule)] md:pr-8">
+          <div class="font-mono text-[10px] text-[var(--mute)] tracking-widest uppercase" data-i18n="metrics.col2_unit">TRC / XR</div>
+          <div class="metric-num text-[var(--ink)]">30+</div>
+          <div class="font-sans text-sm text-[var(--mute)] mt-1" data-i18n="metrics.col2_desc">compliance fixes resolved</div>
+        </div>
+
+        <!-- Metric 3 -->
+        <div class="md:border-r border-[var(--rule)] md:pr-8">
+          <div class="font-mono text-[10px] text-[var(--mute)] tracking-widest uppercase" data-i18n="metrics.col3_unit">PERCENT</div>
+          <div class="metric-num text-[var(--ink)]">−90%</div>
+          <div class="font-sans text-sm text-[var(--mute)] mt-1" data-i18n="metrics.col3_desc">QA turnaround reduction</div>
+        </div>
+
+        <!-- Metric 4 -->
+        <div>
+          <div class="font-mono text-[10px] text-[var(--mute)] tracking-widest uppercase" data-i18n="metrics.col4_unit">FPS STEADY</div>
+          <div class="metric-num text-[var(--ink)]">60</div>
+          <div class="font-sans text-sm text-[var(--mute)] mt-1" data-i18n="metrics.col4_desc">deterministic frame-time & memory</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FLAGSHIP CASE STUDY SECTION -->
+    <section id="flagship" class="py-24 lg:py-32 px-6 lg:px-12 max-w-7xl mx-auto">
+      
+      <!-- Flagship Header -->
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-10 h-px bg-[var(--accent)]"></div>
+        <span class="chip chip-accent" data-i18n="flagship.chip">◆ FLAGSHIP SYSTEM</span>
+      </div>
+
+      <h2 class="section-title-large mb-12 max-w-4xl text-[var(--ink)]">
+        <span data-i18n="flagship.title_1">Authoritative replication &</span><br />
+        <span class="text-accent" data-i18n="flagship.title_2">deterministic state sync</span> <span class="text-[var(--mute)]" data-i18n="flagship.title_3">in UE5.</span>
+      </h2>
+
+      <!-- Flagship Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start case-study-grid">
+        
+        <!-- Left: Architecture Breakdown -->
+        <div class="lg:col-span-7 space-y-8">
+          <p class="text-lg lg:text-xl text-[var(--mute)] leading-relaxed font-normal" data-i18n="flagship.desc">
+            Engineered authority-driven state synchronization, replicated entity components, and deterministic gameplay logic in UE5 — validated with distributed stress tests on headless dedicated servers (~25 concurrent synchronized entities), profiling tick stability, RPC overhead, and bandwidth with Unreal Insights.
+          </p>
+
+          <!-- 2x2 Feature Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <div class="p-5 bg-[var(--surface)] border border-[var(--rule)]">
+              <div class="font-mono text-[11px] uppercase tracking-wider text-accent font-semibold mb-2" data-i18n="flagship.card1_title">State Synchronization</div>
+              <div class="font-sans text-xs text-[var(--ink)] leading-relaxed" data-i18n="flagship.card1_desc">
+                Authority-driven state sync, replicated entity components, and deterministic gameplay logic on dedicated servers.
+              </div>
+            </div>
+
+            <div class="p-5 bg-[var(--surface)] border border-[var(--rule)]">
+              <div class="font-mono text-[11px] uppercase tracking-wider text-accent font-semibold mb-2" data-i18n="flagship.card2_title">Stress Testing & Profiling</div>
+              <div class="font-sans text-xs text-[var(--ink)] leading-relaxed" data-i18n="flagship.card2_desc">
+                Distributed stress tests on headless servers (~25 concurrent entities): tick stability, RPC overhead, and bandwidth optimization.
+              </div>
+            </div>
+
+            <div class="p-5 bg-[var(--surface)] border border-[var(--rule)]">
+              <div class="font-mono text-[11px] uppercase tracking-wider text-accent font-semibold mb-2" data-i18n="flagship.card3_title">Desync & Race Conditions</div>
+              <div class="font-sans text-xs text-[var(--ink)] leading-relaxed" data-i18n="flagship.card3_desc">
+                Diagnosed state desynchronizations, edge-case race conditions, and network bottlenecks using Unreal Insights and telemetry tooling.
+              </div>
+            </div>
+
+            <div class="p-5 bg-[var(--surface)] border border-[var(--rule)]">
+              <div class="font-mono text-[11px] uppercase tracking-wider text-accent font-semibold mb-2" data-i18n="flagship.card4_title">Observability & Tooling</div>
+              <div class="font-sans text-xs text-[var(--ink)] leading-relaxed" data-i18n="flagship.card4_desc">
+                Runtime telemetry & diagnostics feeding custom tooling — profiling distributed systems to reproduce network edge cases deterministically.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="chip">Unreal 5</span>
+            <span class="chip">C++</span>
+            <span class="chip">Replication</span>
+            <span class="chip">Deterministic Systems</span>
+            <span class="chip">RPCs</span>
+            <span class="chip">Dedicated Servers</span>
+            <span class="chip">Stress Testing</span>
+          </div>
+        </div>
+
+        <!-- Right: Telemetry Terminal Box -->
+        <div class="lg:col-span-5 w-full">
+          <div class="terminal-box shadow-2xl">
+            <div class="terminal-header">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-terminal text-accent text-xs"></i>
+                <span>./net — session_telemetry.log</span>
+              </span>
+              <span class="text-accent blink font-bold">●</span>
+            </div>
+            <div id="terminal-content" class="terminal-body space-y-1">
+              <div><span class="text-[var(--mute)]">[tick 1247]</span> <span class="text-accent">player_96</span> fire <span class="text-[var(--ink)]">→ server_ack(182ms)</span> hit=<span class="text-accent">true</span></div>
+              <div><span class="text-[var(--mute)]">[tick 1248]</span> replicate actors=<span class="text-[var(--ink)]">2,384</span> / budget=<span class="text-[var(--ink)]">2,600</span></div>
+              <div><span class="text-[var(--mute)]">[tick 1249]</span> <span class="text-accent">player_42</span> inv_pick <span class="text-[var(--ink)]">item_rifle_02</span> ack=<span class="text-accent">✓</span></div>
+              <div><span class="text-[var(--mute)]">[tick 1250]</span> bandwidth kbps/client <span class="text-[var(--ink)]">38.4</span> avg <span class="text-[var(--ink)]">36.1</span></div>
+              <div><span class="text-[var(--mute)]">[tick 1251]</span> <span class="text-accent">state_reconcile</span> entities=<span class="text-[var(--ink)]">47</span> drift=<span class="text-[var(--ink)]">0.00</span></div>
+              <div><span class="text-[var(--mute)]">[tick 1252]</span> <span class="text-accent">player_11</span> disconnect <span class="text-[var(--ink)]">→ session_persist(60s)</span></div>
+              <div><span class="text-[var(--mute)]">[tick 1253]</span> net_update <span class="text-[var(--ink)]">OK</span> jitter=±<span class="text-[var(--ink)]">2.8ms</span></div>
+              <div><span class="text-[var(--mute)]">[tick 1254]</span> server_tick <span class="text-accent">60Hz</span> budget=<span class="text-[var(--ink)]">14.2/16.6ms</span></div>
+              <div><span class="text-[var(--mute)]">[tick 1255]</span> <span class="text-accent">sync_report</span> desync=<span class="text-[var(--ink)]">0</span> race_cond=<span class="text-[var(--ink)]">0</span></div>
+            </div>
+            <div class="px-5 py-3 border-t border-[var(--rule)] font-mono text-xs text-[var(--mute)] flex items-center gap-1.5">
+              <span>$</span>
+              <span class="text-accent blink font-bold">_</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SELECTED WORK / PROJECTS GRID -->
+    <section id="work" class="py-24 lg:py-32 px-6 lg:px-12 max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="flex justify-between items-baseline mb-12 border-b border-[var(--rule)] pb-6">
+        <h3 class="font-display text-4xl lg:text-5xl font-bold tracking-tight text-[var(--ink)]" data-i18n="projects.title">
+          Selected work
+        </h3>
+        <span class="chip" data-i18n="projects.count_chip">04 projects</span>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 projects-grid">
+
+        <!-- Project 1: Sea Horizon (Span 2) -->
+        <div class="prj-card span-2 lg:col-span-2 min-h-[320px]">
+          <div class="prj-shine" style="background: radial-gradient(circle at 30% 20%, rgba(255, 59, 107, 0.18), transparent 65%);"></div>
+          
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-mono text-xs uppercase tracking-widest text-accent2 font-semibold" data-i18n="projects.p1_sub">
+                Console port
+              </span>
+              <span class="font-mono text-xs text-[var(--mute)]">#01</span>
+            </div>
+            <h4 class="font-display text-3xl lg:text-4xl font-bold tracking-tight text-[var(--ink)] mb-3" data-i18n="projects.p1_title">
+              Sea Horizon
+            </h4>
+            <p class="font-sans text-sm lg:text-base text-[var(--mute)] leading-relaxed max-w-2xl" data-i18n="projects.p1_desc">
+              PS4 / PS5 / Xbox Series. Platform SDK integration, resolved 30+ TRC/XR platform compliance issues, and optimized memory budgets.
             </p>
-            <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="Alejandro_Garcia_GameDev_CV_2025_Human_NoNumber.pdf" target="_blank"
-                    class="px-8 py-3 bg-tech-primary text-slate-900 font-bold rounded-lg hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg shadow-tech-primary/25"
-                    data-i18n="hero.cta_cv">
-                    Download CV
-                </a>
-                <a href="#contact"
-                    class="px-8 py-3 border border-gray-600 text-white font-medium rounded-lg hover:bg-gray-800 transition-all"
-                    data-i18n="hero.cta_contact">
-                    Contact Me
-                </a>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-[var(--rule)]/60 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex flex-wrap gap-2">
+              <span class="chip text-[10px]">Unreal</span>
+              <span class="chip text-[10px]">C++</span>
+              <span class="chip text-[10px]">PS4 / PS5</span>
+              <span class="chip text-[10px]">Xbox Series</span>
+              <span class="chip text-[10px]">TRC / XR</span>
+              <span class="chip text-[10px]">GDK</span>
             </div>
+            <a href="https://catnessgames.com/games/sea-horizon/" target="_blank" rel="noopener" class="font-mono text-xs uppercase tracking-wider text-accent2 hover:underline flex items-center gap-1.5">
+              <span>View Case</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
         </div>
 
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-gray-500">
-            <i class="fa-solid fa-arrow-down-long text-xl"></i>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-24 bg-tech-surface/30 px-4">
-        <div class="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-16">
-            <div class="w-full md:w-5/12 relative group">
-                <div
-                    class="absolute -inset-2 bg-gradient-to-tr from-tech-primary to-tech-secondary rounded-2xl opacity-20 group-hover:opacity-40 transition duration-500">
-                </div>
-                <div
-                    class="relative aspect-square bg-slate-800 rounded-xl overflow-hidden shadow-2xl flex items-center justify-center">
-                    <!-- Foto real -->
-                    <img src="img/pf.JPG" alt="Alejandro Galo" class="w-full h-full object-cover">
-                </div>
+        <!-- Project 2: Rise of the Overlords -->
+        <div class="prj-card min-h-[320px]">
+          <div class="prj-shine" style="background: radial-gradient(circle at 30% 20%, rgba(0, 229, 255, 0.16), transparent 65%);"></div>
+          
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-mono text-xs uppercase tracking-widest text-accent font-semibold" data-i18n="projects.p2_sub">
+                Live Unity title
+              </span>
+              <span class="font-mono text-xs text-[var(--mute)]">#02</span>
             </div>
-            <div class="w-full md:w-7/12">
-                <h2 class="text-3xl md:text-4xl font-display font-bold mb-6 text-white"><span
-                        data-i18n="about.title">About</span> <span class="text-tech-primary"
-                        data-i18n="about.title_span">Me</span></h2>
-                <div class="space-y-4 text-tech-muted text-lg leading-relaxed">
-                    <p data-i18n="about.p1">
-                        Hi, I'm Alejandro. I am a Gameplay Programmer based in Castellón, Spain. My journey started with
-                        creating simple games in Scratch, and now I'm shipping weekly builds for complex multiplayer
-                        prototypes.
-                    </p>
-                    <p data-i18n="about.p2">
-                        I have experience porting titles like 'Sea Horizon' to PS4, PS5, and Xbox. I am driven by
-                        mastering emerging technologies and writing clean, maintainable code. I've improved QA
-                        turnaround times by 95% and boosted frame rates by 15% through optimization.
-                    </p>
-                </div>
-
-                <div class="mt-8 grid grid-cols-2 gap-4">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-check text-tech-primary"></i>
-                        <span class="text-white" data-i18n="about.check1">Console Porting (PS/Xbox)</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-check text-tech-primary"></i>
-                        <span class="text-white" data-i18n="about.check2">Performance Optimization</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-check text-tech-primary"></i>
-                        <span class="text-white" data-i18n="about.check3">Multiplayer Networking</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-check text-tech-primary"></i>
-                        <span class="text-white" data-i18n="about.check4">Tool Development</span>
-                    </div>
-                </div>
-
-                <div class="flex gap-5 mt-8">
-                    <a href="https://github.com/MrLexDev" target="_blank"
-                        class="text-2xl text-slate-400 hover:text-white transition-colors"><i
-                            class="fa-brands fa-github"></i></a>
-                    <a href="https://linkedin.com/in/alejandro-galo" target="_blank"
-                        class="text-2xl text-slate-400 hover:text-[#0077b5] transition-colors"><i
-                            class="fa-brands fa-linkedin"></i></a>
-                    <a href="https://mrlexdev.itch.io/" target="_blank"
-                        class="text-2xl text-slate-400 hover:text-[#fa5c5c] transition-colors"><i
-                            class="fa-brands fa-itch-io"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Timeline / Trayectoria Section -->
-    <section id="experience" class="py-24 px-4">
-        <div class="max-w-screen-lg mx-auto">
-            <h2 class="text-3xl md:text-4xl font-display font-bold mb-16 text-center text-white"><span
-                    data-i18n="exp.title">My</span> <span class="text-tech-secondary"
-                    data-i18n="exp.title_span">Journey</span></h2>
-
-            <div class="relative border-l border-slate-700 ml-3 md:ml-6 space-y-12">
-
-                <!-- Item 1 -->
-                <div class="relative pl-8 md:pl-12 group">
-                    <span
-                        class="absolute flex items-center justify-center w-6 h-6 bg-tech-bg border-2 border-tech-primary rounded-full -left-[13px] group-hover:scale-125 transition-transform duration-300">
-                        <div class="w-2 h-2 bg-tech-primary rounded-full"></div>
-                    </span>
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                        <h3 class="text-xl font-bold text-white" data-i18n="exp.item1_role">Unity Developer</h3>
-                        <span
-                            class="text-sm font-mono text-tech-primary bg-tech-primary/10 px-2 py-1 rounded border border-tech-primary/20 w-fit mt-1 sm:mt-0"
-                            data-i18n="exp.item1_date">Dec 2024 - Present</span>
-                    </div>
-                    <p class="text-slate-400 font-medium mb-2">Firescale Studios | Castellon, Spain</p>
-                    <p class="text-tech-muted" data-i18n="exp.item1_desc">Built in-game Cheat Systems accelerating QA by
-                        95%. Developed localization tools cutting iteration time by 60%. Implemented data-driven
-                        encounter systems for <a
-                            href="https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/" target="_blank"
-                            class="text-tech-primary hover:underline">Rise of the Overlords</a>.</p>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="relative pl-8 md:pl-12 group">
-                    <span
-                        class="absolute flex items-center justify-center w-6 h-6 bg-tech-bg border-2 border-slate-600 rounded-full -left-[13px] group-hover:border-tech-primary transition-colors duration-300">
-                        <div class="w-2 h-2 bg-slate-600 rounded-full group-hover:bg-tech-primary transition-colors">
-                        </div>
-                    </span>
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                        <h3 class="text-xl font-bold text-white" data-i18n="exp.item2_role">Unreal Developer</h3>
-                        <span
-                            class="text-sm font-mono text-slate-400 bg-slate-800 px-2 py-1 rounded border border-slate-700 w-fit mt-1 sm:mt-0"
-                            data-i18n="exp.item2_date">Jan 2023 - Nov 2024</span>
-                    </div>
-                    <p class="text-slate-400 font-medium mb-2">Catness Game Studios | Castellon, Spain</p>
-                    <p class="text-tech-muted" data-i18n="exp.item2_desc">Built a 100-player battle-royale in UE5.
-                        Ported <a href="https://catnessgames.com/games/sea-horizon/" target="_blank"
-                            class="text-tech-primary hover:underline">Sea Horizon</a> to PS4, PS5, and Xbox. Migrated
-                        projects to UE 5.3 yielding +15% FPS gain. Implemented replicated inventory systems.</p>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="relative pl-8 md:pl-12 group">
-                    <span
-                        class="absolute flex items-center justify-center w-6 h-6 bg-tech-bg border-2 border-tech-secondary rounded-full -left-[13px] group-hover:scale-125 transition-transform duration-300">
-                        <i class="fa-solid fa-graduation-cap text-[10px] text-tech-secondary"></i>
-                    </span>
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                        <h3 class="text-xl font-bold text-white" data-i18n="exp.item3_role">BSc, Design and Development
-                            of Videogames</h3>
-                        <span
-                            class="text-sm font-mono text-tech-secondary bg-tech-secondary/10 px-2 py-1 rounded border border-tech-secondary/20 w-fit mt-1 sm:mt-0"
-                            data-i18n="exp.item3_date">Sep 2019 - Jun 2023</span>
-                    </div>
-                    <p class="text-slate-400 font-medium mb-2">Universitat Jaume I</p>
-                    <p class="text-tech-muted" data-i18n="exp.item3_desc">Specialized training in game design,
-                        programming, and graphics. Included a concentration in Software Engineering (2020-2021).</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section (Updated with magnet-trigger class and real skills) -->
-    <section id="skills" class="py-24 bg-tech-surface/30 px-4 relative overflow-hidden">
-        <div class="max-w-screen-xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-display font-bold mb-12 text-center text-white"><span
-                    data-i18n="skills.title">Tech</span> <span class="text-tech-primary"
-                    data-i18n="skills.title_span">Stack</span></h2>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
-                <!-- Skill 1: C++ -->
-                <div
-                    class="magnet-trigger p-6 bg-tech-bg border border-slate-800 rounded-xl hover:border-tech-primary hover:bg-slate-900 transition-all group shadow-lg cursor-default">
-                    <img src="img/c.svg" alt="C++" class="h-12 mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <h3 class="font-bold text-lg text-white">C++</h3>
-                </div>
-                <!-- Skill 2: C# -->
-                <div
-                    class="magnet-trigger p-6 bg-tech-bg border border-slate-800 rounded-xl hover:border-tech-primary hover:bg-slate-900 transition-all group shadow-lg cursor-default">
-                    <img src="img/c--4.svg" alt="C#"
-                        class="h-12 mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <h3 class="font-bold text-lg text-white">C#</h3>
-                </div>
-                <!-- Skill 3: Unity -->
-                <div
-                    class="magnet-trigger p-6 bg-tech-bg border border-slate-800 rounded-xl hover:border-tech-primary hover:bg-slate-900 transition-all group shadow-lg cursor-default">
-                    <img src="img/unity3d-icon_white.svg" alt="Unity"
-                        class="h-12 mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <h3 class="font-bold text-lg text-white">Unity</h3>
-                </div>
-                <!-- Skill 4: Unreal -->
-                <div
-                    class="magnet-trigger p-6 bg-tech-bg border border-slate-800 rounded-xl hover:border-tech-primary hover:bg-slate-900 transition-all group shadow-lg cursor-default">
-                    <img src="img/unreal-engine-white.svg" alt="Unreal"
-                        class="h-12 mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <h3 class="font-bold text-lg text-white">Unreal 5</h3>
-                </div>
-                <!-- Skill 5: Git -->
-                <div
-                    class="magnet-trigger p-6 bg-tech-bg border border-slate-800 rounded-xl hover:border-tech-primary hover:bg-slate-900 transition-all group shadow-lg cursor-default">
-                    <img src="img/Git-Icon.svg" alt="Git"
-                        class="h-12 mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <h3 class="font-bold text-lg text-white">Git</h3>
-                </div>
-                <!-- Skill 6: Perforce -->
-                <div
-                    class="magnet-trigger p-6 bg-tech-bg border border-slate-800 rounded-xl hover:border-tech-primary hover:bg-slate-900 transition-all group shadow-lg cursor-default">
-                    <img src="img/p4v.png" alt="Perforce"
-                        class="h-12 mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <h3 class="font-bold text-lg text-white">Perforce</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section (Updated with magnet-trigger class) -->
-    <section id="projects" class="py-24 px-4">
-        <div class="max-w-screen-xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-display font-bold mb-12 text-center text-white"><span
-                    data-i18n="projects.title">Featured</span> <span class="text-tech-secondary"
-                    data-i18n="projects.title_span">Projects</span></h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1: Fractalia -->
-                <div
-                    class="magnet-trigger group relative bg-tech-surface rounded-xl overflow-hidden border border-slate-800 hover:border-tech-primary transition-all duration-300 shadow-xl project-card">
-                    <a href="Fractalia/index.html" class="project-image-container">
-                        <div
-                            class="absolute inset-0 bg-slate-900/60 group-hover:bg-slate-900/20 transition-all duration-300 z-10 pointer-events-none">
-                        </div>
-                        <img src="img/Banner3.png" alt="Fractalia" class="project-image">
-                    </a>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-white group-hover:text-tech-primary transition-colors">
-                                Fractalia</h3>
-                            <div class="flex gap-2">
-                                <a href="https://youtu.be/Ye9NPVDxxRE" target="_blank" title="Watch Gameplay"><i
-                                        class="fa-brands fa-youtube text-slate-400 hover:text-[#ff0000] transition-colors cursor-pointer text-xl"></i></a>
-                                <a href="https://mrlexdev.itch.io/fractalia" target="_blank" title="Itch.io Page"><i
-                                        class="fa-brands fa-itch-io text-slate-400 hover:text-[#fa5c5c] transition-colors cursor-pointer text-xl"></i></a>
-                                <a href="https://github.com/MrLexDev/Fractalia" target="_blank" title="View Source"><i
-                                        class="fa-brands fa-github text-slate-400 hover:text-white transition-colors cursor-pointer text-xl"></i></a>
-                            </div>
-                        </div>
-                        <p class="text-tech-muted text-sm mb-4 line-clamp-3" data-i18n="projects.p1_desc">Procedurally
-                            generated fractal exploration game. Implemented custom raymarching algorithms in Unity
-                            shaders using HLSL to render complex geometries in real-time.</p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span
-                                class="text-xs text-sky-300 bg-sky-900/30 px-2 py-1 rounded border border-sky-800">Unity</span>
-                            <span
-                                class="text-xs text-sky-300 bg-sky-900/30 px-2 py-1 rounded border border-sky-800">HLSL</span>
-                        </div>
-                        <a href="Fractalia/index.html"
-                            class="inline-flex items-center text-sm font-bold text-tech-primary hover:text-white transition-colors">
-                            <span data-i18n="projects.btn_demo">Play Demo</span> <i
-                                class="fa-solid fa-gamepad ml-2 text-xs"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Project 2: The Hidden Offering -->
-                <div
-                    class="magnet-trigger group relative bg-tech-surface rounded-xl overflow-hidden border border-slate-800 hover:border-tech-secondary transition-all duration-300 shadow-xl project-card">
-                    <a href="https://mrlexdev.itch.io/the-hidden-offering" target="_blank"
-                        class="project-image-container">
-                        <div
-                            class="absolute inset-0 bg-slate-900/60 group-hover:bg-slate-900/20 transition-all duration-300 z-10 pointer-events-none">
-                        </div>
-                        <img src="img/HiddenOffering.png" alt="The Hidden Offering" class="project-image">
-                    </a>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-white group-hover:text-tech-secondary transition-colors">
-                                The Hidden Offering</h3>
-                            <div class="flex gap-2">
-                                <a href="https://youtu.be/vRdege_J9DA" target="_blank" title="Watch Gameplay"><i
-                                        class="fa-brands fa-youtube text-slate-400 hover:text-[#ff0000] transition-colors cursor-pointer text-xl"></i></a>
-                                <a href="https://mrlexdev.itch.io/the-hidden-offering" target="_blank"
-                                    title="Itch.io Page"><i
-                                        class="fa-brands fa-itch-io text-slate-400 hover:text-[#fa5c5c] transition-colors cursor-pointer text-xl"></i></a>
-                                <a href="https://github.com/alitwicerh/Secrets" target="_blank" title="View Source"><i
-                                        class="fa-brands fa-github text-slate-400 hover:text-white transition-colors cursor-pointer text-xl"></i></a>
-                            </div>
-                        </div>
-                        <p class="text-tech-muted text-sm mb-4 line-clamp-3" data-i18n="projects.p2_desc">
-                            Narrative-stealth experience created in 48h for Game Off jam. Handled gameplay scripting and
-                            visual logic using Blueprints and C++ in UE5.</p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span
-                                class="text-xs text-indigo-300 bg-indigo-900/30 px-2 py-1 rounded border border-indigo-800">Unreal
-                                5</span>
-                            <span
-                                class="text-xs text-indigo-300 bg-indigo-900/30 px-2 py-1 rounded border border-indigo-800">C++</span>
-                        </div>
-                        <a href="https://mrlexdev.itch.io/the-hidden-offering" target="_blank"
-                            class="inline-flex items-center text-sm font-bold text-tech-secondary hover:text-white transition-colors">
-                            <span data-i18n="projects.btn">View Details</span> <i
-                                class="fa-solid fa-arrow-right ml-2 text-xs"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Project 3: Engine Wars -->
-                <div
-                    class="magnet-trigger group relative bg-tech-surface rounded-xl overflow-hidden border border-slate-800 hover:border-emerald-500 transition-all duration-300 shadow-xl project-card">
-                    <a href="https://ttakeshii.itch.io/engine-wars" target="_blank" class="project-image-container">
-                        <div
-                            class="absolute inset-0 bg-slate-900/60 group-hover:bg-slate-900/20 transition-all duration-300 z-10 pointer-events-none">
-                        </div>
-                        <img src="img/enginewars.png" alt="Engine Wars" class="project-image">
-                    </a>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-white group-hover:text-emerald-500 transition-colors">
-                                Engine Wars</h3>
-                            <div class="flex gap-2">
-                                <a href="https://youtu.be/YPu8ssr_1HA" target="_blank" title="Watch Gameplay"><i
-                                        class="fa-brands fa-youtube text-slate-400 hover:text-[#ff0000] transition-colors cursor-pointer text-xl"></i></a>
-                                <a href="https://ttakeshii.itch.io/engine-wars" target="_blank" title="Itch.io Page"><i
-                                        class="fa-brands fa-itch-io text-slate-400 hover:text-[#fa5c5c] transition-colors cursor-pointer text-xl"></i></a>
-                            </div>
-                        </div>
-                        <p class="text-tech-muted text-sm mb-4 line-clamp-3" data-i18n="projects.p3_desc">A unique game
-                            featuring quirky levels with mismatched gameplay across diverse worlds. Developed using
-                            obsolete tools in a dystopian setting.</p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span
-                                class="text-xs text-emerald-300 bg-emerald-900/30 px-2 py-1 rounded border border-emerald-800">Unity</span>
-                            <span
-                                class="text-xs text-emerald-300 bg-emerald-900/30 px-2 py-1 rounded border border-emerald-800">C#</span>
-                        </div>
-                        <a href="https://ttakeshii.itch.io/engine-wars" target="_blank"
-                            class="inline-flex items-center text-sm font-bold text-emerald-500 hover:text-white transition-colors">
-                            <span data-i18n="projects.btn">View Details</span> <i
-                                class="fa-solid fa-arrow-right ml-2 text-xs"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 px-4 bg-tech-surface/20">
-        <div class="max-w-xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-display font-bold mb-6 text-white" data-i18n="contact.title">Let's
-                Talk?</h2>
-            <p class="text-tech-muted mb-10 text-lg" data-i18n="contact.desc">
-                I am available for freelance opportunities or to join a great team. If you have a project in mind, get
-                in touch.
+            <h4 class="font-display text-2xl lg:text-3xl font-bold tracking-tight text-[var(--ink)] mb-3" data-i18n="projects.p2_title">
+              Rise of the Overlords
+            </h4>
+            <p class="font-sans text-sm text-[var(--mute)] leading-relaxed" data-i18n="projects.p2_desc">
+              Modular data-driven combat systems using C# and ScriptableObjects. In-engine cheat menu & tooling reduced QA turnaround by 90%.
             </p>
+          </div>
 
-            <div class="glass-effect rounded-lg p-8">
-                <!-- Botón de contacto actualizado con el estilo del botón de CV -->
-                <a href="mailto:AlejandroGaloGames@gmail.com"
-                    class="inline-block w-full py-3.5 bg-tech-primary text-slate-900 font-bold rounded-lg hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg shadow-tech-primary/25 mb-4">
-                    AlejandroGaloGames@gmail.com
-                </a>
-                <div class="flex justify-center space-x-6 mt-6">
-                    <a href="https://github.com/MrLexDev" target="_blank"
-                        class="text-3xl text-gray-400 hover:text-white transition-colors"><i
-                            class="fa-brands fa-github"></i></a>
-                    <a href="https://linkedin.com/in/alejandro-galo" target="_blank"
-                        class="text-3xl text-gray-400 hover:text-[#0077b5] transition-colors"><i
-                            class="fa-brands fa-linkedin"></i></a>
-                </div>
+          <div class="mt-8 pt-6 border-t border-[var(--rule)]/60 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex flex-wrap gap-2">
+              <span class="chip text-[10px]">Unity</span>
+              <span class="chip text-[10px]">C#</span>
+              <span class="chip text-[10px]">Zenject</span>
+              <span class="chip text-[10px]">ScriptableObjects</span>
+              <span class="chip text-[10px]">Tooling</span>
             </div>
+            <a href="https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/" target="_blank" rel="noopener" class="font-mono text-xs uppercase tracking-wider text-accent hover:underline flex items-center gap-1.5">
+              <span>Steam</span> <i class="fa-brands fa-steam text-xs"></i>
+            </a>
+          </div>
         </div>
+
+        <!-- Project 3: Fractalia -->
+        <div class="prj-card min-h-[320px]">
+          <div class="prj-shine" style="background: radial-gradient(circle at 30% 20%, rgba(167, 139, 250, 0.18), transparent 65%);"></div>
+          
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-mono text-xs uppercase tracking-widest text-[#a78bfa] font-semibold" data-i18n="projects.p3_sub">
+                Real-time spatial computing
+              </span>
+              <span class="font-mono text-xs text-[var(--mute)]">#03</span>
+            </div>
+            <h4 class="font-display text-2xl lg:text-3xl font-bold tracking-tight text-[var(--ink)] mb-3" data-i18n="projects.p3_title">
+              Fractalia
+            </h4>
+            <p class="font-sans text-sm text-[var(--mute)] leading-relaxed" data-i18n="projects.p3_desc">
+              GPU-accelerated volumetric rendering and spatial queries. Custom HLSL raymarching, analytic Signed Distance Functions (SDFs), and optimized sphere tracing on GPU compute passes.
+            </p>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-[var(--rule)]/60 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex flex-wrap gap-2">
+              <span class="chip text-[10px]">Unity</span>
+              <span class="chip text-[10px]">C#</span>
+              <span class="chip text-[10px]">HLSL</span>
+              <span class="chip text-[10px]">Raymarching</span>
+              <span class="chip text-[10px]">SDF</span>
+              <span class="chip text-[10px]">GPU Compute</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <a href="Fractalia/index.html" class="font-mono text-xs uppercase tracking-wider text-[#a78bfa] hover:underline flex items-center gap-1.5">
+                <span data-i18n="projects.p3_btn">Play Demo →</span>
+              </a>
+              <a href="https://github.com/MrLexDev/Fractalia" target="_blank" rel="noopener" class="text-[var(--mute)] hover:text-white" title="Source Code">
+                <i class="fa-brands fa-github text-sm"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4: Urban Traffic Simulation AI (Span 2) -->
+        <div class="prj-card span-2 lg:col-span-2 min-h-[320px]">
+          <div class="prj-shine" style="background: radial-gradient(circle at 30% 20%, rgba(16, 185, 129, 0.18), transparent 65%);"></div>
+          
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-mono text-xs uppercase tracking-widest text-emerald-400 font-semibold" data-i18n="projects.p4_sub">
+                Bachelor's Thesis · Multi-Agent Simulation
+              </span>
+              <span class="font-mono text-xs text-[var(--mute)]">#04</span>
+            </div>
+            <h4 class="font-display text-2xl lg:text-3xl font-bold tracking-tight text-[var(--ink)] mb-3" data-i18n="projects.p4_title">
+              Urban Traffic Simulation AI
+            </h4>
+            <p class="font-sans text-sm lg:text-base text-[var(--mute)] leading-relaxed max-w-2xl" data-i18n="projects.p4_desc">
+              Autonomous vehicle agents (FSM) with spatial sensor queries simulating dynamic traffic flow, intersection priority rules, and reactive obstacle avoidance — optimized perception loops and raycasting for smooth multi-agent throughput.
+            </p>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-[var(--rule)]/60 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex flex-wrap gap-2">
+              <span class="chip text-[10px]">AI / Agents</span>
+              <span class="chip text-[10px]">FSM</span>
+              <span class="chip text-[10px]">Spatial Queries</span>
+              <span class="chip text-[10px]">Pathfinding</span>
+              <span class="chip text-[10px]">Optimization</span>
+              <span class="chip text-[10px]">Real-Time Systems</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <a href="https://github.com/MrLexDev" target="_blank" rel="noopener" class="font-mono text-xs uppercase tracking-wider text-emerald-400 hover:underline flex items-center gap-1.5">
+                <span>View on GitHub</span> <i class="fa-brands fa-github text-xs"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-8 bg-slate-950 text-center border-t border-slate-900">
-        <p class="text-slate-600 text-sm">&copy; 2025 Alejandro Galo. <span data-i18n="footer">All rights
-                reserved.</span></p>
-    </footer>
+    <!-- TRAJECTORY / TIMELINE SECTION -->
+    <section id="trajectory" class="py-24 lg:py-32 px-6 lg:px-12 bg-[var(--surface)] border-y border-[var(--rule)]">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Header -->
+        <div class="flex items-center gap-4 mb-12">
+          <div class="w-10 h-px bg-[var(--accent)]"></div>
+          <span class="chip chip-accent" data-i18n="trajectory.chip">◆ TIMELINE</span>
+        </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/main.js"></script>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 timeline-grid">
+          
+          <!-- Left Column -->
+          <div class="lg:col-span-4">
+            <h3 class="font-display text-5xl lg:text-6xl font-bold tracking-tight text-[var(--ink)]" data-i18n="trajectory.title">
+              Trajectory.
+            </h3>
+          </div>
+
+          <!-- Right Timeline Items -->
+          <div class="lg:col-span-8 space-y-0">
+            
+            <!-- Item 1 -->
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-8 py-8 border-t border-[var(--rule)]">
+              <div class="sm:col-span-4 font-mono text-xs uppercase tracking-widest text-accent font-semibold" data-i18n="trajectory.item1_year">
+                Dec. 2024 — May 2026
+              </div>
+              <div class="sm:col-span-8">
+                <div class="font-display text-2xl font-semibold text-[var(--ink)] mb-2">
+                  <span data-i18n="trajectory.item1_role">Unity Gameplay & Systems Developer (C#)</span>
+                  <span class="text-[var(--mute)] font-normal"> · <span data-i18n="trajectory.item1_co">Firescale Studios · Castellón, Spain</span></span>
+                </div>
+                <p class="font-sans text-sm text-[var(--mute)] leading-relaxed" data-i18n="trajectory.item1_desc">
+                  Architected modular gameplay & engine systems with C#, Zenject DI, and ScriptableObjects — async asset streaming via Addressables, runtime diagnostics & telemetry tooling, Editor automation with data validation, and deterministic 60 FPS frame-time profiling.
+                </p>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-8 py-8 border-t border-[var(--rule)]">
+              <div class="sm:col-span-4 font-mono text-xs uppercase tracking-widest text-accent2 font-semibold" data-i18n="trajectory.item2_year">
+                Jan. 2023 — Nov. 2024
+              </div>
+              <div class="sm:col-span-8">
+                <div class="font-display text-2xl font-semibold text-[var(--ink)] mb-2">
+                  <span data-i18n="trajectory.item2_role">Multiplayer & Gameplay Programmer (C++)</span>
+                  <span class="text-[var(--mute)] font-normal"> · <span data-i18n="trajectory.item2_co">Catness Game Studios · Hybrid, Spain</span></span>
+                </div>
+                <p class="font-sans text-sm text-[var(--mute)] leading-relaxed" data-i18n="trajectory.item2_desc">
+                  Implemented networked gameplay mechanics with GAS, replicated inventories, and synchronized world states in UE5. Stress-tested dedicated servers (~25 concurrent entities), diagnosed desyncs & race conditions with Unreal Insights, and ported Sea Horizon to PS4/PS5/Xbox Series (30+ TRC/XR fixes, GDK).
+                </p>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-8 py-8 border-t border-[var(--rule)]">
+              <div class="sm:col-span-4 font-mono text-xs uppercase tracking-widest text-[var(--mute)]" data-i18n="trajectory.item3_year">
+                Sept. 2019 — June 2023
+              </div>
+              <div class="sm:col-span-8">
+                <div class="font-display text-2xl font-semibold text-[var(--ink)] mb-2">
+                  <span data-i18n="trajectory.item3_role">BSc in Design & Development of Video Games</span> 
+                  <span class="text-[var(--mute)] font-normal"> · <span data-i18n="trajectory.item3_co">Universitat Jaume I · Castellón, Spain</span></span>
+                </div>
+                <p class="font-sans text-sm text-[var(--mute)] leading-relaxed" data-i18n="trajectory.item3_desc">
+                  Specialization in Software Engineering and Real-Time Systems Architecture. Urban traffic simulation AI thesis.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-32 lg:py-44 px-6 lg:px-12 max-w-7xl mx-auto text-center relative">
+      
+      <div class="max-w-4xl mx-auto">
+        
+        <div class="font-mono text-xs tracking-widest text-accent uppercase font-semibold mb-8" data-i18n="contact.chip">
+          ◆ LET'S CONNECT
+        </div>
+
+        <h2 class="cta-huge-title text-[var(--ink)] mb-8">
+          <span data-i18n="contact.title_1">Building something</span><br />
+          <span class="text-accent italic font-normal" data-i18n="contact.title_2">multiplayer or simulated?</span>
+        </h2>
+
+        <p class="font-sans text-lg lg:text-2xl text-[var(--mute)] max-w-2xl mx-auto font-normal leading-relaxed mb-12" data-i18n="contact.desc">
+          I'm actively looking for gameplay, multiplayer, and simulation programming roles (Remote & Relocation). C++, C#, Unreal Engine 5, Unity, Netcode, Deterministic Systems, and Telemetry Tooling.
+        </p>
+
+        <div class="flex flex-wrap gap-4 justify-center items-center mb-16">
+          <a href="mailto:AlejandroGaloDev@gmail.com" class="btn-pri glow !text-sm !py-4 !px-8" data-i18n="contact.cta_email">
+            AlejandroGaloDev@gmail.com →
+          </a>
+          <div class="relative cv-dropdown" data-cv-dropdown>
+            <button data-cv-toggle class="btn-sec !text-sm !py-4 !px-8" aria-haspopup="true" aria-expanded="false" data-i18n="contact.cta_cv">
+              Download CV
+            </button>
+            <div data-cv-menu class="cv-dropdown-menu cv-dropdown-menu-center" role="menu">
+              <a href="CV/Alejandro_Garcia_Multiplayer_CV_2026.pdf" target="_blank" rel="noopener" data-cv="multiplayer" class="cv-dropdown-item" role="menuitem">
+                <i class="fa-solid fa-gamepad text-accent text-xs w-4"></i>
+                <span data-i18n="nav.cv_multiplayer">Multiplayer CV</span>
+                <i class="fa-solid fa-download text-[10px] ml-auto text-[var(--mute)]"></i>
+              </a>
+              <a href="CV/Alejandro_Garcia_Simulation_CV_2025.pdf" target="_blank" rel="noopener" data-cv="simulation" class="cv-dropdown-item" role="menuitem">
+                <i class="fa-solid fa-microchip text-accent text-xs w-4"></i>
+                <span data-i18n="nav.cv_sim">Simulation CV</span>
+                <i class="fa-solid fa-download text-[10px] ml-auto text-[var(--mute)]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Network Links -->
+        <div class="flex flex-wrap justify-center gap-8 font-mono text-xs uppercase tracking-widest text-[var(--mute)]">
+          <a href="https://linkedin.com/in/alejandro-galo" target="_blank" rel="noopener" class="hover:text-accent transition-colors flex items-center gap-2">
+            <i class="fa-brands fa-linkedin text-sm"></i>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://github.com/MrLexDev" target="_blank" rel="noopener" class="hover:text-accent transition-colors flex items-center gap-2">
+            <i class="fa-brands fa-github text-sm"></i>
+            <span>GitHub</span>
+          </a>
+          <a href="https://mrlexdev.itch.io/" target="_blank" rel="noopener" class="hover:text-accent transition-colors flex items-center gap-2">
+            <i class="fa-brands fa-itch-io text-sm"></i>
+            <span>itch.io</span>
+          </a>
+          <a href="https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/" target="_blank" rel="noopener" class="hover:text-accent transition-colors flex items-center gap-2">
+            <i class="fa-brands fa-steam text-sm"></i>
+            <span>Steam</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TELEMETRY FOOTER -->
+  <footer class="border-t border-[var(--rule)] bg-[var(--bg)] py-8 px-6 lg:px-12 font-mono text-[11px] text-[var(--mute)] tracking-wider uppercase relative z-10">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+      <span data-i18n="footer.copy">© 2026 Alejandro García López (Alejandro Galo) · Spain</span>
+      <span class="text-accent" data-i18n="footer.telemetry">Tick 64Hz · RTT 00ms · Loss 0.0%</span>
+      <span data-i18n="footer.version">v2.0.0</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js"></script>
 </body>
 
 </html>
