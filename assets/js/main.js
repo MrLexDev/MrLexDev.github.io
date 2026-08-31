@@ -122,44 +122,32 @@ document.addEventListener('click', (e) => {
 
 
 
-// --- 4. Flagship Terminal Live Telemetry Stream ---
+// --- 4. Flagship Terminal: personal log stream ---
 const terminalContent = document.getElementById('terminal-content');
-const terminalLines = [
-  { prefix: '[tick 1247]', actor: 'player_96', action: 'fire', meta: '→ server_ack(182ms)', result: 'hit=true', accent: true },
-  { prefix: '[tick 1248]', actor: 'replicate actors=', meta: '2,384', action: '/ budget=', result: '2,600' },
-  { prefix: '[tick 1249]', actor: 'player_42', action: 'inv_pick', meta: 'item_rifle_02', result: 'ack=✓', accent: true },
-  { prefix: '[tick 1250]', actor: 'bandwidth kbps/client', action: '38.4', meta: 'avg', result: '36.1' },
-  { prefix: '[tick 1251]', actor: 'state_reconcile', action: 'entities=47', meta: 'drift=', result: '0.00', accent: true },
-  { prefix: '[tick 1252]', actor: 'player_11', action: 'disconnect', meta: '→ session_persist(60s)', result: 'OK' },
-  { prefix: '[tick 1253]', actor: 'net_update', action: 'OK', meta: 'jitter=±', result: '2.8ms' },
-  { prefix: '[tick 1254]', actor: 'server_tick', action: '60Hz', meta: 'budget=', result: '14.2/16.6ms', accent: true },
-  { prefix: '[tick 1255]', actor: 'sync_report', action: 'desync=0', meta: 'race_cond=', result: '0', accent: true },
+const terminalFacts = [
+  { tag: 'ship', html: `<a class="terminal-link" href="https://catnessgames.com/games/sea-horizon/" target="_blank" rel="noopener">Sea Horizon</a> <span class="terminal-ink">· PS4 / PS5 / Xbox Series port ✓</span>` },
+  { tag: 'live', html: `<a class="terminal-link" href="https://store.steampowered.com/app/1162140/Rise_Of_The_Overlords/" target="_blank" rel="noopener">Rise of the Overlords</a> <span class="terminal-ink">· out on Steam ✓</span>` },
+  { tag: 'demo', html: `<a class="terminal-link" href="https://mrlexdev.itch.io/fractalia" target="_blank" rel="noopener">Fractalia</a> <span class="terminal-ink">· GPU raymarching + analytic SDFs ✓</span>` },
+  { tag: 'thesis', html: `<a class="terminal-link" href="https://youtu.be/S7lLfCrk1bQ" target="_blank" rel="noopener">Urban Traffic Simulation AI</a> <span class="terminal-ink">· multi-agent FSM ✓</span>` },
+  { tag: 'roles', html: `<span class="terminal-ink">Catness Game Studios · Firescale Studios</span>` },
+  { tag: 'edu', html: `<span class="terminal-ink">BSc Video Game Development · Universitat Jaume I</span>` },
+  { tag: 'metrics', html: `<span class="terminal-ink">30+ TRC/XR fixes · QA turnaround −90% · 60 FPS steady</span>` },
+  { tag: 'ping', html: `<a class="terminal-link" href="https://github.com/MrLexDev" target="_blank" rel="noopener">github.com/MrLexDev</a> <span class="terminal-ink">·</span> <a class="terminal-link" href="https://mrlexdev.itch.io/" target="_blank" rel="noopener">itch.io</a>` },
+  { tag: 'hire', html: `<span class="terminal-ink">OPEN to gameplay / multiplayer / simulation roles</span> <span class="text-accent">●</span>` },
+  { tag: 'mail', html: `<a class="terminal-link" href="mailto:AlejandroGaloDev@gmail.com">AlejandroGaloDev@gmail.com</a>` },
 ];
 
 let baseTick = 1256;
+let factIndex = 0;
 
 function streamTerminalLog() {
   if (!terminalContent) return;
 
-  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-  const isDark = currentTheme === 'dark';
-  const accent = isDark ? '#00e5ff' : '#0066ff';
-  const mute = isDark ? '#7b8598' : '#5b6578';
-  const ink = isDark ? '#f2f4f8' : '#0a0e16';
+  const fact = terminalFacts[factIndex % terminalFacts.length];
+  factIndex++;
 
-  baseTick++;
-  const randomPlayer = `player_${Math.floor(Math.random() * 99) + 1}`;
-  const actions = [
-    { text: `replicate actors=<span style="color:${ink}">${2200 + Math.floor(Math.random() * 200)}</span> / budget=<span style="color:${ink}">2,600</span>` },
-    { text: `<span style="color:${accent}">${randomPlayer}</span> fire <span style="color:${ink}">→ server_ack(${120 + Math.floor(Math.random() * 80)}ms)</span> hit=<span style="color:${accent}">true</span>` },
-    { text: `net_update <span style="color:${ink}">OK</span> jitter=±<span style="color:${ink}">${(Math.random() * 3 + 1).toFixed(1)}ms</span>` },
-    { text: `server_tick <span style="color:${accent}">60Hz</span> budget=<span style="color:${ink}">${(Math.random() * 3 + 13).toFixed(1)}/16.6ms</span>` },
-    { text: `<span style="color:${accent}">${randomPlayer}</span> inv_sync <span style="color:${ink}">ack=✓</span> state=<span style="color:${accent}">RECONCILED</span>` }
-  ];
-
-  const chosen = actions[Math.floor(Math.random() * actions.length)];
   const newLine = document.createElement('div');
-  newLine.innerHTML = `<span style="color:${mute}">[tick ${baseTick}]</span> ${chosen.text}`;
+  newLine.innerHTML = `<span class="text-[var(--mute)]">[tick ${baseTick}]</span> <span class="text-accent">${fact.tag}</span> → ${fact.html}`;
 
   terminalContent.appendChild(newLine);
   if (terminalContent.children.length > 11) {
@@ -288,7 +276,7 @@ const translations = {
       status_avail: "DISPONIBLE PARA ROLES GAMEPLAY, MULTIJUGADOR Y SIMULACIÓN",
       status_loc: "España · Remoto & Reubicación",
       title_1: "Diseñado para",
-      title_2: "el tiempo real.",
+      title_2: "real-time.",
       desc: "Desarrollo sistemas gameplay, multijugador y simulación en <strong class=\"text-ink\">Unreal Engine 5</strong> y <strong class=\"text-ink\">Unity</strong> — replicación de red, sincronización determinista de estado, herramientas de telemetría y computación espacial en GPU. Experiencia en <strong class=\"text-ink\">Firescale Studios</strong> y <strong class=\"text-ink\">Catness Game Studios</strong>.",
       cta_systems: "Ver los sistemas →",
       cta_contact: "Escríbeme",
