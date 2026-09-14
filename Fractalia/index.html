@@ -4,9 +4,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Fractalia — Playable Web Demo | Alejandro Galo</title>
+
+  <!-- Primary SEO Meta Tags -->
+  <title id="page-title">Fractalia — Real-Time GPU Raymarching & SDF Explorer | Alejandro Galo</title>
   <meta id="page-description" name="description"
-    content="Playable real-time raymarched fractal demo in Unity WebGL using custom HLSL shaders.">
+    content="Playable real-time raymarched fractal demo in Unity WebGL using custom HLSL shaders and analytic Signed Distance Functions (SDFs). Engineered by Alejandro Galo.">
+  <meta name="author" content="Alejandro García López (Alejandro Galo)">
+  <meta name="keywords" content="Fractalia, GPU Raymarching, Unity WebGL, HLSL, Signed Distance Functions, SDF, Real-Time Graphics, Alejandro Galo">
+  <link rel="canonical" href="https://mrlexdev.github.io/Fractalia/">
+
+  <!-- Open Graph / Facebook / LinkedIn / Discord -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mrlexdev.github.io/Fractalia/">
+  <meta property="og:title" content="Fractalia — Real-Time GPU Raymarching & SDF Explorer">
+  <meta property="og:description"
+    content="Playable real-time raymarched fractal demo in Unity WebGL using custom HLSL shaders and analytic Signed Distance Functions (SDFs). Engineered by Alejandro Galo.">
+  <meta property="og:image" content="https://mrlexdev.github.io/img/fractalia-og.png">
+  <meta property="og:image:secure_url" content="https://mrlexdev.github.io/img/fractalia-og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Fractalia WebGL Demo Preview">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="es_ES">
+
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://mrlexdev.github.io/Fractalia/">
+  <meta name="twitter:title" content="Fractalia — Real-Time GPU Raymarching & SDF Explorer">
+  <meta name="twitter:description"
+    content="Playable real-time raymarched fractal demo in Unity WebGL using custom HLSL shaders and analytic Signed Distance Functions (SDFs). Engineered by Alejandro Galo.">
+  <meta name="twitter:image" content="https://mrlexdev.github.io/img/fractalia-og.png">
+  <meta name="twitter:image:alt" content="Fractalia WebGL Demo Preview">
+
+  <!-- Comprehensive Favicon Suite & PWA Manifest -->
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="../img/QuasarLogoV2.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#00e5ff">
+  <meta name="msapplication-TileColor" content="#06080c">
+  <meta name="theme-color" content="#06080c" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#eef0f4" media="(prefers-color-scheme: light)">
+
+  <!-- Performance & Preconnects -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,6 +68,13 @@
       position: relative;
       width: 100%;
       padding-top: 56.25%;
+      min-height: 380px;
+    }
+
+    @media (max-width: 640px) {
+      .iframe-wrapper {
+        min-height: 480px;
+      }
     }
 
     .iframe-wrapper iframe {
@@ -43,15 +96,15 @@
 
   <!-- NAVIGATION BAR -->
   <header class="fixed w-full z-50 top-0 start-0 border-b border-[var(--rule)] bg-[var(--bg)]/90 backdrop-blur-md transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between">
       
       <!-- Brand & Icon -->
       <a href="../index.html" class="flex items-center gap-3 group">
         <img src="../img/QuasarLogo.svg" alt="Quasar Logo" width="34" height="34" class="group-hover:scale-105 transition-transform" />
         <div>
           <div class="font-display font-bold text-base tracking-tight text-[var(--ink)]">ALEJANDRO GALO</div>
-          <div class="font-mono text-[10px] text-[var(--mute)] tracking-wider uppercase" data-i18n="nav.brand_sub">
-            Multiplayer & Gameplay Programmer
+          <div class="font-mono text-[10px] text-[var(--mute)] tracking-wider uppercase nav-brand-sub" data-i18n="nav.brand_sub">
+            Gameplay, Multiplayer & Simulation Programmer
           </div>
         </div>
       </a>
@@ -75,10 +128,24 @@
           ☀
         </button>
 
-        <!-- CV Button -->
-        <a href="../Alejandro_Garcia_GameDev_CV_2025_Human_NoNumber.pdf" target="_blank" class="btn-pri ml-2 !py-2 !px-4 !text-[11px]" data-i18n="nav.cv_btn">
-          CV ↓
-        </a>
+        <!-- CV Dropdown -->
+        <div class="relative cv-dropdown ml-2" data-cv-dropdown>
+          <button data-cv-toggle class="btn-pri !py-2 !px-4 !text-[11px]" aria-haspopup="true" aria-expanded="false" data-i18n="nav.cv_btn">
+            CV ↓
+          </button>
+          <div data-cv-menu class="cv-dropdown-menu" role="menu">
+            <a href="../CV/Alejandro_Garcia_Multiplayer_CV_2026.pdf" target="_blank" rel="noopener" data-cv="multiplayer" class="cv-dropdown-item" role="menuitem">
+              <i class="fa-solid fa-gamepad text-accent text-xs w-4"></i>
+              <span data-i18n="nav.cv_multiplayer">Multiplayer CV</span>
+              <i class="fa-solid fa-download text-[10px] ml-auto text-[var(--mute)]"></i>
+            </a>
+            <a href="../CV/Alejandro_Garcia_Simulation_CV_2025.pdf" target="_blank" rel="noopener" data-cv="simulation" class="cv-dropdown-item" role="menuitem">
+              <i class="fa-solid fa-microchip text-accent text-xs w-4"></i>
+              <span data-i18n="nav.cv_sim">Simulation CV</span>
+              <i class="fa-solid fa-download text-[10px] ml-auto text-[var(--mute)]"></i>
+            </a>
+          </div>
+        </div>
       </div>
 
       <!-- Mobile Menu Button -->
@@ -101,16 +168,28 @@
       <a href="../index.html#flagship" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.systems">Systems</a>
       <a href="../index.html#trajectory" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.trajectory">Trajectory</a>
       <a href="../index.html#contact" class="block font-mono text-sm uppercase tracking-wider text-[var(--mute)] hover:text-[var(--accent)]" data-i18n="nav.contact">Contact</a>
-      <div class="pt-2">
-        <a href="../Alejandro_Garcia_GameDev_CV_2025_Human_NoNumber.pdf" target="_blank" class="btn-pri w-full text-center" data-i18n="nav.cv_btn">
+      <div class="pt-2 relative cv-dropdown" data-cv-dropdown>
+        <button data-cv-toggle class="btn-pri w-full text-center" aria-haspopup="true" aria-expanded="false" data-i18n="nav.cv_btn">
           Download CV ↓
-        </a>
+        </button>
+        <div data-cv-menu class="cv-dropdown-menu cv-dropdown-menu-full" role="menu">
+          <a href="../CV/Alejandro_Garcia_Multiplayer_CV_2026.pdf" target="_blank" rel="noopener" data-cv="multiplayer" class="cv-dropdown-item" role="menuitem">
+            <i class="fa-solid fa-gamepad text-accent text-xs w-4"></i>
+            <span data-i18n="nav.cv_multiplayer">Multiplayer CV</span>
+            <i class="fa-solid fa-download text-[10px] ml-auto text-[var(--mute)]"></i>
+          </a>
+          <a href="../CV/Alejandro_Garcia_Simulation_CV_2025.pdf" target="_blank" rel="noopener" data-cv="simulation" class="cv-dropdown-item" role="menuitem">
+            <i class="fa-solid fa-microchip text-accent text-xs w-4"></i>
+            <span data-i18n="nav.cv_sim">Simulation CV</span>
+            <i class="fa-solid fa-download text-[10px] ml-auto text-[var(--mute)]"></i>
+          </a>
+        </div>
       </div>
     </div>
   </header>
 
   <!-- MAIN DEMO CONTAINER -->
-  <main class="relative z-10 pt-28 pb-20 px-6 max-w-6xl mx-auto">
+  <main class="relative z-10 pt-28 pb-20 px-4 sm:px-6 max-w-6xl mx-auto">
     
     <!-- Top Back Link & Header -->
     <div class="mb-8">
@@ -164,7 +243,7 @@
   </main>
 
   <!-- TELEMETRY FOOTER -->
-  <footer class="border-t border-[var(--rule)] bg-[var(--bg)] py-8 px-6 lg:px-12 font-mono text-[11px] text-[var(--mute)] tracking-wider uppercase relative z-10">
+  <footer class="border-t border-[var(--rule)] bg-[var(--bg)] py-8 px-4 sm:px-6 lg:px-12 font-mono text-[11px] text-[var(--mute)] tracking-wider uppercase relative z-10">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
       <span data-i18n="footer.copy">© 2026 Alejandro García López (Alejandro Galo) · Spain</span>
       <span class="text-accent" data-i18n="footer.telemetry">Tick 64Hz · RTT 00ms · Loss 0.0%</span>

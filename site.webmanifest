@@ -1,0 +1,21 @@
+{
+  "name": "Alejandro Galo — Gameplay, Multiplayer & Simulation Programmer",
+  "short_name": "Alejandro Galo",
+  "description": "Portfolio of Alejandro Galo, Gameplay, Multiplayer & Simulation Programmer specializing in Unreal Engine 5, Unity, C++, and Netcode.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#06080c",
+  "background_color": "#06080c",
+  "display": "standalone",
+  "start_url": "/"
+}

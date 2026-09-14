@@ -163,6 +163,12 @@ if (terminalContent) {
 // --- 5. Multi-Language (i18n) System ---
 const translations = {
   en: {
+    meta: {
+      main_title: "Alejandro Galo — Gameplay, Multiplayer & Simulation Programmer",
+      main_desc: "Portfolio of Alejandro Galo. Gameplay, Multiplayer & Simulation Programmer specializing in Unreal Engine 5, Unity, C++, Netcode Replication, Deterministic Systems, and Telemetry Tooling.",
+      fractalia_title: "Fractalia — Real-Time GPU Raymarching & SDF Explorer | Alejandro Galo",
+      fractalia_desc: "Playable real-time raymarched fractal demo in Unity WebGL using custom HLSL shaders and analytic Signed Distance Functions (SDFs). Engineered by Alejandro Galo."
+    },
     nav: {
       brand_sub: "Gameplay, Multiplayer & Simulation Programmer",
       work: "Work",
@@ -262,6 +268,12 @@ const translations = {
     }
   },
   es: {
+    meta: {
+      main_title: "Alejandro Galo — Programador Gameplay, Multijugador & Simulación",
+      main_desc: "Portfolio de Alejandro Galo. Programador Gameplay, Multijugador y Simulación especializado en Unreal Engine 5, Unity, C++, replicación de red, sistemas deterministas y telemetría.",
+      fractalia_title: "Fractalia — Demo WebGL Raymarching en GPU y SDF | Alejandro Galo",
+      fractalia_desc: "Demo jugable en tiempo real de fractal con raymarching en Unity WebGL usando shaders HLSL personalizados y funciones SDF analíticas. Desarrollado por Alejandro Galo."
+    },
     nav: {
       brand_sub: "Programador Gameplay, Multijugador & Simulación",
       work: "Trabajos",
@@ -369,10 +381,28 @@ const langToggleMobile = document.getElementById('lang-toggle-mobile');
 function updatePageLanguage(lang) {
   currentLanguage = lang;
   localStorage.setItem('app-lang', lang);
+  document.documentElement.setAttribute('lang', lang);
 
   const langText = lang.toUpperCase();
   if (langToggleBtn) langToggleBtn.textContent = langText;
   if (langToggleMobile) langToggleMobile.textContent = langText;
+
+  // Dynamic SEO title & description update
+  const isFractalia = window.location.pathname.toLowerCase().includes('fractalia');
+  const langMeta = translations[lang] && translations[lang].meta;
+  if (langMeta) {
+    const titleText = isFractalia ? langMeta.fractalia_title : langMeta.main_title;
+    const descText = isFractalia ? langMeta.fractalia_desc : langMeta.main_desc;
+    if (titleText) {
+      document.title = titleText;
+      const pageTitleEl = document.getElementById('page-title');
+      if (pageTitleEl) pageTitleEl.textContent = titleText;
+    }
+    const descEl = document.getElementById('page-description') || document.querySelector('meta[name="description"]');
+    if (descEl && descText) descEl.setAttribute('content', descText);
+    const ogLocale = document.querySelector('meta[property="og:locale"]');
+    if (ogLocale) ogLocale.setAttribute('content', lang === 'es' ? 'es_ES' : 'en_US');
+  }
 
   const elements = document.querySelectorAll('[data-i18n]');
   elements.forEach(el => {
